@@ -50,5 +50,6 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 
 |Linkable Node Name|Description|Language
 |-|-|-|
+|[Array2D](addons/godot-next/references/array_2d.gd)|A 2D Array class.|GDScript
 |[Cycle](addons/godot-next/gui/cycle.gd)|Cycles through child nodes without any visibility or container effects.|GDScript
 |[Trail2D](addons/godot-next/2d/trails.gd)|Creates a variable-length trail that tracks a "target" node.|GDScript
