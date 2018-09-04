@@ -1,12 +1,14 @@
 # godot-next
 
-Godot Node Extensions, AKA Godot NExt, is a Godot 3.1+ repository dedicated to collecting basic Node script classes that are currently unavailable in vanilla Godot.
+Godot Node Extensions, AKA Godot NExt, is a Godot 3.1+ repository dedicated to collecting basic script classes that are currently unavailable in vanilla Godot.
 
 As you might have noticed, Godot Engine's initial node offerings are general purpose and are intentionally not oriented towards particular types of games.
 
-This repository's purpose is to create nodes that fulfill a particular function and work out-of-the-box. Users should be able to use your node immediately after adding it to their scene. Don't be afraid to design nodes that have an array of dynamically generated children either.
+This repository's purpose is to create classes that fulfill a particular function and work out-of-the-box. Users should be able to use your class immediately after creating it. For nodes, don't be afraid to design ones that have an array of dynamically generated children. ;-)
 
-[Jump to Node List](https://github.com/willnationsdev/godot-next#nodes)
+Note: The repository is named after Nodes, but ultimately any general-purpose type is welcome here (References, Resources, etc.).
+
+[Jump to Class List](https://github.com/willnationsdev/godot-next#classes)
 
 ## How to Use
 
@@ -46,7 +48,7 @@ Submissions are **encouraged** to do the following:
 
 That's it! I hope you've got ideas of what you'd like to share with others.
 
-# Nodes
+# Classes
 
 |Linkable Node Name|Description|Language
 |-|-|-|
