@@ -81,7 +81,6 @@ func _notification(p_what: int):
 
 #warning-ignore:unused_argument
 func _process(delta: float):
-	var added: bool = false
 	if target:
 		match persistance:
 			PERSIST_OFF:
@@ -98,12 +97,14 @@ func _process(delta: float):
 						if not get_point_count() or moved:
 							add_point(target.global_position)
 						else:
+							#warning-ignore:unused_variable
 							for i in range(degen_rate):
 								remove_point(0)
 					PERSIST_COND_CUSTOM:
 						if _should_grow():
 							add_point(target.global_position)
 						if _should_shrink():
+							#warning-ignore:unused_variable
 							for i in range(degen_rate):
 								remove_point(0)
 
