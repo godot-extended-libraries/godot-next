@@ -1,7 +1,7 @@
-# Array2D
-# author: willnationsdev
-# brief_description: A 2D Array class
-
+## Array2D
+## author: willnationsdev
+## brief_description: A 2D Array class
+#
 extends Reference
 class_name Array2D
 
@@ -126,7 +126,7 @@ func sort_col_custom(p_idx: int, p_obj: Object, p_func: String):
 	_sort_axis_custom(p_idx, false, p_obj, p_func)
 
 func duplicate() -> Array2D:
-	return Array2D.new(data.duplicate())
+	return (load(get_script().resource_path) as GDScript).new(data.duplicate()) as Array2D
 
 func hash() -> int:
 	return hash(self)
@@ -249,6 +249,13 @@ func rfind(p_value) -> Vector2:
 			j -= 1
 		i -= 1
 	return Vector2(-1, -1)
+
+func transpose() -> Array2D:
+	var array = (load(get_script().resource_path) as GDScript).new() as Array2D
+	array.resize(len(data), len(data[0]))
+	for i in range(len(data[0])):
+		array.append_row(get_col(i))
+	return array
 
 ##### CONNECTIONS #####
 
