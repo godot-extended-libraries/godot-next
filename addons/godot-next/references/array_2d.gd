@@ -76,6 +76,9 @@ func get_row_ref(p_idx: int):
 	assert p_idx >= 0
 	return data[p_idx]
 
+func get_rows() -> Array:
+	return data
+
 func set_row(p_idx: int, p_row):
 	assert len(data) > p_idx
 	assert p_idx >= 0
@@ -150,7 +153,7 @@ func resize(p_height: int, p_width: int):
 			a_col.resize(p_width)
 
 func resizev(p_dimensions: Vector2):
-	resize(p_dimensions.x, p_dimensions.y)
+	resize(int(p_dimensions.x), int(p_dimensions.y))
 
 func clear():
 	data = []
