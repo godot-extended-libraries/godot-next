@@ -55,5 +55,6 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Array2D](addons/godot-next/references/array_2d.gd)|A 2D Array class.|GDScript
 |[CSVFile](addons/godot-next/references/csv_file.gd)|Similar to ConfigFile, parses a .csv file. Can generate a key-value store from rows. Supports .tsv files.|GDScript
 |[Cycle](addons/godot-next/gui/cycle.gd)|Cycles through child nodes without any visibility or container effects.|GDScript
+|[FileSystemLink](addons/godot-next/global/file_system_link.gd)|A utility for creating links (file/directory, symbolic/hard).|GDScript
 |[Trail2D](addons/godot-next/2d/trails.gd)|Creates a variable-length trail that tracks a "target" node.|GDScript
 |[VBoxItemList](addons/godot-next/gui/v_box_item_list.gd)|Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.|GDScript
