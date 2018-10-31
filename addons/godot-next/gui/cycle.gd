@@ -3,7 +3,7 @@
 # brief_description: Cycles through child nodes without any visibility or container effects.
 
 extends TabContainer
-class_name Cycle
+class_name Cycle, "../icons/icon_cycle.svg"
 
 ##### SIGNALS #####
 
