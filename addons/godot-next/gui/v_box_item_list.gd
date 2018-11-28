@@ -223,21 +223,11 @@ func _on_hbox_gui_input(p_event: InputEvent, p_hbox: HBoxContainer):
 			var next_idx = min(p_hbox.get_index() + 1, p_hbox.get_parent().get_child_count() - 1)
 			var previous = p_hbox.get_parent().get_child(prev_idx)
 			var next = p_hbox.get_parent().get_child(next_idx)
-			var moved := false
 			
 			if previous.get_global_rect().has_point(mm.global_position):
 				content.move_child(_dragged_item, prev_idx)
-				moved = true
 			elif next.get_global_rect().has_point(mm.global_position):
 				content.move_child(_dragged_item, next_idx)
-				moved = true
-			
-			if moved:
-				var del_btn := _dragged_item.get_node("DeleteButton") as ToolButton
-				if del_btn.is_connected("pressed", self, "remove_item"):
-					del_btn.disconnect("pressed", self, "remove_item")
-				#warning-ignore:return_value_discarded
-				del_btn.connect("pressed", self, "remove_item", [prev_idx])
 
 func _on_edit_text_entered(p_text: String, p_edit: LineEdit, p_label: Label):
 	p_label.text = p_text
