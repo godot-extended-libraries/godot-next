@@ -54,6 +54,9 @@ var _hovered_item: HBoxContainer = null
 var _insertions: int = 0
 var _removals: int = 0
 
+var _object:Object = null
+var _property_name:String = ""
+
 ##### NOTIFICATIONS #####
 
 func _init(p_title: String = "", p_item_prefix: String = "", p_type: Resource = null):
@@ -108,10 +111,95 @@ func _item_inserted(p_index: int, p_control: Control):
 func _item_removed(p_index: int, p_control: Control):
 	pass
 
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
+func _item_dragged(p_control: Control):
+	pass
+
 ##### PUBLIC METHODS #####
 
 func insert_item(p_index: int) -> Control:
 	
+	var node = _insert_item(p_index);
+	emit_signal("item_inserted", p_index, node);
+	
+	return node;
+
+func get_item(p_index: int) -> Control:
+	if p_index < 0 or p_index >= len(content.get_children()):
+		return null
+	return content.get_child(p_index).get_node("Item") as Control
+
+func append_item():
+	return insert_item(-1)
+
+func remove_item(p_idx: int):
+	var node := content.get_child(p_idx) as HBoxContainer
+	content.remove_child(node)
+	if not (allow_reordering or editable_labels):
+		_reset_prefixes()
+	_item_removed(p_idx, node)
+	emit_signal("item_removed", p_idx, node)
+	if (is_instance_valid(node)):
+		node.free()
+	_removals += 1
+
+func clear_items():
+	for node in content.get_children():
+		content.remove_child(node);
+		node.free();
+
+##### CONNECTIONS #####
+
+func _on_remove_item(p_del_btn: ToolButton):
+	remove_item(p_del_btn.get_parent().get_index())
+
+func _on_slide_gui_input(p_event: InputEvent, p_rect: TextureRect):
+	if p_event is InputEventMouseButton:
+		var mb := p_event as InputEventMouseButton
+		if not mb.is_echo() and mb.button_index == BUTTON_LEFT and mb.pressed:
+			_dragged_item = p_rect.get_parent() as HBoxContainer
+
+func _on_hbox_gui_input(p_event: InputEvent, p_hbox: HBoxContainer):
+	if p_event is InputEventMouseButton:
+		var mb := p_event as InputEventMouseButton
+		if not mb.is_echo() and mb.button_index == BUTTON_LEFT and not mb.pressed and _dragged_item:
+			_dragged_item = null
+			_item_dragged(p_hbox);
+		if mb.doubleclick and editable_labels:
+			var edit := _hovered_item.get_node("ItemEdit") as LineEdit
+			var label := _hovered_item.get_node("ItemLabel") as Label
+			edit.text = label.text
+			edit.show()
+			label.hide()
+	
+	if p_event is InputEventMouseMotion:
+		var mm := p_event as InputEventMouseMotion
+		
+		if _hovered_item and is_instance_valid(_hovered_item):
+			(_hovered_item.get_node("ItemLabel") as Label).modulate = Color(1, 1, 1, 1)
+		_hovered_item = p_hbox
+		(_hovered_item.get_node("ItemLabel") as Label).modulate = label_tint
+		
+		if _dragged_item:
+			var prev_idx = max(p_hbox.get_index() - 1, 0)
+			var next_idx = min(p_hbox.get_index() + 1, p_hbox.get_parent().get_child_count() - 1)
+			var previous = p_hbox.get_parent().get_child(prev_idx)
+			var next = p_hbox.get_parent().get_child(next_idx)
+			
+			if previous.get_global_rect().has_point(mm.global_position):
+				content.move_child(_dragged_item, prev_idx)
+			elif next.get_global_rect().has_point(mm.global_position):
+				content.move_child(_dragged_item, next_idx)
+
+func _on_edit_text_entered(p_text: String, p_edit: LineEdit, p_label: Label):
+	p_label.text = p_text
+	p_label.show()
+	p_edit.hide()
+
+##### PRIVATE METHODS #####
+
+func _insert_item(p_index: int) -> Control:
 	var node: Control = _get_node_from_type()
 	if not node:
 		return null
@@ -151,6 +239,7 @@ func insert_item(p_index: int) -> Control:
 	hbox.add_child(del_btn)
 	
 	content.add_child(hbox)
+	
 	if p_index >= 0:
 		content.move_child(node, p_index)
 	else:
@@ -161,90 +250,9 @@ func insert_item(p_index: int) -> Control:
 	del_btn.connect("pressed", self, "_on_remove_item", [del_btn])
 	_item_inserted(p_index, node)
 	
-	emit_signal("item_inserted", p_index, node)
-	
 	_insertions += 1
 	
 	return node
-
-func get_item(p_index: int) -> Control:
-	if p_index < 0 or p_index >= len(content.get_children()):
-		return null
-	return content.get_child(p_index).get_node("Item") as Control
-
-func append_item():
-	return insert_item(-1)
-
-func remove_item(p_idx: int):
-	var node := content.get_child(p_idx) as HBoxContainer
-	content.remove_child(node)
-	if not (allow_reordering or editable_labels):
-		_reset_prefixes()
-	_item_removed(p_idx, node)
-	emit_signal("item_removed", p_idx, node)
-	if (is_instance_valid(node)):
-		node.free()
-	_removals += 1
-
-##### CONNECTIONS #####
-
-func _on_remove_item(p_del_btn: ToolButton):
-	remove_item(p_del_btn.get_parent().get_index())
-
-func _on_slide_gui_input(p_event: InputEvent, p_rect: TextureRect):
-	if p_event is InputEventMouseButton:
-		var mb := p_event as InputEventMouseButton
-		if not mb.is_echo() and mb.button_index == BUTTON_LEFT and mb.pressed:
-			_dragged_item = p_rect.get_parent() as HBoxContainer
-
-func _on_hbox_gui_input(p_event: InputEvent, p_hbox: HBoxContainer):
-	if p_event is InputEventMouseButton:
-		var mb := p_event as InputEventMouseButton
-		if not mb.is_echo() and mb.button_index == BUTTON_LEFT and not mb.pressed and _dragged_item:
-			_dragged_item = null
-			print(p_hbox, ": stopped dragging")
-		if mb.doubleclick and editable_labels:
-			var edit := _hovered_item.get_node("ItemEdit") as LineEdit
-			var label := _hovered_item.get_node("ItemLabel") as Label
-			edit.text = label.text
-			edit.show()
-			label.hide()
-	
-	if p_event is InputEventMouseMotion:
-		var mm := p_event as InputEventMouseMotion
-		
-		if _hovered_item and is_instance_valid(_hovered_item):
-			(_hovered_item.get_node("ItemLabel") as Label).modulate = Color(1, 1, 1, 1)
-		_hovered_item = p_hbox
-		(_hovered_item.get_node("ItemLabel") as Label).modulate = label_tint
-		
-		if _dragged_item:
-			var prev_idx = max(p_hbox.get_index() - 1, 0)
-			var next_idx = min(p_hbox.get_index() + 1, p_hbox.get_parent().get_child_count() - 1)
-			var previous = p_hbox.get_parent().get_child(prev_idx)
-			var next = p_hbox.get_parent().get_child(next_idx)
-			var moved := false
-			
-			if previous.get_global_rect().has_point(mm.global_position):
-				content.move_child(_dragged_item, prev_idx)
-				moved = true
-			elif next.get_global_rect().has_point(mm.global_position):
-				content.move_child(_dragged_item, next_idx)
-				moved = true
-			
-			if moved:
-				var del_btn := _dragged_item.get_node("DeleteButton") as ToolButton
-				if del_btn.is_connected("pressed", self, "remove_item"):
-					del_btn.disconnect("pressed", self, "remove_item")
-				#warning-ignore:return_value_discarded
-				del_btn.connect("pressed", self, "remove_item", [prev_idx])
-
-func _on_edit_text_entered(p_text: String, p_edit: LineEdit, p_label: Label):
-	p_label.text = p_text
-	p_label.show()
-	p_edit.hide()
-
-##### PRIVATE METHODS #####
 
 func _get_node_from_type() -> Control:
 	if item_script:
@@ -341,3 +349,7 @@ func set_deletable_items(p_value: bool):
 	for a_hbox in content.get_children():
 		var del_btn := (a_hbox as HBoxContainer).get_node("DeleteButton") as ToolButton
 		del_btn.visible = p_value
+
+func set_object_property(p_object: Object, p_property_name: String):
+	_object = p_object;
+	_property_name = p_property_name;
