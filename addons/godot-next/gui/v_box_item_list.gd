@@ -8,11 +8,13 @@
 # - Note that the virtual methods will execute just ahead of emitting their signal counterpart.
 # - Items may define their own "_get_label" method which returns the string for their label text.
 # - If either 'allow_reordering' or 'editable_labels' is true, labels will not be generated automatically via item_prefix + index.
-
+tool
 extends VBoxContainer
 class_name VBoxItemList, "../icons/icon_v_box_item_list.svg"
 
 ##### SIGNALS #####
+
+signal data_updated(data)
 
 signal item_inserted(p_index, p_control)
 signal item_removed(p_index, p_control)
@@ -22,6 +24,8 @@ signal item_removed(p_index, p_control)
 const ICON_ADD: Texture = preload("../icons/icon_add.svg")
 const ICON_DELETE: Texture = preload("../icons/icon_import_fail.svg")
 const ICON_SLIDE: Texture = preload("../icons/icon_mirror_y.svg")
+
+const PROPERTY_USAGE_ITEM: int = PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_NETWORK | PROPERTY_USAGE_SCRIPT_VARIABLE
 
 ##### PROPERTIES #####
 
@@ -53,9 +57,6 @@ var _dragged_item: HBoxContainer = null
 var _hovered_item: HBoxContainer = null
 var _insertions: int = 0
 var _removals: int = 0
-
-var _object: Object = null
-var _property_name: String = ""
 
 ##### NOTIFICATIONS #####
 
@@ -90,6 +91,32 @@ func _init(p_title: String = "", p_item_prefix: String = "", p_type: Resource = 
 	
 	item_prefix = p_item_prefix
 
+func _get(property: String):
+	match property:
+		"data":
+			var _array := []
+			for node in content.get_children():
+				var item = node.get_node("Item")
+				_array.push_back(item.value)
+			return _array
+
+func _set(property: String, value: Array):
+	match property:
+		"data":
+			assert typeof(value) == TYPE_ARRAY
+			clear_items()
+			for data in value:
+				var item = _insert_item(-1)
+				item.value = data
+
+func _get_property_list():
+	return [{
+		"name": "data",
+		"type": TYPE_ARRAY,
+		"hint": PROPERTY_HINT_NONE,
+		"usage": PROPERTY_USAGE_ITEM
+	}]
+
 #warning-ignore:unused_argument
 func _process(p_delta: float):
 	if not get_global_rect().has_point(get_global_mouse_position()):
@@ -112,25 +139,26 @@ func _item_removed(p_index: int, p_control: Control):
 	pass
 
 #warning-ignore:unused_argument
-#warning-ignore:unused_argument
 func _item_dragged(p_control: Control):
 	pass
 
 ##### PUBLIC METHODS #####
 
 func insert_item(p_index: int) -> Control:
-	
 	var node = _insert_item(p_index)
-	emit_signal("item_inserted", p_index, node)
 	
-	return node;
+	p_index = p_index if p_index >= 0 else len(content.get_children())-1
+	emit_signal("item_inserted", p_index, node)
+	emit_signal("data_updated", self.data)
+	
+	return node
 
 func get_item(p_index: int) -> Control:
 	if p_index < 0 or p_index >= len(content.get_children()):
 		return null
 	return content.get_child(p_index).get_node("Item") as Control
 
-func append_item():
+func append_item() -> Control:
 	return insert_item(-1)
 
 func remove_item(p_idx: int):
@@ -140,6 +168,7 @@ func remove_item(p_idx: int):
 		_reset_prefixes()
 	_item_removed(p_idx, node)
 	emit_signal("item_removed", p_idx, node)
+	emit_signal("data_updated", self.data)
 	if (is_instance_valid(node)):
 		node.free()
 	_removals += 1
@@ -164,8 +193,9 @@ func _on_hbox_gui_input(p_event: InputEvent, p_hbox: HBoxContainer):
 	if p_event is InputEventMouseButton:
 		var mb := p_event as InputEventMouseButton
 		if not mb.is_echo() and mb.button_index == BUTTON_LEFT and not mb.pressed and _dragged_item:
+			_item_dragged(_dragged_item)
+			emit_signal("data_updated", self.data)
 			_dragged_item = null
-			_item_dragged(p_hbox)
 		if mb.doubleclick and editable_labels:
 			var edit := _hovered_item.get_node("ItemEdit") as LineEdit
 			var label := _hovered_item.get_node("ItemLabel") as Label
@@ -349,7 +379,3 @@ func set_deletable_items(p_value: bool):
 	for a_hbox in content.get_children():
 		var del_btn := (a_hbox as HBoxContainer).get_node("DeleteButton") as ToolButton
 		del_btn.visible = p_value
-
-func set_object_property(p_object: Object, p_property_name: String):
-	_object = p_object
-	_property_name = p_property_name
