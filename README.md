@@ -8,7 +8,7 @@ This repository's purpose is to create classes that fulfill a particular functio
 
 Note: The repository is named after Nodes, but ultimately any general-purpose type is welcome here (References, Resources, etc.).
 
-[Jump to Class List](https://github.com/willnationsdev/godot-next#classes)
+[Jump to Class List](#classes)
 
 ## How to Use
 
