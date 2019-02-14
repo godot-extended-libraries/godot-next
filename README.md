@@ -8,6 +8,8 @@ This repository's purpose is to create classes that fulfill a particular functio
 
 Note: The repository is named after Nodes, but ultimately any general-purpose type is welcome here (References, Resources, etc.).
 
+If you like the project, please star it. If you'd like to support it's development, please [send tips to my Kofi](https://ko-fi.com/willnationsdev).
+
 [Jump to Class List](#classes)
 
 ## How to Use
