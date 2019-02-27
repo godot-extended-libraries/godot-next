@@ -55,6 +55,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |Linkable Node Name|Description|Language
 |-|-|-|
 |[Array2D](addons/godot-next/references/array_2d.gd)|A 2D Array class.|GDScript
+|[ClassType](addons/godot-next/references/class_type.gd)|A class abstraction, both for engine and user-defined types.|GDScript
 |[CSVFile](addons/godot-next/references/csv_file.gd)|Similar to ConfigFile, parses a .csv file. Can generate a key-value store from rows. Supports .tsv files.|GDScript
 |[Cycle](addons/godot-next/gui/cycle.gd)|Cycles through child nodes without any visibility or container effects.|GDScript
 |[EditorTools](addons/godot-next/global/editor_tools.gd)|A utility for any features useful in the context of the Editor.|GDScript
