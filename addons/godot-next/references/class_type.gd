@@ -19,7 +19,7 @@
 #     print(ct.name) # prints engine or script class name
 #     print(ct.to_string()) # prints name or, if an anonymous resource, a PascalCase version of the filename
 # - Type Checks:
-#     if ClassType.static_object_is(MyNode, "Node"): # static type_is() method for comparisons.
+#     if ClassType.static_object_is(MyNode, node): # static object_is() method for comparisons.
 #     if ClassType.static_type_is(MyNode, "Node"): # static type_is() method for comparisons.
 #     if ct.type_is("Node"): # non-static `type_is`. Assumes first parameter from the ct instance.
 #     if ct.object_is(node): # non-static `object_is`. Assumes first parameter from the ct instance.
@@ -53,8 +53,8 @@
 #     var type_map = ct.get_deep_type_map() # 'type_map' is...
 #         Dictionary<name, {
 #             'name': <class name or generated file name>
-#             'type': <"Engine"|"Script"|"PackedScene">
-#             'path': <file path or empty string if "Engine">
+#             'type': <"Script"|"PackedScene">
+#             'path': <file path>
 #         }>
 # - Inheritance Lists:
 #     var list: PoolStringArray = ct.get_inheritors_list() # get all named types that inherit "MyNode" (engine + script classes)
@@ -63,7 +63,7 @@
 #     var list: PoolStringArray = ct.get_deep_inheritors_list() # get all types that inherit "MyNode" (engine + script and scene resources, namified paths for anonymous ones)
 #     var ct = ClassType.from_type_dict(type_map[list[0]]) # factory method handles init logic
 tool
-extends Resource
+extends Reference
 class_name ClassType
 
 ##### CLASSES #####
@@ -87,7 +87,6 @@ export(Resource) var res: Resource = null setget set_res, get_res
 
 var _source: int = Source.NONE
 
-# flag these so they don't get serialized
 var _script_map: Dictionary = {}
 var _path_map: Dictionary = {}
 var _deep_type_map: Dictionary = {}
