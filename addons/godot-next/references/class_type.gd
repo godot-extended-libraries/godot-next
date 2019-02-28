@@ -92,6 +92,8 @@ var _path_map: Dictionary = {}
 var _deep_type_map: Dictionary = {}
 var _deep_path_map: Dictionary = {}
 
+var _script_map_dirty: bool = true
+
 ##### NOTIFICATIONS #####
 
 func _init(p_input = null, p_generate_deep_map: bool = true, p_duplicate_maps: bool = true) -> void:
@@ -113,11 +115,14 @@ func _init(p_input = null, p_generate_deep_map: bool = true, p_duplicate_maps: b
 					_deep_path_map = p_input._deep_path_map
 				return
 			_init_from_object(p_input)
+			_connect_script_updates()
 		TYPE_STRING:
 			if ResourceLoader.exists(p_input):
 				_init_from_path(p_input)
+				_connect_script_updates()
 			else:
 				_init_from_name(p_input)
+				_connect_script_updates()
 	return
 
 ##### OVERRIDES #####
@@ -604,6 +609,7 @@ func _init_from_name(p_name: String) -> void:
 	path = ""
 	res = null
 	_source = Source.NONE
+	_connect_script_updates()
 
 # reset properties based on a given path
 func _init_from_path(p_path: String) -> void:
@@ -622,6 +628,7 @@ func _init_from_path(p_path: String) -> void:
 		return
 	name = ""
 	_source = Source.NONE
+	_connect_script_updates()
 
 # reset properties based on a given object instance
 # if null: don't initialize.
@@ -649,12 +656,19 @@ func _init_from_object(p_object: Object) -> void:
 	if p_object is PackedScene or p_object is Script:
 		_init_from_path((p_object as Resource).resource_path)
 	_init_from_name(p_object.get_class())
+	_connect_script_updates()
+
+func _connect_script_updates() -> void:
+	var ep = EditorPlugin.new()
+	ep.get_editor_interface().get_editor_filesystem().connect("filesystem_changed", self, "set", ["_script_map_dirty", true])
+	ep.free()
 
 # Utility method to re-populate the script maps if not yet initialized.
 func _fetch_script_map() -> void:
-	if _script_map.empty():
+	if _script_map_dirty:
 		_script_map = _get_script_map()
 		_build_path_map()
+		_script_map_dirty = false
 
 # Utility method to build the path map from the script map.
 func _build_path_map() -> void:
