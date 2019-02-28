@@ -261,7 +261,7 @@ func get_script_class() -> String:
 	return ""
 
 # Get the name of the next inherited type
-func get_type_parent_class() -> String:
+func get_type_class() -> String:
 	var ret := get_script_class()
 	if not ret:
 		ret = get_engine_class()
@@ -298,7 +298,9 @@ func get_engine_parent() -> Reference:
 func get_script_parent() -> Reference:
 	var ret := _new()
 	if _source == Source.SCRIPT:
-		ret.path = (res as Script).get_base_script().resource_path
+		var base_script = (res as Script).get_base_script()
+		if base_script:
+			ret.path = base_script.resource_path
 	elif _source == Source.ENGINE:
 		ret.name = ""
 	return ret
@@ -316,11 +318,11 @@ func get_scene_parent() -> Reference:
 
 # get inherited resource or engine class as ClassType
 func get_type_parent() -> Reference:
-	var scene := res as PackedScene
-	if scene.path_exists():
-		return get_scene_parent()
-	var ret = get_script_parent()
-	if ret.path_exists():
+	var ret = get_scene_parent()
+	if ret.is_valid():
+		return ret
+	ret = get_script_parent()
+	if ret.is_valid():
 		return ret
 	return get_engine_parent()
 
@@ -421,6 +423,7 @@ func get_class_list() -> PoolStringArray:
 func get_deep_class_list() -> PoolStringArray:
 	_fetch_deep_type_map()
 	var class_list := PoolStringArray(_deep_type_map.keys())
+	class_list.append_array(PoolStringArray(get_engine_class_list()))
 	return class_list
 
 # Generate a list of all engine and resource names
@@ -442,6 +445,7 @@ static func static_get_class_list() -> PoolStringArray:
 static func static_get_deep_class_list() -> PoolStringArray:
 	var _deep_type_map = _get_deep_type_map()
 	var class_list := PoolStringArray(_deep_type_map.keys())
+	class_list.append_array(static_get_engine_class_list())
 	return class_list
 
 func is_object_instance_of(p_object) -> bool:
@@ -475,6 +479,9 @@ static func static_is_type(p_type, p_other, p_map: Dictionary = {}) -> bool:
 	var map = {}
 	if p_map.empty():
 		map = _get_script_map()
+	else:
+		map = p_map
+	
 	match typeof(p_type):
 		# static_is_type(<string>, <something>)
 		TYPE_STRING:
@@ -491,7 +498,7 @@ static func static_is_type(p_type, p_other, p_map: Dictionary = {}) -> bool:
 			# static_is_type("MyTypeScn", "MyTypeScn")
 			var res_type := _convert_name_to_res(p_type, map)
 			if res_type:
-				return static_is_type(res_type, map)
+				return static_is_type(res_type, p_other, map)
 			
 			return false
 

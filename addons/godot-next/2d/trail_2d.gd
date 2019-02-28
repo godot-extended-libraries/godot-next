@@ -26,14 +26,14 @@ class_name Trail2D, "../icons/icon_trail_2d.svg"
 ##### CONSTANTS #####
 
 enum Persistance {
-	PERSIST_OFF,        # Do not persist. Remove all points after the trail_length.
-	PERSIST_ALWAYS,     # Always persist. Do not remove any points.
-	PERSIST_CONDITIONAL # Sometimes persist. Choose an algorithm for when to add and remove points.
+	OFF,        # Do not persist. Remove all points after the trail_length.
+	ALWAYS,     # Always persist. Do not remove any points.
+	CONDITIONAL # Sometimes persist. Choose an algorithm for when to add and remove points.
 }
 
-enum ConditionalPersistanceOptions {
-	PERSIST_COND_ON_MOVEMENT, # Add points during movement and remove points when not moving.
-	PERSIST_COND_CUSTOM       # Override _should_grow() and _should_shrink() to define when to add/remove points.
+enum PersistWhen {
+	ON_MOVEMENT, # Add points during movement and remove points when not moving.
+	CUSTOM       # Override _should_grow() and _should_shrink() to define when to add/remove points.
 }
 
 ##### PROPERTIES #####
@@ -46,9 +46,9 @@ export var target_path: NodePath = @".." setget set_target_path
 # If not persisting, the number of points that should be allowed in the trail
 export var trail_length: int = 10
 # To what degree the trail should remain in existence before automatically removing points.
-export(int, "Off", "Always", "Conditional") var persistance: int = PERSIST_OFF
+export(int, "Off", "Always", "Conditional") var persistance: int = Persistance.OFF
 # During conditional persistance, which persistance algorithm to use
-export(int, "On Movement", "Custom") var persistance_condition: int = PERSIST_COND_ON_MOVEMENT
+export(int, "On Movement", "Custom") var persistance_condition: int = PersistWhen.ON_MOVEMENT
 # During conditional persistance, how many points to remove per frame
 export var degen_rate: int = 1
 # If true, automatically set z_index to be one less than the 'target'
@@ -83,16 +83,16 @@ func _notification(p_what: int):
 func _process(delta: float):
 	if target:
 		match persistance:
-			PERSIST_OFF:
+			Persistance.OFF:
 				add_point(target.global_position)
 				while get_point_count() > trail_length:
 					remove_point(0)
-			PERSIST_ALWAYS:
+			Persistance.ALWAYS:
 				add_point(target.global_position)
 				pass
-			PERSIST_CONDITIONAL:
+			Persistance.CONDITIONAL:
 				match persistance_condition:
-					PERSIST_COND_ON_MOVEMENT:
+					PersistWhen.ON_MOVEMENT:
 						var moved: bool = get_point_position(get_point_count()-1) != target.global_position if get_point_count() else false
 						if not get_point_count() or moved:
 							add_point(target.global_position)
@@ -100,7 +100,7 @@ func _process(delta: float):
 							#warning-ignore:unused_variable
 							for i in range(degen_rate):
 								remove_point(0)
-					PERSIST_COND_CUSTOM:
+					PersistWhen.CUSTOM:
 						if _should_grow():
 							add_point(target.global_position)
 						if _should_shrink():

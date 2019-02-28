@@ -19,50 +19,50 @@ enum TargetTypes {
 }
 
 static func mk_hard_file(p_target: String, p_linkpath: String = "") -> int:
-	return _make_link(p_target, p_linkpath, FILE, HARD)
+	return _make_link(p_target, p_linkpath, TargetTypes.FILE, LinkTypes.HARD)
 
 static func mk_soft_file(p_target: String, p_linkpath: String = "") -> int:
-	return _make_link(p_target, p_linkpath, FILE, SOFT)
+	return _make_link(p_target, p_linkpath, TargetTypes.FILE, LinkTypes.SOFT)
 
 static func mk_hard_dir(p_target: String, p_linkpath: String = "") -> int:
-	return _make_link(p_target, p_linkpath, DIR, HARD)
+	return _make_link(p_target, p_linkpath, TargetTypes.DIR, LinkTypes.HARD)
 
 static func mk_soft_dir(p_target: String, p_linkpath: String = "") -> int:
-	return _make_link(p_target, p_linkpath, DIR, SOFT)
+	return _make_link(p_target, p_linkpath, TargetTypes.DIR, LinkTypes.SOFT)
 
 static func mk_windows_junction(p_target: String, p_linkpath: String = "") -> int:
-	return _make_link(p_target, p_linkpath, WINDOWS_JUNCTION, SOFT)
+	return _make_link(p_target, p_linkpath, TargetTypes.WINDOWS_JUNCTION, LinkTypes.SOFT)
 
-static func _make_link(p_target: String, p_linkpath: String = "", p_target_type = FILE, p_link_type: int = SOFT) -> int:
+static func _make_link(p_target: String, p_linkpath: String = "", p_target_type = TargetTypes.FILE, p_link_type: int = LinkTypes.SOFT) -> int:
 	var params := PoolStringArray()
 	var dir := Directory.new()
 	var output := []
 	var target := ProjectSettings.globalize_path(p_target)
 	var linkpath := ProjectSettings.globalize_path(p_linkpath)
 	match p_target_type:
-		FILE:
+		TargetTypes.FILE:
 			if not dir.file_exists(target):
 				return ERR_FILE_NOT_FOUND
-		DIR, WINDOWS_JUNCTION:
+		TargetTypes.DIR, TargetTypes.WINDOWS_JUNCTION:
 			if not dir.dir_exists(target):
 				return ERR_FILE_NOT_FOUND
 	match OS.get_name():
 		"Windows":
 			match p_link_type:
-				SOFT:
+				LinkTypes.SOFT:
 					pass
-				HARD:
+				LinkTypes.HARD:
 					params.append("/H")
 				_:
 					printerr("Unknown link type passed to FileSystemLink.make_link: ", p_link_type)
 					return ERR_INVALID_PARAMETER
 
 			match p_target_type:
-				FILE:
+				TargetTypes.FILE:
 					pass
-				DIR:
+				TargetTypes.DIR:
 					params.append("/D")
-				WINDOWS_JUNCTION:
+				TargetTypes.WINDOWS_JUNCTION:
 					params.append("/J")
 				_:
 					printerr("Unknown target type passed to FileSystemLink.make_link: ", p_target_type)
@@ -74,20 +74,20 @@ static func _make_link(p_target: String, p_linkpath: String = "", p_target_type 
 			return OK
 		"X11", "OSX":
 			match p_link_type:
-				SOFT:
+				LinkTypes.SOFT:
 					params.append("-s")
-				HARD:
+				LinkTypes.HARD:
 					pass
 				_:
 					printerr("Unknown link type passed to FileSystemLink.make_link", p_link_type)
 					return ERR_INVALID_PARAMETER
 			
 			match p_target_type:
-				FILE:
+				TargetTypes.FILE:
 					pass
-				DIR:
+				TargetTypes.DIR:
 					params.append("-d")
-				WINDOWS_JUNCTION:
+				TargetTypes.WINDOWS_JUNCTION:
 					printerr("Junctions are a Windows feature")
 					return ERR_INVALID_PARAMETER
 				_:
