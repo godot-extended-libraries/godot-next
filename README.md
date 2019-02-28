@@ -16,7 +16,7 @@ If you like the project, please star it. If you'd like to support it's developme
 
 1. Create or open a project.
 
-2. Go to the Asset Library tab, search for "Godot NExt" and install the plugin.
+2. Download the repo from GitHub directly. I don't bother updating the AssetLib version anymore. ~~Go to the Asset Library tab, search for "Godot NExt" and install the plugin.~~
 
 3. Open Project Settings and go to the Plugins tab.
 
