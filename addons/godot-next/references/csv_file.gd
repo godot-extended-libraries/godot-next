@@ -90,6 +90,7 @@ func load(p_filepath: String) -> int:
 		for a_header in _headers:
 			_map[a_header] = []
 	
+	#warning-ignore:unused_variable
 	var line: String
 	while not f.eof_reached():
 		var row = _parse_line(f.get_line())

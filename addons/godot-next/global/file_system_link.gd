@@ -56,7 +56,7 @@ static func _make_link(p_target: String, p_linkpath: String = "", p_target_type 
 				_:
 					printerr("Unknown link type passed to FileSystemLink.make_link: ", p_link_type)
 					return ERR_INVALID_PARAMETER
-
+			#warning-ignore:unreachable_code
 			match p_target_type:
 				TargetTypes.FILE:
 					pass
@@ -70,6 +70,7 @@ static func _make_link(p_target: String, p_linkpath: String = "", p_target_type 
 
 			params.append(linkpath)
 			params.append(target)
+			#warning-ignore:return_value_discarded
 			OS.execute("mklink", params, true, output)
 			return OK
 		"X11", "OSX":
@@ -96,6 +97,7 @@ static func _make_link(p_target: String, p_linkpath: String = "", p_target_type 
 
 			params.append(target)
 			params.append(linkpath)
+			#warning-ignore:return_value_discarded
 			OS.execute("ln", params, true, output)
 			return OK
 		_:
