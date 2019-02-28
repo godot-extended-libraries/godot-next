@@ -19,10 +19,10 @@
 #     print(ct.name) # prints engine or script class name
 #     print(ct.to_string()) # prints name or, if an anonymous resource, a PascalCase version of the filename
 # - Type Checks:
-#     if ClassType.static_object_is(MyNode, node): # static object_is() method for comparisons.
-#     if ClassType.static_type_is(MyNode, "Node"): # static type_is() method for comparisons.
-#     if ct.type_is("Node"): # non-static `type_is`. Assumes first parameter from the ct instance.
-#     if ct.object_is(node): # non-static `object_is`. Assumes first parameter from the ct instance.
+#     if ClassType.static_is_object_instance_of(MyNode, node): # static is_object_instance_of() method for comparisons.
+#     if ClassType.static_is_type(MyNode, "Node"): # static is_type() method for comparisons.
+#     if ct.is_type("Node"): # non-static `is_type`. Assumes first parameter from the ct instance.
+#     if ct.is_object_instance_of(node): # non-static `is_object_instance_of`. Assumes first parameter from the ct instance.
 #     Note:
 #     - Must use Strings for engine classes
 #     - Must use PackedScene instances for scenes
@@ -195,14 +195,14 @@ func _get_map() -> Dictionary:
 	return map
 
 # Is this ClassType the same as or does it inherit another class name/resource?
-func type_is(p_other) -> bool:
+func is_type(p_other) -> bool:
 	match _source:
 		Source.NONE:
 			return false
 		Source.ENGINE:
 			if typeof(p_other) == TYPE_OBJECT and p_other.get_script() == get_script():
-				return static_type_is(name, p_other.name, _get_map())
-			return static_type_is(name, p_other, _get_map())
+				return static_is_type(name, p_other.name, _get_map())
+			return static_is_type(name, p_other, _get_map())
 	if typeof(p_other) == TYPE_OBJECT:
 		match p_other.get_class():
 			"Script", "PackedScene":
@@ -210,13 +210,13 @@ func type_is(p_other) -> bool:
 			_:
 				if p_other.get_script() == get_script():
 					if res:
-						return static_type_is(res, p_other.res, _get_map())
-					return static_type_is(name, p_other.name, _get_map())
+						return static_is_type(res, p_other.res, _get_map())
+					return static_is_type(name, p_other.name, _get_map())
 
 				var other = from_object(p_other)
 				if other.res:
-					return static_type_is(res, other.res, _get_map())
-	return static_type_is(res, p_other, _get_map())
+					return static_is_type(res, other.res, _get_map())
+	return static_is_type(res, p_other, _get_map())
 
 # Instantiate whatever type the ClassType refers to
 func instance() -> Object:
@@ -387,7 +387,7 @@ func get_inheritors_list() -> PoolStringArray:
 	var class_list = get_class_list()
 	var ret := PoolStringArray()
 	for a_class in class_list:
-		if static_type_is(a_class, name, _get_map()):
+		if static_is_type(a_class, name, _get_map()):
 			ret.append(a_class)
 	return ret
 
@@ -397,7 +397,7 @@ func get_deep_inheritors_list() -> PoolStringArray:
 	var class_list := PoolStringArray(_deep_type_map.keys())
 	var ret := PoolStringArray()
 	for a_class in class_list:
-		if static_type_is(a_class, name, _get_map()):
+		if static_is_type(a_class, name, _get_map()):
 			ret.append(a_class)
 	return ret
 
@@ -444,12 +444,12 @@ static func static_get_deep_class_list() -> PoolStringArray:
 	var class_list := PoolStringArray(_deep_type_map.keys())
 	return class_list
 
-func object_is(p_object) -> bool:
+func is_object_instance_of(p_object) -> bool:
 	var ct = from_object(p_object)
-	return type_is(ct)
+	return is_type(ct)
 
 # Tests whether an object constitutes a class name or resource
-static func static_object_is(p_object, p_type, p_map: Dictionary = {}) -> bool:
+static func static_is_object_instance_of(p_object, p_type, p_map: Dictionary = {}) -> bool:
 	if not p_object or typeof(p_object) != TYPE_OBJECT:
 		return false
 	var node := p_object as Node
@@ -457,53 +457,53 @@ static func static_object_is(p_object, p_type, p_map: Dictionary = {}) -> bool:
 	if map.empty():
 		map = _get_script_map()
 	if node and node.filename:
-		return static_type_is(load(node.filename), p_type, map)
+		return static_is_type(load(node.filename), p_type, map)
 	var script := p_object.get_script() as Script
 	if script:
-		return static_type_is(script, p_type, map)
-	return static_type_is(p_object.get_class(), p_type, map)
+		return static_is_type(script, p_type, map)
+	return static_is_type(p_object.get_class(), p_type, map)
 
 # Tests whether a class name or resource constitutes another
 # String names and Resource instances are interchangeable
-# Ex. static_type_is(MyNode, "Node") == static_type_is("MyNode", "Node"), etc.
+# Ex. static_is_type(MyNode, "Node") == static_is_type("MyNode", "Node"), etc.
 # PackedScenes are also supported.
 # Note that scenes are capable of inheriting from divergent
 # script and scene inheritance hierarchies simultaneously
-static func static_type_is(p_type, p_other, p_map: Dictionary = {}) -> bool:
+static func static_is_type(p_type, p_other, p_map: Dictionary = {}) -> bool:
 	if not p_type:
 		return false
 	var map = {}
 	if p_map.empty():
 		map = _get_script_map()
 	match typeof(p_type):
-		# static_type_is(<string>, <something>)
+		# static_is_type(<string>, <something>)
 		TYPE_STRING:
 
-			# static_type_is("Node", "Node")
+			# static_is_type("Node", "Node")
 			if ClassDB.class_exists(p_type) and ClassDB.class_exists(p_other):
 				return ClassDB.is_parent_class(p_type, p_other)
 
-			# static_type_is("MyType", "Node")
-			# static_type_is("MyType", "MyType")
-			# static_type_is("MyType", "MyTypeScn")
-			# static_type_is("MyTypeScn", "Node")
-			# static_type_is("MyTypeScn", "MyType")
-			# static_type_is("MyTypeScn", "MyTypeScn")
+			# static_is_type("MyType", "Node")
+			# static_is_type("MyType", "MyType")
+			# static_is_type("MyType", "MyTypeScn")
+			# static_is_type("MyTypeScn", "Node")
+			# static_is_type("MyTypeScn", "MyType")
+			# static_is_type("MyTypeScn", "MyTypeScn")
 			var res_type := _convert_name_to_res(p_type, map)
 			if res_type:
-				return static_type_is(res_type, map)
+				return static_is_type(res_type, map)
 			
 			return false
 
 		TYPE_OBJECT:
 
 			match typeof(p_other):
-				# static_type_is(MyType, "Node")
-				# static_type_is(MyType, "MyType")
-				# static_type_is(MyType, "MyTypeScn")
-				# static_type_is(MyTypeScn, "Node")
-				# static_type_is(MyTypeScn, "MyType")
-				# static_type_is(MyTypeScn, "MyTypeScn")
+				# static_is_type(MyType, "Node")
+				# static_is_type(MyType, "MyType")
+				# static_is_type(MyType, "MyTypeScn")
+				# static_is_type(MyTypeScn, "Node")
+				# static_is_type(MyTypeScn, "MyType")
+				# static_is_type(MyTypeScn, "MyTypeScn")
 				TYPE_STRING:
 
 					if ClassDB.class_exists(p_other):
@@ -514,14 +514,14 @@ static func static_type_is(p_type, p_other, p_map: Dictionary = {}) -> bool:
 
 					var res_other := _convert_name_to_res(p_other, map)
 					if res_other:
-						return static_type_is(p_type, res_other, map)
+						return static_is_type(p_type, res_other, map)
 
-				# static_type_is(MyType, MyType)
-				# static_type_is(MyType, MyTypeScn)
-				# static_type_is(MyType, node) # reversed scenario (is the node a MyType)
-				# static_type_is(MyTypeScn, MyType)
-				# static_type_is(MyTypeScn, MyTypeScn)
-				# static_type_is(MyTypeScn, node) # reversed scenario (is the node a MyTypeScene)
+				# static_is_type(MyType, MyType)
+				# static_is_type(MyType, MyTypeScn)
+				# static_is_type(MyType, node) # reversed scenario (is the node a MyType)
+				# static_is_type(MyTypeScn, MyType)
+				# static_is_type(MyTypeScn, MyTypeScn)
+				# static_is_type(MyTypeScn, node) # reversed scenario (is the node a MyTypeScene)
 				TYPE_OBJECT:
 
 					if p_type is PackedScene:
