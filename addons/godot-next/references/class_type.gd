@@ -28,6 +28,7 @@
 #     - Must use PackedScene instances for scenes
 #     - Must use Script instances for anonymous scripts
 #     - Both Strings and Script instances available for script classes
+#     - If the deep type map has been initialized (refresh_deep_type_map()), then namified paths can be used for anonymous scripts and scenes too.
 # - Validity Checks:
 #     if ct.class_exists() # is named type (engine or script class)
 #     if ct.path_exsts() # is a resource (script or scene)
