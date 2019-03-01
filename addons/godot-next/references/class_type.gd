@@ -94,6 +94,7 @@ var _deep_type_map: Dictionary = {}
 var _deep_path_map: Dictionary = {}
 
 var _script_map_dirty: bool = true
+var _is_filesystem_connected: bool = false
 
 ##### NOTIFICATIONS #####
 
@@ -291,6 +292,14 @@ func is_valid() -> bool:
 func is_non_class_res() -> bool:
 	return path_exists() and not class_exists()
 
+# Cast to Script
+func as_script() -> Script:
+	return res as Script
+
+# Cast to PackedScene
+func as_scene() -> PackedScene:
+	return res as PackedScene
+
 # get inherited engine class as ClassType
 func get_engine_parent() -> Reference:
 	var ret := _new()
@@ -303,12 +312,20 @@ func get_engine_parent() -> Reference:
 # get inherited script resource as ClassType
 func get_script_parent() -> Reference:
 	var ret := _new()
-	if _source == Source.SCRIPT:
-		var base_script = (res as Script).get_base_script()
-		if base_script:
-			ret.path = base_script.resource_path
-	elif _source == Source.ENGINE:
+	if _source == Source.ENGINE:
 		ret.name = ""
+	elif res:
+		var scene := res as PackedScene
+		if scene:
+			var script := _scene_get_root_script(scene)
+			ret._init_from_object(script)
+		else:
+			var script := res as Script
+			if script:
+				ret._init_from_object(script.get_base_script())
+			else:
+				ret.path("")
+
 	return ret
 
 # get inherited scene resource as ClassType
@@ -594,7 +611,7 @@ func _init_from_name(p_name: String) -> void:
 		_source = Source.ENGINE
 		return
 	_fetch_script_map()
-	if not _deep_type_map.empty() and _deep_type_map.has(p_name):
+	if _deep_type_map.has(p_name):
 		path = _deep_type_map[p_name].path
 		res = load(path)
 		_source = Source.ANONYMOUS
@@ -656,14 +673,16 @@ func _init_from_object(p_object: Object) -> void:
 		_init_from_path(s.resource_path)
 	if p_object is PackedScene or p_object is Script:
 		_init_from_path((p_object as Resource).resource_path)
-	_init_from_name(p_object.get_class())
+	if not path and not name:
+		_init_from_name(p_object.get_class())
 	_connect_script_updates()
 
 func _connect_script_updates() -> void:
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() and not _is_filesystem_connected:
 		var ep = EditorPlugin.new()
 		ep.get_editor_interface().get_resource_filesystem().connect("filesystem_changed", self, "set", ["_script_map_dirty", true])
 		ep.free()
+		_is_filesystem_connected = true
 
 # Utility method to re-populate the script maps if not yet initialized.
 func _fetch_script_map() -> void:
@@ -698,7 +717,7 @@ func _fetch_deep_type_map() -> void:
 
 # Same as _build_path_map, but it includes all resources
 func _build_deep_path_map() -> void:
-	_deep_path_map = _get_deep_path_map(_script_map)
+	_deep_path_map = _get_deep_path_map(_deep_type_map)
 
 func _get_deep_path_map(p_deep_type_map: Dictionary) -> Dictionary:
 	var _deep_path_map = {}
@@ -748,6 +767,7 @@ static func _get_deep_type_map() -> Dictionary:
 
 						var existing_name = _path_map[a_path] if _path_map.has(a_path) else ""
 						var a_name = namify_path(file_name)
+						a_name = a_name.replace("2d", "2D").replace("3d", "3D")
 
 						if data.has(existing_name) and existing_name == a_name:
 							file_name = dir.get_next()
