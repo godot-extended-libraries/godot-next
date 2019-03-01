@@ -395,7 +395,7 @@ func get_inheritors_list() -> PoolStringArray:
 	var class_list = get_class_list()
 	var ret := PoolStringArray()
 	for a_class in class_list:
-		if static_is_type(a_class, name, _get_map()):
+		if a_class != name and static_is_type(a_class, name, _get_map()):
 			ret.append(a_class)
 	return ret
 
@@ -405,7 +405,7 @@ func get_deep_inheritors_list() -> PoolStringArray:
 	var class_list := PoolStringArray(_deep_type_map.keys())
 	var ret := PoolStringArray()
 	for a_class in class_list:
-		if static_is_type(a_class, name, _get_map()):
+		if a_class != name and static_is_type(a_class, name, _get_map()):
 			ret.append(a_class)
 	return ret
 
@@ -660,9 +660,10 @@ func _init_from_object(p_object: Object) -> void:
 	_connect_script_updates()
 
 func _connect_script_updates() -> void:
-	var ep = EditorPlugin.new()
-	ep.get_editor_interface().get_editor_filesystem().connect("filesystem_changed", self, "set", ["_script_map_dirty", true])
-	ep.free()
+	if Engine.is_editor_hint():
+		var ep = EditorPlugin.new()
+		ep.get_editor_interface().get_resource_filesystem().connect("filesystem_changed", self, "set", ["_script_map_dirty", true])
+		ep.free()
 
 # Utility method to re-populate the script maps if not yet initialized.
 func _fetch_script_map() -> void:
