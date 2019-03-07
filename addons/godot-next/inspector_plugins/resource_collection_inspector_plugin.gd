@@ -1,7 +1,9 @@
 # author: xdgamestudios
 # license: MIT
-# description: This script is injected into the editor upon loading the plugin,
-#              allowing for resource collections GUI to work in the inspector.
+# description: This script is injected into the editor upon loading the plugin.
+#              Generates a custom toolbar for ResourceCollection property lists.
+# deps:
+# - ClassType
 tool
 extends EditorInspectorPlugin
 
