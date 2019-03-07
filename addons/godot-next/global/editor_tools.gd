@@ -1,9 +1,6 @@
 # EditorTools
 # author: willnationsdev
 # brief_description: A utility for any features useful in the context of the Editor
-# attributions:
-# - 'is_in_edited_scene' sourced from @Zylann
-
 tool
 extends Reference
 class_name EditorTools

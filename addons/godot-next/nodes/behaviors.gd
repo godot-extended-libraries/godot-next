@@ -1,25 +1,23 @@
 # author: xdgamestudios
 # license: MIT
-# description: Provides a behavior system API for the nodes. 
-# todo: Refactor code in general to clean and improve performance
+# description: Manages a ResourceSet of Behavior resources and delegates Node callbacks to each instance.
+#              As a ResourceSet, only one Behavior of any given type is allowed on a single Behaviors node.
+# deps:
+# - ResourceSet
+# - PropertyInfo
+# - Behavior
+# - ClassType
 # usage:
 # - Creating:
 #     behaviors = Behaviors.new()
 # - Adding Behaviors:
-#     behaviors.add_behavior(MyBehavior) # Returns null if the user assigns an invalid Behavior class.
-#     Note:
-#     - Allows only one behavior of each type.
-#     - If behavior already exists pre-existing Behavior is returned.
+#     behaviors.add_behavior(MyBehavior) # Returns a new or pre-existing instance of the Behavior or null if given an invalid Behavior script.
 # - Checking Behaviors:
-#     behaviors.has_behavior(MyBehavior) # Returns true if behavior exists within the collection.
+#     behaviors.has_behavior(MyBehavior) # Returns true if the Behavior exists in the collection.
 # - Retrieving Behaviors:
-#     behaviors.get_behavior(MyBehavior) # Returns the existing instance of the behavior type.
-#     Note:
-#     - If behavior doesn't exist in the collection returns null.
+#     behaviors.get_behavior(MyBehavior) # Returns the Behavior instance of the given type or null if not in the collection.
 # - Removing Behaviors:
-#     behaviors.remove_behavior(MyBehavior) # Removes the Behavior from the collection.
-#     Note:
-#     - Returns true if successful. Else, returns false.
+#     behaviors.remove_behavior(MyBehavior) # Removes the Behavior from the collection. Returns true if successful. Else, returns false.
 tool
 extends Node
 class_name Behaviors
@@ -173,3 +171,5 @@ func _check_for_empty_callbacks() -> void:
 func _on_behavior_script_change(p_behavior: Behavior) -> void:
 	_remove_from_callbacks(p_behavior)
 	_add_to_callbacks(p_behavior)
+
+##### SETTERS AND GETTERS #####

@@ -1,7 +1,7 @@
 # author: xdgamestudios
 # license: MIT
-# description: A class abstraction, for building properties to be rendered to the
-#              inspector using the method _get_property_list()
+# description: A wrapper and utility class for generating PropertyInfo Dictionaries, of which Object._get_property_list()
+#              returns an Array.
 tool
 extends Reference
 class_name PropertyInfo

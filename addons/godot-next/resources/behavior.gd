@@ -23,14 +23,12 @@ class_name Behavior
 
 ##### CONSTANTS #####
 
-##### EXPORTS #####
-
 ##### PROPERTIES #####
 
-# `owner` is a reference to the Behaviors node.
+# A reference to the owning Behaviors node.
 var owner = null setget _set_owner, get_owner
 
-# `enabled` allows to toggle on and off the bahvior processing.
+# Allows users to toggle processing callbacks on the owner.
 var _enabled: bool = true setget set_enabled, get_enabled
 
 ##### NOTIFICATIONS #####
@@ -39,16 +37,21 @@ var _enabled: bool = true setget set_enabled, get_enabled
 
 ##### VIRTUALS #####
 
+# Should only override if one wishes to create their own abstract Behaviors
+# By default, the absence of this method is interpreted as a non-abstract type!
+static func is_abstract() -> bool:
+	return true
+
 ##### PUBLIC METHODS #####
 
+# Sets up the owner instance on the Behavior.
+# 'awake' name is used to match the convention in Unity's MonoBehaviour class.
 func awake(p_owner) -> void:
 	owner = p_owner
 
+# Returns an instance of the stored Behavior resource.
 func get_behavior(p_type: Script) -> Behavior:
 	return owner.get_behavior(p_type)
-
-static func is_abstract() -> bool:
-	return true
 
 ##### PRIVATE METHODS #####
 
