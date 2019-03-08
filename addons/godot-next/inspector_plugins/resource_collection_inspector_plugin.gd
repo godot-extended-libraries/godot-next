@@ -19,7 +19,7 @@ const ADD_ICON = preload("res://addons/godot-next/icons/icon_add.svg")
 
 #warning-ignore:unused_argument
 func can_handle(p_object) -> bool:
-	return true
+	return p_object is ResourceCollection
 
 #warning-ignore:unused_argument
 func parse_property(p_object, p_type, p_path, p_hint, p_hint_text, p_usage) -> bool:
@@ -51,7 +51,7 @@ func _generate_gui(p_object: Object, p_path: String, p_type_path: String) -> Con
 	var button := _generate_add_button()
 	
 	#warning-ignore:return_value_discarded
-	button.connect("pressed", self, "_on_add_button_pressed", [p_object, p_path, dropdown])
+	button.connect("pressed", self, "_on_add_button_pressed", [p_object, dropdown])
 
 	dropdown.size_flags_horizontal = HBoxContainer.SIZE_EXPAND_FILL
 	
@@ -77,12 +77,12 @@ func _generate_add_button() -> Control:
 
 ##### CONNECTIONS #####
 
-func _on_add_button_pressed(p_object: Object, p_path: String, p_dropdown: OptionButton):
+func _on_add_button_pressed(p_object: Object, p_dropdown: OptionButton):
 	var index := p_dropdown.get_selected_id()
 	var script: Script = p_dropdown.get_item_metadata(index) as Script
 	
 	if p_object.has_method("_add_element"):
-		p_object.call("_add_element", p_path, script)
+		p_object.call("_add_element", script)
 	else:
-		push_warning("The ResourceCollection at <%s> does not implement '_add_element(variable: String, script: Script)'." % p_object.get_script().resource_path)
+		push_warning("The ResourceCollection at <%s> does not implement '_add_element(script: Script)'." % p_object.get_script().resource_path)
 	p_object.property_list_changed_notify()
