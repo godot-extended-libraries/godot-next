@@ -28,7 +28,7 @@ class_name Behavior
 ##### PROPERTIES #####
 
 # A reference to the owning Behaviors node.
-var owner = null setget set_owner, get_owner
+var owner: Node = null setget set_owner, get_owner
 
 # Allows users to toggle processing callbacks on the owner.
 var enabled: bool = true setget set_enabled, get_enabled
@@ -64,12 +64,6 @@ func get_behavior(p_type: Script) -> Behavior:
 
 ##### PRIVATE METHODS #####
 
-# Sets up the owner instance on the Behavior.
-func __awake(p_owner) -> void:
-	owner = p_owner
-	if has_method("_awake"):
-		_awake()
-
 ##### CONNECTIONS #####
 
 ##### SETTERS AND GETTERS #####
@@ -78,17 +72,19 @@ func set_enabled(p_enable: bool) -> void:
 	if enabled == p_enable:
 		return
 	enabled = p_enable
-	#warning-ignore:standalone_expression
-	_on_enable() if p_enable else _on_disable()
-	#warning-ignore:standalone_expression
-	owner._add_to_callbacks() if p_enable else owner._remove_from_callbacks()
+	if p_enable:
+		_on_enable()
+		owner._add_to_callbacks()
+	else:
+		_on_disable()
+		owner._remove_from_callbacks()
 
 func get_enabled() -> bool:
 	return enabled
 
-func set_owner(p_owner) -> void:
+func set_owner(p_owner: Node) -> void:
     assert p_owner
     owner = p_owner
 
-func get_owner():
+func get_owner() -> Node:
 	return owner
