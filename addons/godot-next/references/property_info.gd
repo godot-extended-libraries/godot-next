@@ -47,10 +47,10 @@ static func from_dict(p_dict: Dictionary) -> PropertyInfo:
 	return load(SELF_PATH).new(name, type, hint, hint_string, usage)
 
 static func new_nil(p_name: String) -> PropertyInfo:
-	return load(SELF_PATH).new(p_name, 0, 0, "", PROPERTY_USAGE_EDITOR)
+	return load(SELF_PATH).new(p_name, TYPE_NIL, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR)
 
 static func new_group(p_name: String, p_prefix: String = "") -> PropertyInfo:
-	return load(SELF_PATH).new(p_name, 0, 0, p_prefix, PROPERTY_USAGE_GROUP)
+	return load(SELF_PATH).new(p_name, TYPE_NIL, PROPERTY_HINT_NONE, p_prefix, PROPERTY_USAGE_GROUP)
 
 static func new_array(p_name: String, p_hint: int = PROPERTY_HINT_NONE, p_hint_string: String = "", p_usage: int = PROPERTY_USAGE_DEFAULT) -> PropertyInfo:
 	return load(SELF_PATH).new(p_name, TYPE_ARRAY, p_hint, p_hint_string, p_usage)
