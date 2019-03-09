@@ -17,6 +17,14 @@
 #     elements.get_element(MyResource) # Returns the element instance of the given type or null if not in the collection.
 # - Removing elements:
 #     elements.remove_element(MyResource) # Removes the element from the collection. Returns true if successful. Else, returns false.
+# notes:
+#     - Public interface of each stored Resource type:
+#         - var owner: Node
+#         - func get_enabled() -> bool
+#     - Initialization Sequence:
+#         1. _awake() called during _enter_tree() after CallbackDelegator initializes owner (for Unity familiarity).
+#         2. _enter_tree() called immediately after (so they are virtually aliases for each other)
+#         3. _ready() called during _ready().
 tool
 extends Node
 class_name CallbackDelegator
@@ -49,7 +57,7 @@ func _ready() -> void:
 func _enter_tree() -> void:
 	var elements = _elements.get_data().values()
 	for an_element in elements:
-		if not an_element.get_owner():
+		if not an_element.owner:
 			_initialize_element(an_element)
 	_check_for_empty_callbacks()
 	
@@ -124,7 +132,7 @@ func _handle_notification(p_name: String, p_param = null) -> void:
 			an_element.call(p_name, p_param)
 
 func _initialize_element(p_element: Resource) -> void:
-	p_element.__awake(self)
+	__awake(p_element)
 	#warning-ignore:return_value_discarded
 	p_element.connect("script_changed", self, "_refresh_callbacks", [p_element])
 	_add_to_callbacks(p_element)
@@ -152,6 +160,12 @@ func _check_for_empty_callbacks() -> void:
 				set_process_unhandled_input(not _callbacks[a_callback].empty())
 			"_unhandled_key_input":
 				set_process_unhandled_key_input(not _callbacks[a_callback].empty())
+
+# Sets up the owner instance on the Behavior.
+func __awake(p_element: Resource) -> void:
+	p_element.owner = self
+	if p_element.has_method("_awake"):
+		p_element._awake()
 
 ##### CONNECTIONS #####
 
