@@ -902,7 +902,7 @@ func get_path() -> String:
 func set_res(p_value: Resource) -> void:
 	if not p_value:
 		self.name = ""
-	_init_from_path(p_value.resource_path)
+	_init_from_object(p_value)
 
 func get_res() -> Resource:
 	return res
