@@ -54,7 +54,7 @@ func _get_property_list() -> Array:
 func _ready() -> void:
 	_handle_notification("_ready")
 
-func _enter_tree() -> void:
+func _enter_tree() -> void:	
 	var elements = _elements.get_data().values()
 	for an_element in elements:
 		if not an_element.owner:
@@ -64,7 +64,7 @@ func _enter_tree() -> void:
 	_handle_notification("_enter_tree")
 
 func _exit_tree() -> void:
-	_handle_notification("_enter_tree")
+	_handle_notification("_exit_tree")
 
 func _process(delta: float) -> void:
 	_handle_notification("_process", delta)
@@ -124,6 +124,8 @@ func remove_element(p_type: Script) -> bool:
 ##### PRIVATE METHODS #####
 
 func _handle_notification(p_name: String, p_param = null) -> void:
+	if Engine.editor_hint:
+		return
 	if not p_param:
 		for an_element in _callbacks[p_name]:
 			an_element.call(p_name)

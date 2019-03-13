@@ -27,13 +27,14 @@ func _init() -> void:
 	resource_name = COLLECTION_NAME
 
 func _get(p_property: String):
-	if p_property.begins_with(PREFIX):
-		return _data.get(p_property.lstrip(PREFIX), null)
+	if p_property.begins_with(DATA_PREFIX):
+		var key = _extract_name_from_path(p_property, DATA_PREFIX)
+		return _data.get(key, null)
 	return null
 
 func _set(p_property: String, p_value) -> bool:
-	if p_property.begins_with(PREFIX):
-		var key = p_property.lstrip(PREFIX)
+	if p_property.begins_with(DATA_PREFIX):
+		var key = _extract_name_from_path(p_property, DATA_PREFIX)
 		if not p_value:
 			#warning-ignore:return_value_discarded
 			_data.erase(key)
@@ -45,20 +46,6 @@ func _set(p_property: String, p_value) -> bool:
 				_data[key] = res
 		return true
 	return false
-
-func _get_property_list() -> Array:
-	var list := []
-	if not _type:
-		return list
-	
-	list.append(PropertyInfo.new_group(PREFIX, PREFIX).to_dict())
-	list.append(PropertyInfo.new_dictionary(PREFIX, PROPERTY_HINT_RESOURCE_TYPE, "#%s" % _type.get_path(), PROPERTY_USAGE_DEFAULT).to_dict())
-	if _data.empty():
-		list.append(PropertyInfo.new_nil(PREFIX + EMPTY_ENTRY).to_dict())
-	for a_typename in _data:
-		list.append(PropertyInfo.new_resource(PREFIX + a_typename, "", PROPERTY_USAGE_EDITOR).to_dict())
-	
-	return list
 
 ##### OVERRIDES #####
 
@@ -78,6 +65,15 @@ func _refresh_data() -> void:
 		if not _class_type.is_type(_type):
 			#warning-ignore:return_value_discarded
 			_data.erase(a_typename)
+
+func _export_data_group() -> Array:
+	var list := ._export_data_group()
+	list.append(PropertyInfo.new_storage_only("_data").to_dict())
+	if _data.empty():
+		list.append(PropertyInfo.new_nil(DATA_PREFIX + EMPTY_ENTRY).to_dict())
+	for a_typename in _data:
+		list.append(PropertyInfo.new_resource(DATA_PREFIX + a_typename, "", PROPERTY_USAGE_EDITOR).to_dict())
+	return list
 
 ##### VIRTUALS #####
 

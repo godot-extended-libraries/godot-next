@@ -60,3 +60,9 @@ static func new_dictionary(p_name: String, p_hint: int = PROPERTY_HINT_NONE, p_h
 
 static func new_resource(p_name: String, p_hint_string: String = "", p_usage: int = PROPERTY_USAGE_DEFAULT) -> PropertyInfo:
 	return load(SELF_PATH).new(p_name, TYPE_OBJECT, PROPERTY_HINT_RESOURCE_TYPE, p_hint_string, p_usage)
+
+static func new_editor_only(p_name: String):
+	return load(SELF_PATH).new(p_name, TYPE_NIL, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_SCRIPT_VARIABLE)
+
+static func new_storage_only(p_name: String):
+	return load(SELF_PATH).new(p_name, TYPE_NIL, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_SCRIPT_VARIABLE)
