@@ -1,3 +1,4 @@
+# CallbackDelegator
 # author: xdgamestudios
 # license: MIT
 # description: Manages a ResourceSet of resources and delegates Node callbacks to each instance.
@@ -29,10 +30,18 @@ tool
 extends Node
 class_name CallbackDelegator
 
+##### CLASSES #####
+
+##### SIGNALS #####
+
+##### CONSTANTS #####
+
 ##### PROPERTIES #####
 
+# The collection of Resources. Only one Resource of each type is allowed.
 var _elements: ResourceSet = ResourceSet.new()
 
+# The set of resource instances that have successfully registered themselves to each callback.
 var _callbacks: Dictionary = {
 	"_enter_tree" : {},
 	"_exit_tree" : {},
@@ -44,7 +53,8 @@ var _callbacks: Dictionary = {
 	"_unhandled_key_input" : {}
 }
 
-var _class_type: = ClassType.new()
+# Assists with inheritance checks and name identification of script classes.
+var _class_type: ClassType = ClassType.new()
 
 ##### NOTIFICATIONS #####
 
@@ -54,6 +64,7 @@ func _get_property_list() -> Array:
 func _ready() -> void:
 	_handle_notification("_ready")
 
+# Initialize every element and de-activate any non-essential CallbackDelegator notifications.
 func _enter_tree() -> void:	
 	var elements = _elements.get_data().values()
 	for an_element in elements:
@@ -81,10 +92,13 @@ func _unhandled_input(event: InputEvent) -> void:
 func _unhandled_key_input(event: InputEventKey) -> void:
 	_handle_notification("_unhandled_key_input", event)
 
+##### OVERRIDES #####
+
 ##### VIRTUALS #####
 
 ##### PUBLIC METHODS #####
 
+# Add an element to the CallbackDelegator. Does nothing if no base_type is assigned. See `set_base_type(...)`.
 func add_element(p_type: Script) -> Resource:
 	var elements = _elements.get_data()
 	
@@ -95,23 +109,25 @@ func add_element(p_type: Script) -> Resource:
 		return get_element(p_type)
 		
 	var element: Resource = p_type.new()
-	var element_name: String = _class_type.get_script_class()
 	
-	elements[element_name] = element
+	elements[_class_type.get_script_class()] = element
 	_initialize_element(element)
 	
 	return element
 
+# Return the element with the same type as p_type.
 func get_element(p_type: Script) -> Resource:
 	var elements = _elements.get_data()
 	_class_type.res = p_type
 	return elements.get(_class_type.get_script_class(), null)
 
+# Returns true if the element exists in the internal collection.
 func has_element(p_type: Script) -> bool:
 	var elements = _elements.get_data()
 	_class_type.res = p_type
 	return elements.has(_class_type.get_script_class())
 
+# Returns true if successfully able to remove the element from the internal collection. Else, returns false.
 func remove_element(p_type: Script) -> bool:
 	var elements = _elements.get_data()
 	var element = get_element(p_type)
@@ -121,34 +137,47 @@ func remove_element(p_type: Script) -> bool:
 		return elements.erase(_class_type.get_script_class())
 	return false
 
+# The order of returned Scripts is not deterministic
+func get_element_types() -> Array:
+	return _elements.get_data().keys()
+
+# The order of returned Resources is not deterministic
+func get_elements() -> Array:
+	return _elements.get_data().values()
+
 ##### PRIVATE METHODS #####
 
+# Helper method to facilitate delegation of the callback
 func _handle_notification(p_name: String, p_param = null) -> void:
 	if Engine.editor_hint:
 		return
-	if not p_param:
-		for an_element in _callbacks[p_name]:
-			an_element.call(p_name)
-	else:
+	if p_param:
 		for an_element in _callbacks[p_name]:
 			an_element.call(p_name, p_param)
+	else:
+		for an_element in _callbacks[p_name]:
+			an_element.call(p_name)
 
+# Setup the owner and initialization of the element. Ensure it updates its callbacks if the script is modified.
 func _initialize_element(p_element: Resource) -> void:
 	__awake(p_element)
 	#warning-ignore:return_value_discarded
 	p_element.connect("script_changed", self, "_refresh_callbacks", [p_element])
 	_add_to_callbacks(p_element)
 
+# Register necessary callbacks for the element.
 func _add_to_callbacks(p_element: Resource) -> void:
 	for a_callback in _callbacks:
 		if p_element.has_method(a_callback) and p_element.get_enabled():
 			_callbacks[a_callback][p_element] = null
 
+# Unregister all callbacks for the element.
 func _remove_from_callbacks(p_element: Resource) -> void:
 	for a_callback in _callbacks:
 		_callbacks[a_callback].erase(p_element)
 	_check_for_empty_callbacks()
 
+# Only delegate the call if a callback-implementing, enabled resource relies on it.
 func _check_for_empty_callbacks() -> void:
 	for a_callback in _callbacks:
 		match a_callback:
@@ -171,6 +200,7 @@ func __awake(p_element: Resource) -> void:
 
 ##### CONNECTIONS #####
 
+# Reset callback registrations in the event that the script is modified.
 func _on_element_script_change(p_element: Resource) -> void:
 	_remove_from_callbacks(p_element)
 	_add_to_callbacks(p_element)

@@ -1,3 +1,10 @@
+# InspectorControls
+# author: xdgamestudios
+# license: MIT
+# description: A collection of classes and factory methods for generating
+#              Controls oriented towards editing data. Useful for modifying
+#              the EditorInspector or generating your own in-game data-editing
+#              tools.
 extends Reference
 class_name InspectorControls
 
@@ -19,20 +26,37 @@ class DropdownAppender extends HBoxContainer:
 	func get_selected_meta():
 		return get_dropdown().get_selected_metadata()
 
-static func new_button(p_label: String, p_object = null, p_callback: String = "") -> Button:
+# Instantiates a Button. If toggle mode is set, p_object/p_callback will connect to its "toggled" signal. Else, "pressed".
+static func new_button(p_label: String, p_toggle_mode: bool = false, p_object: Object = null, p_callback: String = "") -> Button:
 	var button = Button.new()
 	button.text = p_label
 	button.name = "Button"
+	button.toggle_mode = p_toggle_mode
 	
 	if p_object and p_callback:
-		button.connect("pressed", p_object, p_callback)
+		if p_toggle_mode:
+			button.connect("toggled", p_object, p_callback)
+		else:
+			button.connect("pressed", p_object, p_callback)
 
 	return button
 
-static func new_tool_button(p_icon_name: String, p_object = null, p_callback: String = "") -> ToolButton:
-	return null
+# Instantiates a ToolButton. If toggle mode is set, p_object/p_callback will connect to its "toggled" signal. Else, "pressed".
+static func new_tool_button(p_icon: Texture, p_toggle_mode: bool = false, p_object: Object = null, p_callback: String = "") -> ToolButton:
+	var button = ToolButton.new()
+	button.icon = p_icon
+	button.name = "ToolButton"
+	button.toggle_mode = p_toggle_mode
+	
+	if p_object and p_callback:
+		if p_toggle_mode:
+			button.connect("toggled", p_object, p_callback)
+		else:
+			button.connect("pressed", p_object, p_callback)
 
-static func new_dropdown(p_elements: Dictionary, p_object = null, p_callback: String = "") -> OptionButton:
+	return button
+
+static func new_dropdown(p_elements: Dictionary, p_object: Object = null, p_callback: String = "") -> OptionButton:
 	var dropdown := OptionButton.new()
 	var index = 0
 	for a_label in p_elements:
@@ -47,7 +71,7 @@ static func new_dropdown(p_elements: Dictionary, p_object = null, p_callback: St
 	
 	return dropdown
 
-static func new_dropdown_appender(p_elements: Dictionary, p_object = null, p_callback: String = "") -> DropdownAppender:
+static func new_dropdown_appender(p_elements: Dictionary, p_object: Object = null, p_callback: String = "") -> DropdownAppender:
 	var dropdown_appender := DropdownAppender.new()
 	
 	var dropdown := new_dropdown(p_elements)

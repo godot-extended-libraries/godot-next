@@ -1,14 +1,20 @@
+# PropertyInfo
 # author: xdgamestudios
 # license: MIT
-# description: A wrapper and utility class for generating PropertyInfo Dictionaries, of which Object._get_property_list()
+# description: A wrapper and utility class for generating PropertyInfo
+#              Dictionaries, of which Object._get_property_list()
 #              returns an Array.
 tool
 extends Reference
 class_name PropertyInfo
 
+##### CLASSES #####
+
+##### SIGNALS #####
+
 ##### CONSTANTS #####
 
-const SELF_PATH := "res://addons/godot-next/references/property_info.gd"
+const SELF_PATH: String = "res://addons/godot-next/references/property_info.gd"
 
 ##### PROPERTIES #####
 

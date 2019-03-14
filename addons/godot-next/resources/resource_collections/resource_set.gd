@@ -1,3 +1,4 @@
+# ResourceSet
 # author: xdgamestudios
 # license: MIT
 # description: A ResourceCollection implementation that manages a Set of Resources.
@@ -15,11 +16,11 @@ class_name ResourceSet
 
 ##### CONSTANTS #####
 
-const COLLECTION_NAME = "[ Set ]"
+const COLLECTION_NAME: String = "[ Set ]"
 
 ##### PROPERTIES #####
 
-var _data := {}
+var _data: Dictionary = {}
 
 ##### NOTIFICATIONS #####
 
@@ -39,11 +40,11 @@ func _set(p_property: String, p_value) -> bool:
 			#warning-ignore:return_value_discarded
 			_data.erase(key)
 			property_list_changed_notify()
-			return true
 		elif _data[key].get_script() == p_value.get_script():
 			var res = _instantiate_script(p_value) if p_value is Script else p_value
 			if res:
 				_data[key] = res
+			property_list_changed_notify()
 		return true
 	return false
 

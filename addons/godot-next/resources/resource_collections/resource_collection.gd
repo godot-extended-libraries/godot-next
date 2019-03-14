@@ -1,3 +1,4 @@
+# ResourceCollection
 # author: xdgamestudios
 # license: MIT
 # description: An abstract base class for data structures that store Resource objects.

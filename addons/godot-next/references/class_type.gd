@@ -1,3 +1,4 @@
+# ClassType
 # author: willnationsdev
 # license: MIT
 # description: A class abstraction, both for engine and user-defined types.
@@ -660,27 +661,36 @@ func _init_from_path(p_path: String) -> void:
 # 2. Due to this logic, one cannot become a specialized type of PackedScene
 #    resource that has its own script.
 func _init_from_object(p_object: Object) -> void:
+	var initialized: bool = false
 	if not p_object:
 		name = ""
 		path = ""
 		res = null
 		_source = Source.NONE
+		initialized = true
 	var n := p_object as Node
-	if n and n.filename:
+	if not initialized and n and n.filename:
 		_init_from_path(n.filename)
-	var s := p_object.get_script() as Script
-	if s:
+		initialized = true
+	var s := (p_object.get_script() as Script) if p_object else null
+	if not initialized and s:
 		_init_from_path(s.resource_path)
-	if p_object is PackedScene or p_object is Script:
+		initialized = true
+	if not initialized and (p_object is PackedScene or p_object is Script):
 		_init_from_path((p_object as Resource).resource_path)
-	if not path and not name:
+		initialized = true
+	if not initialized and not path and not name:
 		_init_from_name(p_object.get_class())
+		initialized = true
 	_connect_script_updates()
 
 func _connect_script_updates() -> void:
-	if Engine.is_editor_hint() and not _is_filesystem_connected:
-		var ep = EditorPlugin.new()
-		ep.get_editor_interface().get_resource_filesystem().connect("filesystem_changed", self, "set", ["_script_map_dirty", true])
+	if Engine.editor_hint and not _is_filesystem_connected:
+		var ep: EditorPlugin = EditorPlugin.new()
+		var fs: EditorFileSystem = ep.get_editor_interface().get_resource_filesystem()
+		if not fs.is_connected("filesystem_changed", self, "set"):
+			#warning-ignore:return_value_discarded
+			fs.connect("filesystem_changed", self, "set", ["_script_map_dirty", true])
 		ep.free()
 		_is_filesystem_connected = true
 
@@ -695,6 +705,7 @@ func _fetch_script_map() -> void:
 func _build_path_map() -> void:
 	_path_map = _get_path_map(_script_map)
 
+# Utility method that returns a path map by building it from the given script map.
 static func _get_path_map(p_script_map: Dictionary) -> Dictionary:
 	var _path_map = {}
 	for a_name in p_script_map:
