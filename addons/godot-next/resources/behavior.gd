@@ -1,3 +1,4 @@
+# Behavior
 # author: xdgamestudios
 # license: MIT
 # description: This is an abstract base "Behavior" class for use in the "Behaviors" node class.
@@ -58,7 +59,7 @@ static func is_abstract() -> bool:
 
 ##### PUBLIC METHODS #####
 
-# Returns an instance of the stored Behavior resource.
+# Returns an instance of the stored Behavior resource from the owner.
 func get_behavior(p_type: Script) -> Behavior:
 	return owner.get_behavior(p_type)
 
@@ -83,7 +84,7 @@ func get_enabled() -> bool:
 	return enabled
 
 func set_owner(p_owner: Node) -> void:
-    assert p_owner
+    assert p_owner # must be assigned a valid owner at all times, except initially.
     owner = p_owner
 
 func get_owner() -> Node:

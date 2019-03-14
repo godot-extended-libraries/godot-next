@@ -2,17 +2,18 @@
 # license: MIT
 # description: A resource file that is preloaded into memory to allow for accessing
 #              singleton classes project wide using Singletons
+tool
 extends Resource
 
 ##### PROPERTIES #####
 
-var _cache = {};
-var _storage = {};
+var _cache = {}
+var _paths = {}
 
 ##### PUBLIC METHODS #####
 
 func get_cache() -> Dictionary:
-	return _cache;
+	return _cache
 
-func get_storage() -> Dictionary:
-	return _storage;
+func get_paths() -> Dictionary:
+	return _paths

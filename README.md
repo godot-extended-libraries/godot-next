@@ -62,9 +62,12 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Cycle](addons/godot-next/gui/cycle.gd)|Cycles through child nodes without any visibility or container effects.|GDScript
 |[EditorTools](addons/godot-next/global/editor_tools.gd)|A utility for any features useful in the context of the Editor.|GDScript
 |[FileSystemLink](addons/godot-next/global/file_system_link.gd)|A utility for creating links (file/directory, symbolic/hard).|GDScript
+|[InspectorControls](addons/godot-next/references/inspector_controls.gd)|A utility for creating data-editing GUI elements.|GDScript
 |[PropertyInfo](addons/godot-next/references/property_info.gd)|A wrapper and utility class for generating PropertyInfo Dictionaries, for use in `Object._get_property_list()`.|GDScript
 |[ResourceArray](addons/godot-next/resources/resource_collections/resource_array.gd)|A ResourceCollection implementation that manages an Array of Resources.|GDScript
 |[ResourceCollection](addons/godot-next/resources/resource_collections/resource_collection.gd)|An abstract base class for data structures that store Resource objects.|GDScript
 |[ResourceSet](addons/godot-next/resources/resource_collections/resource_set.gd)|A ResourceCollection implementation that manages a Set of Resources.|GDScript
+|[Singletons](addons/godot-next/references/singletons.gd)|A utility for caching Reference-derived singletons. Resources with a `SELF_RESOURCE` constant with a path to a `*.tres` file will be automatically loaded when accessed.|GDScript
 |[Trail2D](addons/godot-next/2d/trail_2d.gd)|Creates a variable-length trail that tracks a "target" node.|GDScript
+|[Variant](addons/godot-next/references/variant.gd)|A utility class for handling Variants (the type wrapper for all variables in Godot's scripting API).|GDScript
 |[VBoxItemList](addons/godot-next/gui/v_box_item_list.gd)|Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.|GDScript

@@ -1,3 +1,4 @@
+# ResourceArray
 # author: xdgamestudios
 # license: MIT
 # description: A ResourceCollection implementation that manages an Array of Resources.
@@ -43,6 +44,7 @@ func _set(p_property, p_value):
 			_class_type.res = res
 			if res and _class_type.is_type(_type):
 				_data[index] = res
+			property_list_changed_notify()
 		return true
 	return false
 
