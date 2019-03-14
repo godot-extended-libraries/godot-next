@@ -7,8 +7,8 @@ extends Resource
 
 ##### PROPERTIES #####
 
-var _cache = {}
-var _paths = {}
+var _cache: Dictionary = {}
+var _paths: Dictionary = {}
 
 ##### PUBLIC METHODS #####
 
