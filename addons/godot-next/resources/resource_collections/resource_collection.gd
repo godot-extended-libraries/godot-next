@@ -78,7 +78,7 @@ func _parse_property(p_plugin: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> 
 	match _extract_name_from_path(p_pinfo.name, DATA_PREFIX):
 		"dropdown":
 			var elements = _find_inheritors()
-			var control = InspectorControls.new_dropdown_selector(elements, self, "_on_dropdown_selector_selected")
+			var control = InspectorControls.new_dropdown_appender(elements, self, "_on_dropdown_selector_selected")
 			p_plugin.add_custom_control(control)
 			return true
 	return false

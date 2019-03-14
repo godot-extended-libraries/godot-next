@@ -597,7 +597,10 @@ static func from_type_dict(p_data: Dictionary) -> Reference:
 
 # Generate a PascalCase typename from a file path.
 static func namify_path(p_path: String) -> String:
-	return p_path.get_file().get_basename().capitalize().replace(" ", "")
+	var p := p_path.get_file().get_basename()
+	while p != p.get_basename():
+		p = p.get_basename()
+	return p.capitalize().replace(" ", "")
 
 ##### CONNECTIONS #####
 
