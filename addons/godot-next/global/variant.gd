@@ -52,7 +52,9 @@ static func get_type(p_value) -> String:
 		TYPE_RID:
 			return "RID"
 		TYPE_OBJECT:
-			return p_value.get_class()
+			var ct := ClassType.new(p_value)
+			return ct.get_type_class()
+			#return p_value.get_class()
 		TYPE_DICTIONARY:
 			return "Dictionary"
 		TYPE_ARRAY:

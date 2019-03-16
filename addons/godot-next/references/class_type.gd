@@ -677,7 +677,13 @@ func _init_from_object(p_object: Object) -> void:
 		initialized = true
 	var s := (p_object.get_script() as Script) if p_object else null
 	if not initialized and s:
-		_init_from_path(s.resource_path)
+		if not s.resource_path:
+			res = s
+			path = ""
+			name = ""
+			_source = Source.ANONYMOUS
+		else:
+			_init_from_path(s.resource_path)
 		initialized = true
 	if not initialized and (p_object is PackedScene or p_object is Script):
 		_init_from_path((p_object as Resource).resource_path)
