@@ -25,7 +25,6 @@ func register_dir(p_path: String) -> void:
 	var files_data = FileSearch.search_regex_full_path(".*icon_(.*)\\.svg$", p_path)
 	for a_data in files_data:
 		var a_match = files_data[a_data]["match"]
-		var ext = a_match.subject.get_extension()
 		var name = ClassType.namify_path(a_match.strings[1])
 		data[name] = a_match.subject
 
@@ -56,5 +55,6 @@ func _set(p_property, p_value) -> bool:
 						return false
 				else:
 					data[p_property] = null
+					#warning-ignore:return_value_discarded
 					data.erase(p_property)
 	return false
