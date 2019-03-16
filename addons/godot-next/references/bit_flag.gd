@@ -1,8 +1,7 @@
 # BitFlag
 # author: xdgamestudios
 # license: MIT
-# description: A class that allows to convert enums into bit flag enums and
-#              provides abstraction API to work with them.
+# description: A class that allows abstracts away the complexity of handling bit flag enum types.
 # todo: Implement additional features
 # usage:
 # - Initial setup:
