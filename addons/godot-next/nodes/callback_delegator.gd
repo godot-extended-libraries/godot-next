@@ -71,7 +71,7 @@ func _enter_tree() -> void:
 		if not an_element.owner:
 			_initialize_element(an_element)
 	_check_for_empty_callbacks()
-	
+
 	_handle_notification("_enter_tree")
 
 func _exit_tree() -> void:
@@ -93,6 +93,11 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 	_handle_notification("_unhandled_key_input", event)
 
 ##### OVERRIDES #####
+
+func _parse_property(p_inspector: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> void:
+	match p_pinfo.name:
+		"_elements":
+			p_inspector.add_custom_control(InspectorControls.new_button("Initialize Default Behavior", false, self, "_set_base_type_behavior"))
 
 ##### VIRTUALS #####
 
@@ -204,5 +209,9 @@ func __awake(p_element: Resource) -> void:
 func _on_element_script_change(p_element: Resource) -> void:
 	_remove_from_callbacks(p_element)
 	_add_to_callbacks(p_element)
+
+func _set_base_type_behavior() -> void:
+	_class_type.name = "Behavior"
+	_elements.set_base_type(_class_type.res)
 
 ##### SETTERS AND GETTERS #####
