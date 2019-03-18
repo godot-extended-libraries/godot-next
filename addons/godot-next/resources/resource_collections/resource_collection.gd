@@ -28,13 +28,13 @@ var _class_type: ClassType = ClassType.new()
 ##### NOTIFICATIONS #####
 
 func _get(p_property: String):
-	match _extract_name_from_path(p_property, SETUP_PREFIX):
+	match p_property.trim_prefix(SETUP_PREFIX):
 		"base_type":
 			return _type
 	return null
 
 func _set(p_property: String, p_value) -> bool:
-	match _extract_name_from_path(p_property, SETUP_PREFIX):
+	match p_property.trim_prefix(SETUP_PREFIX):
 		"base_type":
 			if _type != p_value:
 				_type = p_value
@@ -75,7 +75,7 @@ func _export_setup_group() -> Array:
 
 # Injects controls to the 'EditorInspectorPlugin'
 func _parse_property(p_plugin: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> bool:
-	match _extract_name_from_path(p_pinfo.name, DATA_PREFIX):
+	match p_pinfo.name.trim_prefix(DATA_PREFIX):
 		"dropdown":
 			var elements = _find_inheritors()
 			var control = InspectorControls.new_dropdown_appender(elements, self, "_on_dropdown_selector_selected")
@@ -89,11 +89,6 @@ func clear() -> void:
 	assert false
 
 ##### PRIVATE METHODS #####
-
-func _extract_name_from_path(p_path: String, p_prefix: String) -> String:
-	if p_path.begins_with(p_prefix):
-		return p_path.substr(p_prefix.length(), p_path.length())
-	return ""
 
 func _instantiate_script(p_script: Script) -> Resource:
 	var res: Resource = null

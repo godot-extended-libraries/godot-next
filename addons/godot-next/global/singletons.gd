@@ -36,6 +36,17 @@ static func fetchs(p_name: String) -> Object:
 		return fetch(ct.res)
 	return null
 
+# Returns an editor-only singleton by its class name
+static func fetch_editor(p_class: GDScriptNativeClass) -> Object:
+	if not Engine.editor_hint:
+		push_warning("Cannot access '%s' (editor-only class) at runtime." % p_class.get_class())
+		return null
+	
+	var cache: Dictionary = SINGLETON_CACHE.get_cache()
+	if cache.has(p_class):
+		return cache[p_class]
+	return null
+
 # Remove a singleton from the cache and any paths associated with it.
 static func erase(p_script: Script) -> bool:
 	var cache: Dictionary = SINGLETON_CACHE.get_cache()
@@ -64,3 +75,17 @@ static func save_all() -> void:
 
 static func _get_persistent_path(p_script: Script):
 	return p_script.get("SELF_RESOURCE")
+
+# Register all editor-only singletons
+static func _register_editor_singletons(plugin: EditorPlugin):
+	var cache: Dictionary = SINGLETON_CACHE.get_cache()
+	
+	cache[UndoRedo] = plugin.get_undo_redo()
+	
+	cache[EditorInterface] = plugin.get_editor_interface()
+	
+	cache[ScriptEditor] = plugin.get_editor_interface().get_script_editor()
+	cache[EditorSelection] = plugin.get_editor_interface().get_selection()
+	cache[EditorSettings] = plugin.get_editor_interface().get_editor_settings()
+	cache[EditorFileSystem] = plugin.get_editor_interface().get_resource_filesystem()
+	cache[EditorResourcePreview] = plugin.get_editor_interface().get_resource_previewer()
