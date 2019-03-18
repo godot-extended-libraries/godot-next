@@ -29,13 +29,13 @@ func _init() -> void:
 
 func _get(p_property: String):
 	if p_property.begins_with(DATA_PREFIX):
-		var index := int(_extract_name_from_path(p_property, DATA_PREFIX + "item_"))
+		var index := int(p_property.trim_prefix(DATA_PREFIX + "item_"))
 		return _data[index] if index < _data.size() else null
 	return null
 
 func _set(p_property, p_value):
 	if p_property.begins_with(DATA_PREFIX):
-		var index := int(_extract_name_from_path(p_property, DATA_PREFIX + "item_"))
+		var index := int(p_property.trim_prefix(DATA_PREFIX + "item_"))
 		if not p_value:
 			_data.remove(index)
 			property_list_changed_notify()
