@@ -6,6 +6,8 @@ const DelegationInspectorPlugin = preload("res://addons/godot-next/inspector_plu
 var delegation_inspector_plugin
 
 func _enter_tree() -> void:
+	Singletons._register_editor_singletons(self)
+	
 	delegation_inspector_plugin = DelegationInspectorPlugin.new()
 	add_inspector_plugin(delegation_inspector_plugin)
 

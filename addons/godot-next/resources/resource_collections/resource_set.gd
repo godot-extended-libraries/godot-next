@@ -29,13 +29,13 @@ func _init() -> void:
 
 func _get(p_property: String):
 	if p_property.begins_with(DATA_PREFIX):
-		var key = _extract_name_from_path(p_property, DATA_PREFIX)
+		var key = p_property.trim_prefix(DATA_PREFIX)
 		return _data.get(key, null)
 	return null
 
 func _set(p_property: String, p_value) -> bool:
 	if p_property.begins_with(DATA_PREFIX):
-		var key = _extract_name_from_path(p_property, DATA_PREFIX)
+		var key = p_property.trim_prefix(DATA_PREFIX)
 		if not p_value:
 			#warning-ignore:return_value_discarded
 			_data.erase(key)
