@@ -26,6 +26,21 @@ class DropdownAppender extends HBoxContainer:
 	func get_selected_meta():
 		return get_dropdown().get_selected_metadata()
 
+# Instantiates a Label. If align is not set the dafault ALIGN_LEFT will be used
+static func new_label(p_label: String, p_align: int = Label.ALIGN_LEFT) -> Label:
+	var label = Label.new()
+	label.text = p_label
+	label.align = p_align
+	return label
+
+# Instantiates an empty control used to insert space between properties.
+static func new_space(p_size: Vector2, p_horizontal_flag: int = Control.SIZE_EXPAND_FILL, p_vertical_flag: int = Control.SIZE_EXPAND_FILL) -> Control:
+	var control = Control.new()
+	control.size_flags_horizontal = p_horizontal_flag
+	control.size_flags_vertical = p_vertical_flag
+	control.rect_min_size = p_size
+	return control
+
 # Instantiates a Button. If toggle mode is set, p_object/p_callback will connect to its "toggled" signal. Else, "pressed".
 static func new_button(p_label: String, p_toggle_mode: bool = false, p_object: Object = null, p_callback: String = "") -> Button:
 	var button = Button.new()
