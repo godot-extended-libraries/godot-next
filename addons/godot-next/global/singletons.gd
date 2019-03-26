@@ -9,7 +9,7 @@ class_name Singletons
 
 ##### CONSTANTS #####
 
-const SINGLETON_CACHE = preload("res://addons/godot-next/data/singleton_cache.tres")
+const SINGLETON_CACHE = preload("res://addons/godot-next/meta/data/singleton_cache.tres")
 
 ##### PUBLIC METHODS #####
 

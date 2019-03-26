@@ -54,7 +54,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 
 |Linkable Node Name|Description|Language
 |-|-|-|
-|[Array2D](addons/godot-next/references/array_2d.gd)|A 2D Array class.|GDScript
+|[Array2D](addons/godot-next/references/data_structures/array_2d.gd)|A 2D Array class.|GDScript
 |[BitFlag](addons/godot-next/references/bit_flag.gd)|A class that allows abstracts away the complexity of handling bit flag enum types.|GDScript
 |[Behavior](addons/godot-next/resources/behavior.gd)|A Resource type that automatically calls Node-like notification methods when paired with the CallbackDelegator class.|GDScript
 |[CallbackDelegator](addons/godot-next/nodes/callback_delegator.gd)|A Node that manages a ResourceSet of resources and delegates Node callbacks to each instance.|GDScript
