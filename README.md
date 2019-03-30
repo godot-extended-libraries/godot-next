@@ -64,6 +64,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[EditorTools](addons/godot-next/global/editor_tools.gd)|A utility for any features useful in the context of the Editor.|GDScript
 |[FileSearch](addons/godot-next/global/file_search.gd)|A utility with helpful methods to search through one's project files (or any directory).|GDScript
 |[FileSystemLink](addons/godot-next/global/file_system_link.gd)|A utility for creating links (file/directory, symbolic/hard).|GDScript
+|[Geometry2D](addons/godot-next/2d/geometry_2d.gd)|A utility that draws a Shape2D using CollisionShape2D's editor plugin handles.|GDScript
 |[Inflector](addons/godot-next/references/inflector.gd)|A vocabulary wrapper of inflection tools to pluralize and singularize strings.|GDScript
 |[InspectorControls](addons/godot-next/global/inspector_controls.gd)|A utility for creating data-editing GUI elements.|GDScript
 |[PropertyInfo](addons/godot-next/references/property_info.gd)|A wrapper and utility class for generating PropertyInfo Dictionaries, for use in `Object._get_property_list()`.|GDScript
