@@ -14,9 +14,9 @@ If you like the project, please star it. If you'd like to support its developmen
 
 ## How to Use
 
-1. Create or open a project.
+1. Download the repo directly (the AssetLib version is no longer maintained)
 
-2. Download the repo from GitHub directly. I don't bother updating the AssetLib version anymore. ~~Go to the Asset Library tab, search for "Godot NExt" and install the plugin.~~
+2. Copy the addons directory to any project you would like to use them in
 
 3. Open Project Settings and go to the Plugins tab.
 
