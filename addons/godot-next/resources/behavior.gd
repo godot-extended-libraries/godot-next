@@ -61,7 +61,7 @@ static func is_abstract() -> bool:
 
 # Returns an instance of the stored Behavior resource from the owner.
 func get_behavior(p_type: Script) -> Behavior:
-	return owner.get_behavior(p_type)
+	return owner.get_element(p_type)
 
 ##### PRIVATE METHODS #####
 
