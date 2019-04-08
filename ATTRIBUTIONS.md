@@ -5,3 +5,5 @@ This file is for recording any credits related to scripts or icons in the reposi
 - csv_file.gd: The csv-parsing algorithm was extracted from a [Java tutorial](https://www.mkyong.com/java/how-to-read-and-parse-csv-file-in-java/) by [@mkyong](https://twitter.com/mkyong).
 
 - editor_tools.gd: 'is_in_edited_scene' sourced from [@Zylann](https://github.com/Zylann)
+
+- project_tools.gd: `try_set_setting` and `set_setting` initially derived from [/u/WordOfRabbit](https://www.reddit.com/user/WordOfRabbit)'s [blog](https://dfaction.net/handling-custom-project-settings-using-gdscript/).
