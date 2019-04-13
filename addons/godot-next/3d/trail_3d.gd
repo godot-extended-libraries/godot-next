@@ -7,6 +7,7 @@
 # - shape: curve used to shape trail, right click on this in inspector to see curve options
 
 extends ImmediateGeometry
+class_name Trail3D
 
 export(float) var length = 10.0
 export var max_radius = 0.5
