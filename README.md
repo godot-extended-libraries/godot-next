@@ -39,13 +39,13 @@ If you have an idea for a node that you would like to have added to the reposito
 
 **All** scripts must adhere to the relevant language's styling conventions, modeled after Godot Docs examples and the Godot Engine source code.
 
-**All C#** scripts must be submitted to a `*-cs` branch, e.g. `master-cs`, `3.1-cs`, etc. This is to ensure that users who aren't using the Mono-enabled version of Godot do not have C# scripts present.
+**All C#** scripts must be submitted to a separate `addons/godot-next-cs` folder. This is to ensure that users who aren't using the Mono-enabled version of Godot do not have C# scripts present.
 
 Submissions are **encouraged** to do the following:
 
 1. Provide a 16x16 SVG icon for each submitted script.
-2. Use statically-typed GDScript if submitting one or more GDScript files.
-3. Create mirrored versions of GDScript and C# scripts between branches.
+2. Use statically-typed GDScript if submitting GDScript files.
+3. Create mirrored versions of GDScript and C# scripts between folders.
 4. Add your node(s)' information to the bottom of the README, if possible (less work for maintainers).
 
 That's it! I hope you've got ideas of what you'd like to share with others.
