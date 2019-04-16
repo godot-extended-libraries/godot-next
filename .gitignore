@@ -5,3 +5,5 @@ export_presets.cfg
 
 # Mono-specific ignores
 .mono/
+
+.vscode/

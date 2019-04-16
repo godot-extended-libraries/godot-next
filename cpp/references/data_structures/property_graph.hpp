@@ -26,7 +26,7 @@ namespace godot {
 
 			Variant _get(String p_property);
 
-			/* Graph (GDScript) */
+			// Graph (GDScript)
 
 			void _set_property(Variant p_type, Variant p_id, Variant p_name, Variant p_value);
 
@@ -75,7 +75,7 @@ namespace godot {
 				OP_INSERT
 			};
 
-			/* Graph (GDNative) */
+			// Graph (GDNative)
 
 			void set_property(ListDigraph::GraphComponent p_type, int64_t p_id, String p_name, Variant p_value);
 
