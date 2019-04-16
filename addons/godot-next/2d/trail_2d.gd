@@ -120,6 +120,10 @@ func _should_shrink() -> bool:
 
 ##### PUBLIC METHODS #####
 
+func erase_trail():
+	for i in range(get_point_count()):
+		remove_point(0)
+
 ##### PRIVATE METHODS #####
 
 ##### SETTERS AND GETTERS #####
