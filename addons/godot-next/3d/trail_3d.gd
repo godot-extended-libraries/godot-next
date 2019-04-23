@@ -102,19 +102,21 @@ func render_trail():
 			add_vertex(cur[nxt_i])
 			add_vertex(nxt[nxt_i])
 			add_vertex(nxt[i])
-	#cap off top
-	for i in range(density_around):
-		var nxt = (i + 1) % density_around
-		add_vertex(verts[0][i])
-		add_vertex(Vector3())
-		add_vertex(verts[0][nxt])
 	
-	
-	#cap off bottom
-	for i in range(density_around):
-		var nxt = (i + 1) % density_around
-		add_vertex(verts[verts.size() - 1][i])
-		add_vertex(verts[verts.size() - 1][nxt])
-		add_vertex(last_p)
+	if verts.size() > 1:
+		#cap off top
+		for i in range(density_around):
+			var nxt = (i + 1) % density_around
+			add_vertex(verts[0][i])
+			add_vertex(Vector3())
+			add_vertex(verts[0][nxt])
+		
+		
+		#cap off bottom
+		for i in range(density_around):
+			var nxt = (i + 1) % density_around
+			add_vertex(verts[verts.size() - 1][i])
+			add_vertex(verts[verts.size() - 1][nxt])
+			add_vertex(last_p)
 	end()
 	
