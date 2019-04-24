@@ -4,7 +4,7 @@
 #include <vector>
 
 namespace godot {
-	template<typename T>
+	template <typename T>
 	using Vector = std::vector<T>;
-}
+} // namespace godot
 #endif /* !VECTOR_HPP */

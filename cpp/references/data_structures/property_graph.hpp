@@ -1,120 +1,229 @@
-#ifndef STORY_GRAPH_HPP
-#define STORY_GRAPH_HPP
+#ifndef PROPERTY_GRAPH_HPP
+#define PROPERTY_GRAPH_HPP
 
-#include "set.hpp"
+#include <Godot.hpp>
+#include <Reference.hpp>
+
+#include "label_container_trait.hpp"
 #include "list_digraph.hpp"
+#include "property_container_trait.hpp"
 
 namespace godot {
-	class PropertyGraph : public ListDigraph {
-		GODOT_SUBCLASS(PropertyGraph, ListDigraph)
+	class PropertyGraph;
 
-			struct ArcData {
-				String label;
-				HashMap<String, Variant> properties;
-			};
-			struct VertexData {
-				Set<String> labels;
-				HashMap<String, Variant> properties;
-			};
+	class PropertyVertex : public Vertex, public LabelContainerTrait, public PropertyContainerTrait {
+		GODOT_SUBCLASS(PropertyVertex, Vertex);
 
-			LemonDigraph::ArcMap<ArcData> _arc_data;
-			LemonDigraph::NodeMap<VertexData> _vertex_data;
+		friend class PropertyGraph;
 
-		protected:
+	protected:
+		Set<String> &get_label_set() override;
+		HashMap<String, Variant> &get_property_map() override;
 
-			bool _set(String p_property, Variant p_value);
+		// ## PropertyVertex (GDScript) ################################# //
 
-			Variant _get(String p_property);
+		bool _set(String p_property, Variant p_value);
 
-			// Graph (GDScript)
+		Variant _get(String p_property);
 
-			void _set_property(Variant p_type, Variant p_id, Variant p_name, Variant p_value);
+		void _set_labels(Variant p_labels);
 
-			Variant _get_property(Variant p_type, Variant p_id, Variant p_name);
+		void _insert_labels(Variant p_labels);
 
-			bool _has_property(Variant p_type, Variant p_id, Variant p_name);
+		void _erase_labels(Variant p_labels);
 
-			void _insert_property(Variant p_type, Variant p_id, Variant p_name, Variant p_value);
+		Array _get_labels();
 
-			void _erase_property(Variant p_type, Variant p_id, Variant p_name);
+		void _set_properties(Variant p_data);
 
-			void _insert_label(Variant p_type, Variant p_id, Variant p_label);
+		void _merge_properties(Variant p_data);
 
-			bool _has_label(Variant p_type, Variant p_id, Variant p_label);
+		void _insert_properties(Variant p_data);
 
-			void _erase_label(Variant p_type, Variant p_id, Variant p_label);
+		void _erase_properties(Variant p_names);
 
-			void update_vertices_labels(int64_t p_op, Dictionary p_id_to_labels);
-			void _update_vertices_labels(Variant p_op, Variant p_id_to_labels);
+		Dictionary _get_properties();
 
-			Dictionary get_vertices_labels(Array p_vertices);
-			Dictionary _get_vertices_labels(Variant p_vertices);
+	public:
+		// ## PropertyVertex (GDNative) ################################# //
 
-			void erase_vertices_labels(Dictionary p_id_to_labels);
-			void _erase_vertices_labels(Variant p_id_to_labels);
+		void _init();
 
-			void update_arcs_label(Dictionary p_id_to_labels);
-			void _update_arcs_label(Variant p_id_to_labels);
+		static void _register_methods();
 
-			Dictionary get_arcs_label(Array p_arcs);
-			Dictionary _get_arcs_label(Variant p_id_to_labels);
-
-			void update_properties(int64_t p_type, int64_t p_op, Dictionary p_id_to_properties);
-			void _update_properties(Variant p_type, Variant p_op, Variant p_id_to_properties);
-
-			Dictionary get_properties(int64_t p_type, Dictionary p_id_to_names);
-			Dictionary _get_properties(Variant p_type, Variant p_id_to_names);
-
-			void erase_properties(int64_t p_type, Dictionary p_id_to_names);
-			void _erase_properties(Variant p_type, Variant p_id_to_names);
-
-		public:
-			enum GraphOp {
-				OP_SET,
-				OP_MERGE,
-				OP_INSERT
-			};
-
-			// Graph (GDNative)
-
-			void set_property(ListDigraph::GraphComponent p_type, int64_t p_id, String p_name, Variant p_value);
-
-			Variant get_property(ListDigraph::GraphComponent p_type, int64_t p_id, String p_name);
-
-			bool has_property(ListDigraph::GraphComponent p_type, int64_t p_id, String p_name);
-
-			void insert_property(ListDigraph::GraphComponent p_type, int64_t p_id, String p_name, Variant p_value);
-
-			void erase_property(ListDigraph::GraphComponent p_type, int64_t p_id, String p_name);
-
-			void insert_label(ListDigraph::GraphComponent p_type, int64_t p_id, String p_label);
-
-			bool has_label(ListDigraph::GraphComponent p_type, int64_t p_id, String p_label);
-
-			void erase_label(ListDigraph::GraphComponent p_type, int64_t p_id, String p_label);
-
-			void update_vertices_labels(PropertyGraph::GraphOp p_op, const HashMap<int64_t, Set<String>> &p_data);
-
-			void get_vertices_labels(const Vector<int64_t> &p_data, HashMap<int64_t, Set<String>> *r_labels);
-
-			void erase_vertices_labels(const HashMap<int64_t, Set<String>> &p_data);
-
-			void update_arcs_label(const HashMap<int64_t, String> &p_data);
-
-			void get_arcs_label(const Vector<int64_t> &p_data, HashMap<int64_t, String> *r_labels);
-
-			void update_properties(ListDigraph::GraphComponent p_type, PropertyGraph::GraphOp p_op, const HashMap<int64_t, HashMap<String, Variant>> &p_data);
-
-			void get_properties(ListDigraph::GraphComponent p_type, const HashMap<int64_t, Vector<String>> &p_data, HashMap<int64_t, HashMap<String, Variant>> *r_properties);
-
-			void erase_properties(ListDigraph::GraphComponent p_type, const HashMap<int64_t, Vector<String>> &p_data);
-
-			static void _register_methods();
-
-			PropertyGraph();
-			~PropertyGraph();
-
-			void _init();
+		PropertyVertex();
+		~PropertyVertex();
 	};
-}
-#endif /* !STORY_GRAPH_HPP */
+
+	class PropertyArc : public Arc, public PropertyContainerTrait {
+		GODOT_SUBCLASS(PropertyArc, Arc);
+
+		friend class PropertyGraph;
+
+	protected:
+		HashMap<String, Variant> &get_property_map() override;
+
+		// ## PropertyArc (GDScript) #################################### //
+
+		bool _set(String p_property, Variant p_value);
+
+		Variant _get(String p_property);
+
+		void _set_label(Variant p_label);
+
+		void _set_properties(Variant p_data);
+
+		void _merge_properties(Variant p_data);
+
+		void _insert_properties(Variant p_data);
+
+		void _erase_properties(Variant p_names);
+
+		Dictionary _get_properties();
+
+	public:
+		// ## PropertyArc (GDNative) #################################### //
+
+		void set_label(const String &p_label);
+
+		String get_label() const;
+
+		void _init();
+
+		static void _register_methods();
+
+		PropertyArc();
+		~PropertyArc();
+	};
+
+	class PropertyGraph : public ListDigraph {
+		GODOT_SUBCLASS(PropertyGraph, ListDigraph);
+
+		friend class PropertyVertex;
+		friend class PropertyArc;
+
+	private:
+		struct PropertyVertexHash {
+			std::size_t operator()(const PropertyVertex &k) const {
+				return k.get_id();
+			}
+		};
+		struct PropertyArcHash {
+			std::size_t operator()(const PropertyArc &k) const {
+				return k.get_id();
+			}
+		};
+
+		struct PropertyVertexData {
+			Set<String> labels;
+			HashMap<String, Variant> properties;
+		};
+		struct PropertyArcData {
+			String label;
+			HashMap<String, Variant> properties;
+		};
+
+		LemonDigraph::NodeMap<PropertyVertexData> _vertex_data;
+		LemonDigraph::ArcMap<PropertyArcData> _arc_data;
+
+	protected:
+		// ## PropertyGraph (Internal) ################################## //
+
+		template <class T, class H>
+		void __set_properties(const HashMap<T, HashMap<String, Variant>, H> &p_data) {
+			typename HashMap<T, HashMap<String, Variant>, H>::const_iterator comp_to_properties;
+
+			for (comp_to_properties = p_data.begin(); comp_to_properties != p_data.end(); ++comp_to_properties) {
+				T *property_compoment = (T *)&comp_to_properties->first;
+				property_compoment->set_properties(comp_to_properties->second);
+			}
+		}
+
+		template <class T, class H>
+		void __merge_properties(const HashMap<T, HashMap<String, Variant>, H> &p_data) {
+			typename HashMap<T, HashMap<String, Variant>, H>::const_iterator comp_to_properties;
+
+			for (comp_to_properties = p_data.begin(); comp_to_properties != p_data.end(); ++comp_to_properties) {
+				T *property_compoment = (T *)&comp_to_properties->first;
+				property_compoment->merge_properties(comp_to_properties->second);
+			}
+		}
+
+		template <class T, class H>
+		void __insert_properties(const HashMap<T, HashMap<String, Variant>, H> &p_data) {
+			typename HashMap<T, HashMap<String, Variant>, H>::const_iterator comp_to_properties;
+
+			for (comp_to_properties = p_data.begin(); comp_to_properties != p_data.end(); ++comp_to_properties) {
+				T *property_compoment = (T *)&comp_to_properties->first;
+				property_compoment->insert_properties(comp_to_properties->second);
+			}
+		}
+
+		template <class T, class H>
+		void __erase_properties(const HashMap<T, Set<String>, H> &p_data) {
+			typename HashMap<T, Set<String>, H>::const_iterator comp_to_names;
+
+			for (comp_to_names = p_data.begin(); comp_to_names != p_data.end(); ++comp_to_names) {
+				T *property_compoment = (T *)&comp_to_names->first;
+				property_compoment->erase_properties(comp_to_names->second);
+			}
+		}
+
+		virtual Ref<Vertex> get_instance(const LemonDigraph::Node &p_node) override;
+
+		virtual Ref<Arc> get_instance(const LemonDigraph::Arc &p_arc) override;
+
+		// ## PropertyGraph (GDScript) ################################## //
+
+		void set_labels(const Dictionary &p_data);
+		void _set_labels(Variant p_data);
+
+		void insert_labels(const Dictionary &p_data);
+		void _insert_labels(Variant p_data);
+
+		void erase_labels(const Dictionary &p_data);
+		void _erase_labels(Variant p_data);
+
+		void set_properties(const Dictionary &p_data);
+		void _set_properties(Variant p_data);
+
+		void merge_properties(const Dictionary &p_data);
+		void _merge_properties(Variant p_data);
+
+		void insert_properties(const Dictionary &p_data);
+		void _insert_properties(Variant p_data);
+
+		void erase_properties(const Dictionary &p_data);
+		void _erase_properties(Variant p_data);
+
+	public:
+		// ## PropertyGraph (GDNative) ################################## //
+
+		void set_labels(const HashMap<PropertyVertex, Set<String>, PropertyVertexHash> &p_data);
+		void set_labels(const HashMap<PropertyArc, String, PropertyArcHash> &p_data);
+
+		void insert_labels(const HashMap<PropertyVertex, Set<String>, PropertyVertexHash> &p_data);
+
+		void erase_labels(const HashMap<PropertyVertex, Set<String>, PropertyVertexHash> &p_data);
+
+		void set_properties(const HashMap<PropertyVertex, HashMap<String, Variant>, PropertyVertexHash> &p_data);
+		void set_properties(const HashMap<PropertyArc, HashMap<String, Variant>, PropertyArcHash> &p_data);
+
+		void merge_properties(const HashMap<PropertyVertex, HashMap<String, Variant>, PropertyVertexHash> &p_data);
+		void merge_properties(const HashMap<PropertyArc, HashMap<String, Variant>, PropertyArcHash> &p_data);
+
+		void insert_properties(const HashMap<PropertyVertex, HashMap<String, Variant>, PropertyVertexHash> &p_data);
+		void insert_properties(const HashMap<PropertyArc, HashMap<String, Variant>, PropertyArcHash> &p_data);
+
+		void erase_properties(const HashMap<PropertyVertex, Set<String>, PropertyVertexHash> &p_data);
+		void erase_properties(const HashMap<PropertyArc, Set<String>, PropertyArcHash> &p_data);
+
+		void _init();
+
+		static void _register_methods();
+
+		PropertyGraph();
+		~PropertyGraph();
+	};
+} // namespace godot
+#endif /* !PROPERTY_GRAPH_HPP */

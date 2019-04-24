@@ -9,12 +9,12 @@
 #include <Godot.hpp>
 
 namespace godot {
-	#ifndef ERR_CONTINUE
-	#define ERR_CONTINUE(a)	\
-	if (a) {				\
-		WARN_PRINT(#a);		\
-		continue;			\
+#ifndef ERR_CONTINUE
+#define ERR_CONTINUE(a) \
+	if (a) {            \
+		WARN_PRINT(#a); \
+		continue;       \
 	}
-	#endif
+#endif
 } // namespace godot
 #endif /* !ERROR_MACROS_HPP */
