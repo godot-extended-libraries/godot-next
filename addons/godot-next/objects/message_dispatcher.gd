@@ -2,9 +2,9 @@
 # author: MunWolf (Rikhardur Bjarni Einarsson)
 # license: MIT
 # copyright: Copyright (c) 2019 Rikhardur Bjarni Einarsson
-# brief_description: A message handler for non predefined signals, can be extended by any class
-#                    Node, Reference, Resource etc, can also be directly attached to a Node.
-extends Object
+# brief_description: A message handler for non predefined signals, if you want to use this by extending it on a Node please use MessageDispatcherWrapper.
+
+extends Reference
 
 class_name MessageDispatcher
 
@@ -43,9 +43,17 @@ func disconnect_all_message() -> void:
 #    message_data: extra data that can be used by the handler or where the handler can store results.
 #    return: returns if it was passed to any handler or not.
 func emit_message(message_type: String, message_data: Dictionary) -> bool:
+	var invalid
 	var handlers = _message_handlers[message_type]
 	if handlers != null:
+		var invalid = []
 		for handler in handlers:
-			handler[0].call(handler[1], message_type, message_data)
+			if is_instance_valid(handler[0]):
+				handler[0].call(handler[1], message_type, message_data)
+			else:
+				invalid.push_back(handler)
+
+		for handler in invalid:
+			handlers.erase(handler)
 			
 	return handlers != null && !handlers.empty()
