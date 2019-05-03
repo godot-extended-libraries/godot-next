@@ -43,3 +43,7 @@
     - This Reference type stores a static database of all Reference-derived types which can be fetched by their script.
     - `Singletons.fetch(MyType)` will return an instance of MyType and ensure that only one instance of it is managed by the Singletons database.
     - Can implement one's own static method which converts `Singletons.fetch(MyType)` to `MyType.fetch()`.
+6. Have you ever wanted to send signals to child nodes, resources or even references but you don't want to define all the possible signals in the instance?
+    - MessageDispatcher
+    - Allows any object to register a function that handles a specific message_type.
+    - Emit a message on the dispatcher and it sends it to all relevant handlers or discards it if no handlers were registered.

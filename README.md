@@ -67,6 +67,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Geometry2D](addons/godot-next/2d/geometry_2d.gd)|A utility that draws a Shape2D using CollisionShape2D's editor plugin handles.|GDScript
 |[Inflector](addons/godot-next/references/inflector.gd)|A vocabulary wrapper of inflection tools to pluralize and singularize strings.|GDScript
 |[InspectorControls](addons/godot-next/global/inspector_controls.gd)|A utility for creating data-editing GUI elements.|GDScript
+|[MessageDispatcher](addons/godot-next/objects/message_dispatcher.gd)|A base object that handles signaling for non predetermined signals.|GDScript
 |[ProjectTools](addons/godot-next/global/project_tools.gd)|A utility for any features useful in the context of a Godot Project.|GDScript
 |[PropertyInfo](addons/godot-next/references/property_info.gd)|A wrapper and utility class for generating PropertyInfo Dictionaries, for use in `Object._get_property_list()`.|GDScript
 |[ResourceArray](addons/godot-next/resources/resource_collections/resource_array.gd)|A ResourceCollection implementation that manages an Array of Resources.|GDScript
