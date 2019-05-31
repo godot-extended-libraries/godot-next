@@ -5,7 +5,6 @@
 # brief_description: A message handler for non predefined signals, if you want to use this by extending it on a Node please use MessageDispatcherWrapper.
 
 extends Reference
-
 class_name MessageDispatcher
 
 ##### PROPERTIES #####
@@ -43,7 +42,6 @@ func disconnect_all_message() -> void:
 #    message_data: extra data that can be used by the handler or where the handler can store results.
 #    return: returns if it was passed to any handler or not.
 func emit_message(message_type: String, message_data: Dictionary) -> bool:
-	var invalid
 	var handlers = _message_handlers[message_type]
 	if handlers != null:
 		var invalid = []
