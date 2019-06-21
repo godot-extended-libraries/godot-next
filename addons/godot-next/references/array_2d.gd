@@ -146,10 +146,10 @@ func size() -> int:
 	return len(data) * len(data[0])
 
 func resize(p_height: int, p_width: int):
-	for a_row in data:
-		a_row.resize(p_height)
-		for a_col in a_row:
-			a_col.resize(p_width)
+	data.resize(p_height)
+	for i in range(len(data)):
+		data[i] = []
+		data[i].resize(p_width)
 
 func resizev(p_dimensions: Vector2):
 	resize(int(p_dimensions.x), int(p_dimensions.y))
@@ -158,8 +158,8 @@ func clear():
 	data = []
 
 func fill(p_value):
-	for a_row in data:
-		for a_col in a_row:
+	for a_row in range(data.size()):
+		for a_col in range(data[a_row].size()):
 			data[a_row][a_col] = p_value
 
 func fill_row(p_idx: int, p_value):
