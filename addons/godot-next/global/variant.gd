@@ -6,12 +6,6 @@ tool
 extends Reference
 class_name Variant
 
-# Returns a string form of all types, but allows Objects to override their string conversion
-static func to_string(p_value) -> String:
-	if typeof(p_value) == TYPE_OBJECT and p_value.has_method("_to_string"):
-		return p_value._to_string() as String
-	return var2str(p_value)
-
 # Returns the string text of a type's name, for all types.
 static func get_type(p_value) -> String:
 	match typeof(p_value):
