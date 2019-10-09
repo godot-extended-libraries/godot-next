@@ -56,30 +56,39 @@ func _set(p_property: String, p_value: bool) -> bool:
 		return true
 	return false
 
+func _get_value_flags(p_value) -> int:
+	match typeof(p_value):
+		TYPE_OBJECT:
+			if p_value.get_script() == get_script():
+				return p_value._flags
+		TYPE_INT:
+			return p_value
+	assert(false)
+
 ##### PUBLIC METHODS #####
 
 func put(p_value) -> int:
 	if p_value == null:
 		return _flags
-	_flags |= p_value._flags if get_script() == p_value.get_script() else p_value
+	_flags |= _get_value_flags(p_value)
 	return _flags
 
 func clear(p_value) -> int:
 	if p_value == null:
 		return _flags
-	_flags &= ~(p_value._flags if get_script() == p_value.get_script() else p_value)
+	_flags &= ~(_get_value_flags(p_value))
 	return _flags
 
 func toggle(p_value) -> int:
 	if p_value == null:
 		return _flags
-	_flags ^=  p_value._flags if get_script() == p_value.get_script() else p_value
+	_flags ^= _get_value_flags(p_value)
 	return _flags
 
 func check(p_value) -> bool:
 	if p_value == null:
 		return false
-	var flags: int = p_value._flags if get_script() == p_value.get_script() else p_value
+	var flags: int = _get_value_flags(p_value)
 	return (_flags & flags) == flags
 
 func get_active_keys() -> Array:
@@ -106,4 +115,4 @@ func get_flags() -> int:
 func set_flags(p_value) -> void:
 	if p_value == null:
 		return
-	_flags = p_value._flags if get_script() == p_value.get_script() else p_value
+	_flags = _get_value_flags(p_value)
