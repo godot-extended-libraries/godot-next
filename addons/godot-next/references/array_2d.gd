@@ -144,6 +144,11 @@ func size() -> int:
 	if len(data) <= 0:
 		return 0
 	return len(data) * len(data[0])
+	
+func sizev() -> Vector2:
+	if len(data) <= 0:
+		return Vector2.ZERO
+	return Vector2(len(data), len(data[0]))
 
 func resize(p_height: int, p_width: int):
 	data.resize(p_height)
@@ -162,6 +167,11 @@ func fill(p_value):
 		for a_col in range(data[a_row].size()):
 			data[a_row][a_col] = p_value
 
+func fillv(start : Vector2, end : Vector2, p_value):
+	for a_row in range(start.y, end.y):
+		for a_col in range(start.x, end.x):
+			set_cell_if_exists(a_row, a_col, p_value)
+
 func fill_row(p_idx: int, p_value):
 	assert p_idx >= 0
 	assert len(data) > p_idx
@@ -179,6 +189,13 @@ func fill_col(p_idx: int, p_value):
 	for i in len(data):
 		arr.push_back(p_value)
 	set_col(p_idx, arr)
+
+func flatten() -> Array:
+	var out = []
+	for a_row in range(len(data)):
+		for a_col in range(len(data[a_row])):
+			out.append({"location" : Vector2(a_row, a_col), "content" : data[a_row][a_col]})
+	return out
 
 func remove_row(p_idx: int):
 	assert p_idx >= 0
