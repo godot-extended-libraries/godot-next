@@ -7,7 +7,7 @@
 # - If you assign an empty 'target var', the value will automatically update to grab the parent.
 #     - To completely turn off the Trail2D, set its `trail_length` to 0
 # - The node will automatically update its target vars when it is moved around in the tree
-# - You can set the "persistance" mode to have it...
+# - You can set the "persistence" mode to have it...
 #     - vanish the trail over time (Off)
 #     - persist the trail forever, unless modified directly (Always)
 #     - persist conditionally:
@@ -25,7 +25,7 @@ class_name Trail2D, "../icons/icon_trail_2d.svg"
 
 ##### CONSTANTS #####
 
-enum Persistance {
+enum Persistence {
 	OFF,        # Do not persist. Remove all points after the trail_length.
 	ALWAYS,     # Always persist. Do not remove any points.
 	CONDITIONAL # Sometimes persist. Choose an algorithm for when to add and remove points.
@@ -46,10 +46,10 @@ export var target_path: NodePath = @".." setget set_target_path
 # If not persisting, the number of points that should be allowed in the trail
 export var trail_length: int = 10
 # To what degree the trail should remain in existence before automatically removing points.
-export(int, "Off", "Always", "Conditional") var persistance: int = Persistance.OFF
-# During conditional persistance, which persistance algorithm to use
-export(int, "On Movement", "Custom") var persistance_condition: int = PersistWhen.ON_MOVEMENT
-# During conditional persistance, how many points to remove per frame
+export(int, "Off", "Always", "Conditional") var persistence: int = Persistence.OFF
+# During conditional persistence, which persistence algorithm to use
+export(int, "On Movement", "Custom") var persistence_condition: int = PersistWhen.ON_MOVEMENT
+# During conditional persistence, how many points to remove per frame
 export var degen_rate: int = 1
 # If true, automatically set z_index to be one less than the 'target'
 export var auto_z_index: bool = true
@@ -82,16 +82,16 @@ func _notification(p_what: int):
 #warning-ignore:unused_argument
 func _process(delta: float):
 	if target:
-		match persistance:
-			Persistance.OFF:
+		match persistence:
+			Persistence.OFF:
 				add_point(target.global_position)
 				while get_point_count() > trail_length:
 					remove_point(0)
-			Persistance.ALWAYS:
+			Persistence.ALWAYS:
 				add_point(target.global_position)
 				pass
-			Persistance.CONDITIONAL:
-				match persistance_condition:
+			Persistence.CONDITIONAL:
+				match persistence_condition:
 					PersistWhen.ON_MOVEMENT:
 						var moved: bool = get_point_position(get_point_count()-1) != target.global_position if get_point_count() else false
 						if not get_point_count() or moved:
@@ -121,6 +121,7 @@ func _should_shrink() -> bool:
 ##### PUBLIC METHODS #####
 
 func erase_trail():
+	#warning-ignore:unused_variable
 	for i in range(get_point_count()):
 		remove_point(0)
 

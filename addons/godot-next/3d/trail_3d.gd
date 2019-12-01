@@ -7,7 +7,7 @@
 # - shape: curve used to shape trail, right click on this in inspector to see curve options
 
 extends ImmediateGeometry
-class_name Trail3D
+class_name Trail3D, "../icons/icon_trail_3d.svg"
 
 export(float) var length = 10.0
 export var max_radius = 0.5
@@ -26,10 +26,8 @@ func _ready():
 		density_lengthwise = 2
 	
 	segment_length = length / density_lengthwise
-	var cur = 1
-	for p in density_lengthwise:
+	for i in range(density_lengthwise):
 		points.append(global_transform.origin)
-		cur += 1
 
 func _process(_delta):
 	update_trail()
