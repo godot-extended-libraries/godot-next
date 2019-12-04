@@ -64,6 +64,7 @@ func _get_value_flags(p_value) -> int:
 		TYPE_INT:
 			return p_value
 	assert(false)
+	return -1
 
 ##### PUBLIC METHODS #####
 

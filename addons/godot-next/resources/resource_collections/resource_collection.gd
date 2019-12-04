@@ -59,11 +59,11 @@ func _get_property_list() -> Array:
 # Append an element to the collection.
 #warning-ignore:unused_argument
 func _add_element(p_script: Script) -> void:
-	assert false
+	assert(false)
 
 # Refresh the data upon type change.
 func _refresh_data() -> void:
-	assert false
+	assert(false)
 
 # Export properties within the 'data' group
 func _export_data_group() -> Array:
@@ -86,7 +86,7 @@ func _parse_property(p_plugin: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> 
 ##### PUBLIC METHODS #####
 
 func clear() -> void:
-	assert false
+	assert(false)
 
 ##### PRIVATE METHODS #####
 

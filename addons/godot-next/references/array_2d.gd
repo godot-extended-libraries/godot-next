@@ -27,11 +27,11 @@ func has_cell(p_row: int, p_col: int) -> bool:
 	return len(data) > p_row and len(data[p_row]) > p_col
 
 func set_cell(p_row: int, p_col: int, p_value):
-	assert has_cell(p_row, p_col)
+	assert(has_cell(p_row, p_col))
 	data[p_row][p_col] = p_value
 
 func get_cell(p_row: int, p_col: int):
-	assert has_cell(p_row, p_col)
+	assert(has_cell(p_row, p_col))
 	return data[p_row][p_col]
 
 func set_cell_if_exists(p_row: int, p_col: int, p_value) -> bool:
@@ -44,11 +44,11 @@ func has_cellv(p_pos: Vector2) -> bool:
 	return len(data) > p_pos.x and len(data[p_pos.x]) > p_pos.y
 
 func set_cellv(p_pos: Vector2, p_value):
-	assert has_cellv(p_pos)
+	assert(has_cellv(p_pos))
 	data[p_pos.x][p_pos.y] = p_value
 
 func get_cellv(p_pos: Vector2):
-	assert has_cellv(p_pos)
+	assert(has_cellv(p_pos))
 	return data[p_pos.x][p_pos.y]
 
 func set_cellv_if_exists(p_pos: Vector2, p_value) -> bool:
@@ -58,39 +58,39 @@ func set_cellv_if_exists(p_pos: Vector2, p_value) -> bool:
 	return false
 
 func get_row(p_idx: int):
-	assert len(data) > p_idx
-	assert p_idx >= 0
+	assert(len(data) > p_idx)
+	assert(p_idx >= 0)
 	return data[p_idx].duplicate()
 
 func get_col(p_idx: int):
 	var result = []
 	for a_row in data:
-		assert len(a_row) > p_idx
-		assert p_idx >= 0
+		assert(len(a_row) > p_idx)
+		assert(p_idx >= 0)
 		result.push_back(a_row[p_idx])
 	return result
 
 func get_row_ref(p_idx: int):
-	assert len(data) > p_idx
-	assert p_idx >= 0
+	assert(len(data) > p_idx)
+	assert(p_idx >= 0)
 	return data[p_idx]
 
 func get_rows() -> Array:
 	return data
 
 func set_row(p_idx: int, p_row):
-	assert len(data) > p_idx
-	assert p_idx >= 0
-	assert len(data) == len(p_row)
+	assert(len(data) > p_idx)
+	assert(p_idx >= 0)
+	assert(len(data) == len(p_row))
 	data[p_idx] = p_row
 
 func set_col(p_idx: int, p_col):
-	assert len(data) > 0 and len(data[0]) > 0
-	assert len(data) == len(p_col)
+	assert(len(data) > 0 and len(data[0]) > 0)
+	assert(len(data) == len(p_col))
 	var idx = 0
 	for a_row in data:
-		assert len(a_row) > p_idx
-		assert p_idx >= 0
+		assert(len(a_row) > p_idx)
+		assert(p_idx >= 0)
 		a_row[p_idx] = p_col[idx]
 		idx += 1
 
@@ -163,31 +163,31 @@ func fill(p_value):
 			data[a_row][a_col] = p_value
 
 func fill_row(p_idx: int, p_value):
-	assert p_idx >= 0
-	assert len(data) > p_idx
-	assert len(data[0]) > 0
+	assert(p_idx >= 0)
+	assert(len(data) > p_idx)
+	assert(len(data[0]) > 0)
 	var arr = []
 	for i in len(data[0]):
 		arr.push_back(p_value)
 	data[p_idx] = arr
 
 func fill_col(p_idx: int, p_value):
-	assert p_idx >= 0
-	assert len(data) > 0
-	assert len(data[0]) > p_idx
+	assert(p_idx >= 0)
+	assert(len(data) > 0)
+	assert(len(data[0]) > p_idx)
 	var arr = []
 	for i in len(data):
 		arr.push_back(p_value)
 	set_col(p_idx, arr)
 
 func remove_row(p_idx: int):
-	assert p_idx >= 0
-	assert len(data) > p_idx
+	assert(p_idx >= 0)
+	assert(len(data) > p_idx)
 	data.remove(p_idx)
 
 func remove_col(p_idx: int):
-	assert len(data) > 0
-	assert p_idx >= 0 and len(data[0]) > p_idx
+	assert(len(data) > 0)
+	assert(p_idx >= 0 and len(data[0]) > p_idx)
 	for a_row in data:
 		a_row.remove(p_idx)
 
@@ -211,25 +211,25 @@ func invert() -> Array2D:
 	return self
 
 func invert_row(p_idx: int) -> Array2D:
-	assert p_idx >= 0 and len(data) > p_idx
+	assert(p_idx >= 0 and len(data) > p_idx)
 	data[p_idx].invert()
 	return self
 
 func invert_col(p_idx: int) -> Array2D:
-	assert len(data) > 0
-	assert p_idx >= 0 and len(data[0]) > p_idx
+	assert(len(data) > 0)
+	assert(p_idx >= 0 and len(data[0]) > p_idx)
 	var col = get_col(p_idx)
 	col.invert()
 	set_col(p_idx, col)
 	return self
 
 func bsearch_row(p_idx: int, p_value, p_before: bool) -> int:
-	assert p_idx >= 0 and len(data) > p_idx
+	assert(p_idx >= 0 and len(data) > p_idx)
 	return data[p_idx].bsearch(p_value, p_before)
 
 func bsearch_col(p_idx: int, p_value, p_before: bool) -> int:
-	assert len(data) > 0
-	assert p_idx >= 0 and len(data[0]) > p_idx
+	assert(len(data) > 0)
+	assert(p_idx >= 0 and len(data[0]) > p_idx)
 	var col = get_col(p_idx)
 	col.sort()
 	return col[p_idx].bsearch(p_value, p_before)

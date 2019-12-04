@@ -18,7 +18,7 @@ class_name Geometry2D
 ##### PROPERTIES #####
 
 export (Color) var color := Color(1, 1, 1, 1) setget set_color
-export (Vector2) var offset_position := Vector2(0, 0)
+export (Vector2) var offset_position := Vector2(0, 0) setget set_offset
 
 ##### NOTIFICATIONS #####
 
@@ -58,4 +58,8 @@ func draw_capsule(capsule_position: Vector2, capsule_radius: float,
 
 func set_color(new_color: Color) -> void:
 	color = new_color
+	update()
+
+func set_offset(offset: Vector2) -> void:
+	offset_position = offset
 	update()
