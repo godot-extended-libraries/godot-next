@@ -132,7 +132,7 @@ func erase_trail():
 func set_target(p_value: Node2D):
 	if p_value:
 		if get_path_to(p_value) != target_path:
-			target_path = get_path_to(p_value)
+			set_target_path(get_path_to(p_value))
 	else:
 		target_path = @""
 
