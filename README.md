@@ -61,6 +61,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[ClassType](addons/godot-next/references/class_type.gd)|A class abstraction, both for engine and user-defined types.|GDScript
 |[CSVFile](addons/godot-next/references/csv_file.gd)|Similar to ConfigFile, parses a .csv file. Can generate a key-value store from rows. Supports .tsv files.|GDScript
 |[Cycle](addons/godot-next/gui/cycle.gd)|Cycles through child nodes without any visibility or container effects.|GDScript
+|[DebugLabel](addons/godot-next/gui/debug_label.gd)|A label which displays a list of property values in any `Object`-derived instance at run-time for debugging purposes.|GDScript
 |[EditorTools](addons/godot-next/global/editor_tools.gd)|A utility for any features useful in the context of the Editor.|GDScript
 |[FileSearch](addons/godot-next/global/file_search.gd)|A utility with helpful methods to search through one's project files (or any directory).|GDScript
 |[FileSystemLink](addons/godot-next/global/file_system_link.gd)|A utility for creating links (file/directory, symbolic/hard).|GDScript
