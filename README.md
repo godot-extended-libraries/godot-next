@@ -76,5 +76,6 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Singletons](addons/godot-next/global/singletons.gd)|A utility for caching Reference-derived singletons. Resources with a `SELF_RESOURCE` constant with a path to a `*.tres` file will be automatically loaded when accessed.|GDScript
 |[Trail2D](addons/godot-next/2d/trail_2d.gd)|Creates a variable-length trail that tracks a "target" node.|GDScript
 |[Trail3D](addons/godot-next/3d/trail_3d.gd)|Creates a variable-length trail on an ImmediateGeometry node.|GDScript
+|[Tween Sequence](addons/godot-next/references/tween_sequence.gd)|A helper class for easier management and chaining of Tweens dynamically from code.|GDScript
 |[Variant](addons/godot-next/global/variant.gd)|A utility class for handling Variants (the type wrapper for all variables in Godot's scripting API).|GDScript
 |[VBoxItemList](addons/godot-next/gui/v_box_item_list.gd)|Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.|GDScript
