@@ -67,6 +67,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[ClassType](addons/godot-next/references/class_type.gd)|A class abstraction, both for engine and user-defined types.|GDScript
 |[CSVFile](addons/godot-next/references/csv_file.gd)|Similar to ConfigFile, parses a .csv file. Can generate a key-value store from rows. Supports .tsv files.|GDScript
 |[Cycle](addons/godot-next/gui/cycle.gd)|Cycles through child nodes without any visibility or container effects.|GDScript
+|[DebugLabel](addons/godot-next/gui/debug_label.gd)|A label which displays a list of property values in any `Object`-derived instance at run-time for debugging purposes.|GDScript
 |[EditorTools](addons/godot-next/global/editor_tools.gd)|A utility for any features useful in the context of the Editor.|GDScript
 |[FileSearch](addons/godot-next/global/file_search.gd)|A utility with helpful methods to search through one's project files (or any directory).|GDScript
 |[FileSystemLink](addons/godot-next/global/file_system_link.gd)|A utility for creating links (file/directory, symbolic/hard).|GDScript
@@ -74,6 +75,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Inflector](addons/godot-next/references/inflector.gd)|A vocabulary wrapper of inflection tools to pluralize and singularize strings.|GDScript
 |[InspectorControls](addons/godot-next/global/inspector_controls.gd)|A utility for creating data-editing GUI elements.|GDScript
 |[MessageDispatcher](addons/godot-next/objects/message_dispatcher.gd)|A base object that handles signaling for non predetermined signals.|GDScript
+|[PhysicsLayers](addons/godot-next/global/physics_layers.gd)|A Utility class which allows easy access to your physics layers via their names in the project settings.|GDScript
 |[ProjectTools](addons/godot-next/global/project_tools.gd)|A utility for any features useful in the context of a Godot Project.|GDScript
 |[PropertyInfo](addons/godot-next/references/property_info.gd)|A wrapper and utility class for generating PropertyInfo Dictionaries, for use in `Object._get_property_list()`.|GDScript
 |[ResourceArray](addons/godot-next/resources/resource_collections/resource_array.gd)|A ResourceCollection implementation that manages an Array of Resources.|GDScript
@@ -84,3 +86,4 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Trail3D](addons/godot-next/3d/trail_3d.gd)|Creates a variable-length trail on an ImmediateGeometry node.|GDScript
 |[Variant](addons/godot-next/global/variant.gd)|A utility class for handling Variants (the type wrapper for all variables in Godot's scripting API).|GDScript
 |[VBoxItemList](addons/godot-next/gui/v_box_item_list.gd)|Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.|GDScript
+|[DiscreteGradientTexture](addons/godot-next/resources/DiscreteGradientTexture.gd)|Creates a not interpolated texture for a gradient.|GDScript

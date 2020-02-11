@@ -47,3 +47,6 @@
     - MessageDispatcher
     - Allows any object to register a function that handles a specific message_type.
     - Emit a message on the dispatcher and it sends it to all relevant handlers or discards it if no handlers were registered.
+7. Have you ever wanted to create a flat gradient with hard transitions?
+	- DiscreteGradientTexture
+	- It works like the GradientTexture but ignores the color interpolation of the gradient.
