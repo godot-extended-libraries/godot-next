@@ -1,13 +1,13 @@
-# BigMask
+# Bitset
 # author: milesturin
 # license: MIT
 # description: A class that allows for easily manipulated bitmasks of any size
 # usage: Mostly self explanatory. _init() is equivalent to resize().
-# 	By setting enforce_soft_size to false, the BigMask will allow the user to access
+# 	By setting enforce_soft_size to false, the Bitset will allow the user to access
 # 	bits that have been reserved by the script, but are outside of the requested size.
 
 extends Reference
-class_name BigMask
+class_name Bitset
 
 ### CONSTANTS ###
 
@@ -48,6 +48,10 @@ func set_bit(index: int, state: bool) -> void:
 		bitmasks[index / MASK_SIZE] |= (1 << (index % MASK_SIZE))
 	else:
 		bitmasks[index / MASK_SIZE] &= ~(1 << (index % MASK_SIZE))
+
+func flip_bit(index: int) -> void:
+	assert(index < bits)
+	set_bit(index, !check_bit(index))
 
 func print_bits(multiline: bool = true) -> void:
 	if multiline:
