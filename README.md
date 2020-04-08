@@ -62,6 +62,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |-|-|-|
 |[Array2D](addons/godot-next/references/array_2d.gd)|A 2D Array class.|GDScript
 |[BitFlag](addons/godot-next/references/bit_flag.gd)|A class that allows abstracts away the complexity of handling bit flag enum types.|GDScript
+|[Bitset](addons/godot-next/references/bigset.gd)|A class that allows for easily manipulated bitmasks of any size.|GDScript
 |[Behavior](addons/godot-next/resources/behavior.gd)|A Resource type that automatically calls Node-like notification methods when paired with the CallbackDelegator class.|GDScript
 |[CallbackDelegator](addons/godot-next/nodes/callback_delegator.gd)|A Node that manages a ResourceSet of resources and delegates Node callbacks to each instance.|GDScript
 |[ClassType](addons/godot-next/references/class_type.gd)|A class abstraction, both for engine and user-defined types.|GDScript
@@ -84,6 +85,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Singletons](addons/godot-next/global/singletons.gd)|A utility for caching Reference-derived singletons. Resources with a `SELF_RESOURCE` constant with a path to a `*.tres` file will be automatically loaded when accessed.|GDScript
 |[Trail2D](addons/godot-next/2d/trail_2d.gd)|Creates a variable-length trail that tracks a "target" node.|GDScript
 |[Trail3D](addons/godot-next/3d/trail_3d.gd)|Creates a variable-length trail on an ImmediateGeometry node.|GDScript
+|[Tween Sequence](addons/godot-next/references/tween_sequence.gd)|A helper class for easier management and chaining of Tweens dynamically from code.|GDScript
 |[Variant](addons/godot-next/global/variant.gd)|A utility class for handling Variants (the type wrapper for all variables in Godot's scripting API).|GDScript
 |[VBoxItemList](addons/godot-next/gui/v_box_item_list.gd)|Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.|GDScript
 |[DiscreteGradientTexture](addons/godot-next/resources/DiscreteGradientTexture.gd)|Creates a not interpolated texture for a gradient.|GDScript
