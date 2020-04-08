@@ -74,7 +74,7 @@ func _export_setup_group() -> Array:
 	return [ PropertyInfo.new_resource(SETUP_PREFIX + "base_type", "Script").to_dict() ] if not _type_readonly else []
 
 # Injects controls to the 'EditorInspectorPlugin'
-func _parse_property(p_plugin: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> bool:
+func _parse_property(p_plugin: Reference, p_pinfo: PropertyInfo) -> bool:
 	match p_pinfo.name.trim_prefix(DATA_PREFIX):
 		"dropdown":
 			var elements = _find_inheritors()
