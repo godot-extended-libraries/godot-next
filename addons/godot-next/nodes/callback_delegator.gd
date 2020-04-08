@@ -94,7 +94,7 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 
 ##### OVERRIDES #####
 
-func _parse_property(p_inspector: Reference, p_pinfo: PropertyInfo) -> void:
+func _parse_property(p_inspector: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> void:
 	match p_pinfo.name:
 		"_elements":
 			p_inspector.add_custom_control(InspectorControls.new_button("Initialize Default Behavior", false, self, "_set_base_type_behavior"))
