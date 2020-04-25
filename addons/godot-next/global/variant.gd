@@ -12,6 +12,7 @@ static func to_string(p_value) -> String:
 		return p_value._to_string() as String
 	return var2str(p_value)
 
+
 # Returns the string text of a type's name, for all types.
 static func get_type(p_value) -> String:
 	match typeof(p_value):

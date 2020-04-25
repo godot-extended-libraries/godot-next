@@ -21,17 +21,22 @@ enum TargetTypes {
 static func mk_hard_file(p_target: String, p_linkpath: String = "") -> int:
 	return _make_link(p_target, p_linkpath, TargetTypes.FILE, LinkTypes.HARD)
 
+
 static func mk_soft_file(p_target: String, p_linkpath: String = "") -> int:
 	return _make_link(p_target, p_linkpath, TargetTypes.FILE, LinkTypes.SOFT)
+
 
 static func mk_hard_dir(p_target: String, p_linkpath: String = "") -> int:
 	return _make_link(p_target, p_linkpath, TargetTypes.DIR, LinkTypes.HARD)
 
+
 static func mk_soft_dir(p_target: String, p_linkpath: String = "") -> int:
 	return _make_link(p_target, p_linkpath, TargetTypes.DIR, LinkTypes.SOFT)
 
+
 static func mk_windows_junction(p_target: String, p_linkpath: String = "") -> int:
 	return _make_link(p_target, p_linkpath, TargetTypes.WINDOWS_JUNCTION, LinkTypes.SOFT)
+
 
 static func _make_link(p_target: String, p_linkpath: String = "", p_target_type = TargetTypes.FILE, p_link_type: int = LinkTypes.SOFT) -> int:
 	var params := PoolStringArray()

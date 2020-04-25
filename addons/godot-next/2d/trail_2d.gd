@@ -69,6 +69,7 @@ func _init():
 		gradient.set_color(0, first)
 		gradient.set_color(1, default_color)
 
+
 func _notification(p_what: int):
 	match p_what:
 		NOTIFICATION_PARENTED:
@@ -79,8 +80,8 @@ func _notification(p_what: int):
 			self.target_path = @""
 			self.trail_length = 0
 
-#warning-ignore:unused_argument
-func _process(delta: float):
+
+func _process(_delta: float):
 	if target:
 		match persistence:
 			Persistence.OFF:
@@ -115,6 +116,7 @@ func _process(delta: float):
 func _should_grow() -> bool:
 	return true
 
+
 func _should_shrink() -> bool:
 	return true
 
@@ -135,6 +137,7 @@ func set_target(p_value: Node2D):
 			set_target_path(get_path_to(p_value))
 	else:
 		target_path = @""
+
 
 func set_target_path(p_value: NodePath):
 	target_path = p_value

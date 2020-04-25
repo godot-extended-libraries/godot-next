@@ -159,11 +159,13 @@ func to_string():
 	'path': <path to script>
 }
 """
+
 # Caches script maps for faster access.
 # Does not cache in the editor context.
 func get_script_classes() -> Dictionary:
 	_fetch_script_map()
 	return _script_map
+
 
 # Get Dictionary<path, name> map for script classes
 # Caches script maps for faster access.
@@ -172,25 +174,30 @@ func get_path_map() -> Dictionary:
 	_fetch_script_map()
 	return _path_map
 
+
 # Same as get_script_map, but it includes all resources
 func get_deep_type_map() -> Dictionary:
 	_fetch_deep_type_map()
 	return _deep_type_map
+
 
 # Same as get_path_map, but it includes all resources
 func get_deep_path_map() -> Dictionary:
 	_fetch_deep_type_map()
 	return _deep_path_map
 
+
 # Forces a refresh of the script maps
 func refresh_script_classes() -> void:
 	_script_map = _get_script_map()
 	_build_path_map()
 
+
 # Same as refresh_script_map, but it includes all resources
 func refresh_deep_type_map() -> void:
 	_deep_type_map = _get_deep_type_map()
 	_build_deep_path_map()
+
 
 # Get a type map. Minimum: _script_map. Maximum: _deep_type_map.
 func _get_map() -> Dictionary:
@@ -203,6 +210,7 @@ func _get_map() -> Dictionary:
 		_fetch_script_map()
 		map = _script_map
 	return map
+
 
 # Is this ClassType the same as or does it inherit another class name/resource?
 func is_type(p_other) -> bool:
@@ -228,6 +236,7 @@ func is_type(p_other) -> bool:
 					return static_is_type(res, other.res, _get_map())
 	return static_is_type(res, p_other, _get_map())
 
+
 # Instantiate whatever type the ClassType refers to
 func instance() -> Object:
 	if _source == Source.ENGINE:
@@ -238,6 +247,7 @@ func instance() -> Object:
 		if res is PackedScene:
 			return res.instance()
 	return null
+
 
 # Get the name of the next inherited engine class
 func get_engine_class() -> String:
@@ -250,6 +260,7 @@ func get_engine_class() -> String:
 			var state := (res as PackedScene).get_state()
 			return state.get_node_type(0)
 	return ""
+
 
 # Get the name of the next inherited script
 func get_script_class() -> String:
@@ -270,6 +281,7 @@ func get_script_class() -> String:
 		script = script.get_base_script()
 	return ""
 
+
 # Get the name of the next inherited type
 func get_type_class() -> String:
 	var ret := get_script_class()
@@ -277,9 +289,11 @@ func get_type_class() -> String:
 		ret = get_engine_class()
 	return ret
 
+
 # Is this a "named" type, i.e. engine or script class?
 func class_exists() -> bool:
 	return _source != Source.NONE
+
 
 # Does our stored resource path exist?
 # False for engine classes.
@@ -287,21 +301,26 @@ func class_exists() -> bool:
 func path_exists() -> bool:
 	return ResourceLoader.exists(path)
 
+
 # Is this a named type or an anonymous resource?
 func is_valid() -> bool:
 	return class_exists() or path_exists()
+
 
 # Is this an anonymous resource?
 func is_non_class_res() -> bool:
 	return path_exists() and not class_exists()
 
+
 # Cast to Script
 func as_script() -> Script:
 	return res as Script
 
+
 # Cast to PackedScene
 func as_scene() -> PackedScene:
 	return res as PackedScene
+
 
 # get inherited engine class as ClassType
 func get_engine_parent() -> Reference:
@@ -311,6 +330,7 @@ func get_engine_parent() -> Reference:
 	elif _source == Source.ENGINE:
 		ret.name = ClassDB.get_parent_class(name)
 	return ret
+
 
 # get inherited script resource as ClassType
 func get_script_parent() -> Reference:
@@ -331,6 +351,7 @@ func get_script_parent() -> Reference:
 
 	return ret
 
+
 # get inherited scene resource as ClassType
 func get_scene_parent() -> Reference:
 	var ret := _new()
@@ -342,6 +363,7 @@ func get_scene_parent() -> Reference:
 	ret.res = scene
 	return ret
 
+
 # get inherited resource or engine class as ClassType
 func get_type_parent() -> Reference:
 	var ret = get_scene_parent()
@@ -351,6 +373,7 @@ func get_type_parent() -> Reference:
 	if ret.is_valid():
 		return ret
 	return get_engine_parent()
+
 
 # Convert the current ClassType into its base ClassType. Returns true if valid.
 # Can use an inheritance loop like so:
@@ -388,6 +411,7 @@ func become_parent() -> bool:
 			return true
 	return false
 
+
 # Returns the inherited Script object. For scene's this fetches the script
 # of the root node.
 func get_type_script() -> Script:
@@ -399,6 +423,7 @@ func get_type_script() -> Script:
 		script = res as Script
 	return script
 
+
 # Wrapper for the base engine class's `can_instance()` method.
 # This is specific for the engine and does not relate to abstract-ness.
 func can_instance() -> bool:
@@ -408,6 +433,7 @@ func can_instance() -> bool:
 	if script:
 		return script.can_instance()
 	return false
+
 
 # Generate a list of named classes that extend the represented class or
 # resource. SLOW
@@ -419,6 +445,7 @@ func get_inheritors_list() -> PoolStringArray:
 			ret.append(a_class)
 	return ret
 
+
 # Same as get_inheritors_list, but it includes all resources. SLOW
 func get_deep_inheritors_list() -> PoolStringArray:
 	_fetch_deep_type_map()
@@ -429,14 +456,17 @@ func get_deep_inheritors_list() -> PoolStringArray:
 			ret.append(a_class)
 	return ret
 
+
 # Generate a list of engine class names
 func get_engine_class_list() -> PoolStringArray:
 	return ClassDB.get_class_list()
+
 
 # Generate a list of script class names
 func get_script_class_list() -> PoolStringArray:
 	_fetch_script_map()
 	return PoolStringArray(_script_map.keys())
+
 
 # Generate a list of all named classes
 func get_class_list() -> PoolStringArray:
@@ -445,6 +475,7 @@ func get_class_list() -> PoolStringArray:
 	class_list.append_array(get_script_class_list())
 	return class_list
 
+
 # Generate a list of class names
 func get_deep_class_list() -> PoolStringArray:
 	_fetch_deep_type_map()
@@ -452,13 +483,16 @@ func get_deep_class_list() -> PoolStringArray:
 	class_list.append_array(PoolStringArray(get_engine_class_list()))
 	return class_list
 
+
 # Generate a list of all engine and resource names
 static func static_get_engine_class_list() -> PoolStringArray:
 	return ClassDB.get_class_list()
 
+
 # Generate a list of script class names
 static func static_get_script_class_list() -> PoolStringArray:
 	return PoolStringArray(_get_script_map().keys())
+
 
 # Generate a list of all named classes
 static func static_get_class_list() -> PoolStringArray:
@@ -467,6 +501,7 @@ static func static_get_class_list() -> PoolStringArray:
 	class_list.append_array(static_get_script_class_list())
 	return class_list
 
+
 # Generate a list of all engine and resource names
 static func static_get_deep_class_list() -> PoolStringArray:
 	var _deep_type_map = _get_deep_type_map()
@@ -474,9 +509,11 @@ static func static_get_deep_class_list() -> PoolStringArray:
 	class_list.append_array(static_get_engine_class_list())
 	return class_list
 
+
 func is_object_instance_of(p_object) -> bool:
 	var ct = from_object(p_object)
 	return is_type(ct)
+
 
 # Tests whether an object constitutes a class name or resource
 static func static_is_object_instance_of(p_object, p_type, p_map: Dictionary = {}) -> bool:
@@ -492,6 +529,7 @@ static func static_is_object_instance_of(p_object, p_type, p_map: Dictionary = {
 	if script:
 		return static_is_type(script, p_type, map)
 	return static_is_type(p_object.get_class(), p_type, map)
+
 
 # Tests whether a class name or resource constitutes another
 # String names and Resource instances are interchangeable
@@ -569,11 +607,13 @@ static func static_is_type(p_type, p_other, p_map: Dictionary = {}) -> bool:
 							return _script_is_script(p_type, p_other)
 	return false
 
+
 # ClassType.new(p_name), but for clarity.
 static func from_name(p_name: String) -> Reference:
 	var ret := _new()
 	ret._init_from_name(p_name)
 	return ret
+
 
 # ClassType.new(p_path), but for clarity.
 static func from_path(p_path: String) -> Reference:
@@ -581,11 +621,13 @@ static func from_path(p_path: String) -> Reference:
 	ret._init_from_path(p_path)
 	return ret
 
+
 # ClassType.new(p_object), but for clarity.
 static func from_object(p_object: Object) -> Reference:
 	var ret := _new()
 	ret._init_from_object(p_object)
 	return ret
+
 
 # Utility function to create from `get_deep_type_map()` values
 static func from_type_dict(p_data: Dictionary) -> Reference:
@@ -596,6 +638,7 @@ static func from_type_dict(p_data: Dictionary) -> Reference:
 		"Script", "PackedScene":
 			ret._init_from_path(p_data.path)
 	return ret
+
 
 # Generate a PascalCase typename from a file path.
 static func namify_path(p_path: String) -> String:
@@ -635,6 +678,7 @@ func _init_from_name(p_name: String) -> void:
 	_source = Source.NONE
 	_connect_script_updates()
 
+
 # reset properties based on a given path
 func _init_from_path(p_path: String) -> void:
 	path = p_path
@@ -653,6 +697,7 @@ func _init_from_path(p_path: String) -> void:
 	name = ""
 	_source = Source.NONE
 	_connect_script_updates()
+
 
 # reset properties based on a given object instance
 # if null: don't initialize.
@@ -695,6 +740,7 @@ func _init_from_object(p_object: Object) -> void:
 		initialized = true
 	_connect_script_updates()
 
+
 func _connect_script_updates() -> void:
 	if Engine.editor_hint and not _is_filesystem_connected:
 		var ep: EditorPlugin = EditorPlugin.new()
@@ -705,6 +751,7 @@ func _connect_script_updates() -> void:
 		ep.free()
 		_is_filesystem_connected = true
 
+
 # Utility method to re-populate the script maps if not yet initialized.
 func _fetch_script_map() -> void:
 	if _script_map_dirty:
@@ -712,9 +759,11 @@ func _fetch_script_map() -> void:
 		_build_path_map()
 		_script_map_dirty = false
 
+
 # Utility method to build the path map from the script map.
 func _build_path_map() -> void:
 	_path_map = _get_path_map(_script_map)
+
 
 # Utility method that returns a path map by building it from the given script map.
 static func _get_path_map(p_script_map: Dictionary) -> Dictionary:
@@ -722,6 +771,7 @@ static func _get_path_map(p_script_map: Dictionary) -> Dictionary:
 	for a_name in p_script_map:
 		_path_map[p_script_map[a_name].path] = a_name
 	return _path_map
+
 
 # Utility method that returns a script map by fetching it from ProjectSettings
 static func _get_script_map() -> Dictionary:
@@ -731,21 +781,25 @@ static func _get_script_map() -> Dictionary:
 		script_map[a_class["class"]] = a_class
 	return script_map
 
+
 # Same as _fetch_script_map, but it includes all resources
 func _fetch_deep_type_map() -> void:
 	if _deep_type_map.empty():
 		_deep_type_map = _get_deep_type_map()
 		_build_deep_path_map()
 
+
 # Same as _build_path_map, but it includes all resources
 func _build_deep_path_map() -> void:
 	_deep_path_map = _get_deep_path_map(_deep_type_map)
+
 
 func _get_deep_path_map(p_deep_type_map: Dictionary) -> Dictionary:
 	var _deep_path_map = {}
 	for a_name in p_deep_type_map:
 		_deep_path_map[p_deep_type_map[a_name].path] = a_name
 	return _deep_path_map
+
 
 # Same as _get_script_map, but it includes all resources
 static func _get_deep_type_map() -> Dictionary:
@@ -809,17 +863,21 @@ static func _get_deep_type_map() -> Dictionary:
 
 	return data
 
+
 # Utility for fetching a reference to this script in a static context
 static func _get_script() -> Script:
 	return load("res://addons/godot-next/references/class_type.gd") as Script
+
 
 # Utility for creating an instance of this class in a static context
 static func _new() -> Reference:
 	return (_get_script()).new() as Reference
 
+
 # Does this script inherit the features of the given engine class?
 static func _script_is_engine(p_script: Script, p_class: String) -> bool:
 	return ClassDB.is_parent_class(p_script.get_instance_base_type(), p_class)
+
 
 # Does one script extend the other, or are they the same?
 static func _script_is_script(p_script: Script, p_other: Script) -> bool:
@@ -830,6 +888,7 @@ static func _script_is_script(p_script: Script, p_other: Script) -> bool:
 		script = script.get_base_script()
 	return false
 
+
 # Is this script extending the same script or class at the root of this scene?
 static func _script_is_scene(p_script: Script, p_scene: PackedScene) -> bool:
 	var state := p_scene.get_state()
@@ -839,9 +898,11 @@ static func _script_is_scene(p_script: Script, p_scene: PackedScene) -> bool:
 			return _script_is_script(p_script, script)
 	return false
 
+
 # Is a scene's root node a parent of a certain class?
 static func _scene_is_engine(p_scene: PackedScene, p_class: String) -> bool:
 	return ClassDB.is_parent_class(p_scene.get_state().get_node_type(0), p_class)
+
 
 # Does a scene's root script derive from another script?
 static func _scene_is_script(p_scene: PackedScene, p_script: Script) -> bool:
@@ -851,6 +912,7 @@ static func _scene_is_script(p_scene: PackedScene, p_script: Script) -> bool:
 	if not script:
 		return false
 	return _script_is_script(script, p_script)
+
 
 # Does a scene derive another scene?
 static func _scene_is_scene(p_scene: PackedScene, p_other: PackedScene) -> bool:
@@ -867,10 +929,12 @@ static func _scene_is_scene(p_scene: PackedScene, p_other: PackedScene) -> bool:
 		scene = base
 	return false
 
+
 static func _convert_name_to_res(p_name: String, p_map: Dictionary = {}) -> Resource:
 	if not p_name or ClassDB.class_exists(p_name) or p_map.empty() or not p_map.has(p_name):
 		return null
 	return load(p_map[p_name].path)
+
 
 static func _convert_name_to_variant(p_name: String, p_map: Dictionary = {}):
 	var res = _convert_name_to_res(p_name, p_map)
@@ -879,6 +943,7 @@ static func _convert_name_to_variant(p_name: String, p_map: Dictionary = {}):
 	if ClassDB.class_exists(p_name):
 		return p_name
 	return null
+
 
 # Return the root script associated with a scene.
 static func _scene_get_root_script(p_scene: PackedScene) -> Script:
@@ -897,6 +962,7 @@ static func _scene_get_root_script(p_scene: PackedScene) -> Script:
 			state = null
 	return null
 
+
 # Return the root scene associated with a scene.
 static func _scene_get_root_scene(p_scene: PackedScene) -> PackedScene:
 	if not p_scene:
@@ -910,21 +976,26 @@ static func _scene_get_root_scene(p_scene: PackedScene) -> PackedScene:
 func set_name(p_value: String) -> void:
 	_init_from_name(p_value)
 
+
 func get_name() -> String:
 	return name
+
 
 # Re-initialize based on assigned path.
 func set_path(p_value: String) -> void:
 	_init_from_path(p_value)
 
+
 func get_path() -> String:
 	return path
+
 
 # Re-initialize based on assigned resource.
 func set_res(p_value: Resource) -> void:
 	if not p_value:
 		self.name = ""
 	_init_from_object(p_value)
+
 
 func get_res() -> Resource:
 	return res

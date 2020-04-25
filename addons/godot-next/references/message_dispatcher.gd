@@ -26,6 +26,7 @@ func connect_message(message_type: String, obj: Object, function: String) -> voi
 	
 	_message_handlers[message_type].push_back([obj, function])
 
+
 # Disconnect a handler, this assumes that some handler with this message type has been registered
 #	message_type: type of the message, we call obj.function(message) based on this.
 #	obj: object that holds the callback.
@@ -34,9 +35,11 @@ func disconnect_message(message_type: String, obj: Object, function: String) -> 
 	assert(_message_handlers[message_type] != null)
 	_message_handlers[message_type].erase([obj, function])
 
+
 # Disconnect all handlers.
 func disconnect_all_message() -> void:
 	_message_handlers = {}
+
 
 # Emits a message to all handlers, message can be modified by the handlers
 # and it will show up inside the dictionary that was passed by the caller.

@@ -33,6 +33,7 @@ class FileEvaluator:
 	func set_file_path(p_value):
 		file_path = p_value
 
+
 class FilesThatHaveString:
 	extends FileEvaluator
 	
@@ -41,8 +42,10 @@ class FilesThatHaveString:
 	func _init(p_compare: String = ""):
 		_compare = p_compare
 	
+	
 	func _is_match() -> bool:
 		return file_path.find(_compare) != -1
+
 
 class FilesThatAreSubsequenceOf:
 	extends FileEvaluator
@@ -59,6 +62,7 @@ class FilesThatAreSubsequenceOf:
 			return _compare.is_subsequence_of(file_path)
 		return _compare.is_subsequence_ofi(file_path)
 
+
 class FilesThatMatchRegex:
 	extends FileEvaluator
 
@@ -72,16 +76,19 @@ class FilesThatMatchRegex:
 			push_error("Check failed. FilesThatMatchRegex failed to compile regex: " + p_regex_str)
 			return
 	
+	
 	func _is_match() -> bool:
 		if not _regex.is_valid():
 			return false
 		_match = _regex.search(file_path if _compare_full_path else file_path.get_file())
 		return _match != null
 	
+	
 	func _get_value() -> Dictionary:
 		var data = ._get_value()
 		data.match = _match
 		return data
+
 
 class FilesThatExtendResource:
 	extends FileEvaluator
@@ -99,6 +106,7 @@ class FilesThatExtendResource:
 			#warning-ignore:return_value_discarded
 			_exts.erase("tres")
 			_exts.erase("res")
+	
 	
 	func _is_match() -> bool:
 		for a_ext in _exts:
@@ -125,26 +133,34 @@ const SELF_PATH: String = "res://addons/godot-next/global/file_search.gd"
 static func search_string(p_str: String, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatHaveString.new(p_str), p_from_dir, p_recursive)
 
+
 static func search_subsequence(p_str: String, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatAreSubsequenceOf.new(p_str, false), p_from_dir, p_recursive)
+
 
 static func search_subsequence_i(p_str: String, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatAreSubsequenceOf.new(p_str, true), p_from_dir, p_recursive)
 
+
 static func search_regex(p_regex: String, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatMatchRegex.new(p_regex, false), p_from_dir, p_recursive)
+
 
 static func search_regex_full_path(p_regex: String, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatMatchRegex.new(p_regex, true), p_from_dir, p_recursive)
 
+
 static func search_scripts(p_match_func: FuncRef = null, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatExtendResource.new(["Script"], p_match_func), p_from_dir, p_recursive)
+
 
 static func search_scenes(p_match_func: FuncRef = null, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatExtendResource.new(["PackedScene"], p_match_func), p_from_dir, p_recursive)
 
+
 static func search_types(p_match_func: FuncRef = null, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatExtendResource.new(["Script", "PackedScene"], p_match_func), p_from_dir, p_recursive)
+
 
 static func search_resources(p_types: PoolStringArray = ["Resource"], p_match_func: FuncRef = null, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatExtendResource.new(p_types, p_match_func), p_from_dir, p_recursive)

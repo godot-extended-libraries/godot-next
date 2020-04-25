@@ -28,11 +28,13 @@ var _data: Dictionary = {}
 func _init() -> void:
 	resource_name = COLLECTION_NAME
 
+
 func _get(p_property: String):
 	if p_property.begins_with(DATA_PREFIX):
 		var key = p_property.trim_prefix(DATA_PREFIX)
 		return _data.get(key, null)
 	return null
+
 
 func _set(p_property: String, p_value) -> bool:
 	if p_property.begins_with(DATA_PREFIX):
@@ -57,6 +59,7 @@ func _add_element(p_script: Script) -> void:
 	if not _data.has(key):
 		_data[key] = p_script.new()
 
+
 func _refresh_data() -> void:
 	if _type == null:
 		clear()
@@ -67,6 +70,7 @@ func _refresh_data() -> void:
 		if not _class_type.is_type(_type):
 			#warning-ignore:return_value_discarded
 			_data.erase(a_typename)
+
 
 func _export_data_group() -> Array:
 	var list := ._export_data_group()
