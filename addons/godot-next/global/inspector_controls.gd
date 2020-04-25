@@ -1,10 +1,11 @@
 # InspectorControls
 # author: xdgamestudios
 # license: MIT
-# description: A collection of classes and factory methods for generating
-#              Controls oriented towards editing data. Useful for modifying
-#              the EditorInspector or generating your own in-game data-editing
-#              tools.
+# description:
+#	A collection of classes and factory methods for generating
+#	Controls oriented towards editing data. Useful for modifying
+#	the EditorInspector or generating your own in-game data-editing
+#	tools.
 extends Reference
 class_name InspectorControls
 

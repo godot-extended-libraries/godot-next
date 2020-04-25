@@ -152,7 +152,7 @@ static func search_resources(p_types: PoolStringArray = ["Resource"], p_match_fu
 ##### PRIVATE METHODS #####
 
 static func _this() -> Script:
-    return load(SELF_PATH) as Script
+	return load(SELF_PATH) as Script
 
 # p_evaluator: A FileEvaluator type.
 # p_from_dir: The starting location from which to scan.

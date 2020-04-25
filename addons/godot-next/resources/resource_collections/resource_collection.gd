@@ -1,8 +1,9 @@
 # ResourceCollection
 # author: xdgamestudios
 # license: MIT
-# description: An abstract base class for data structures that store Resource objects.
-#              Uses a key-value store, but can also append items.
+# description:
+#	An abstract base class for data structures that store Resource objects.
+#	Uses a key-value store, but can also append items.
 tool
 extends Resource
 class_name ResourceCollection

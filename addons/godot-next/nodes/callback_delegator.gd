@@ -1,31 +1,32 @@
 # CallbackDelegator
 # author: xdgamestudios
 # license: MIT
-# description: Manages a ResourceSet of resources and delegates Node callbacks to each instance.
-#              As a ResourceSet, only one element of any given type is allowed on a single elements node.
+# description:
+#	Manages a ResourceSet of resources and delegates Node callbacks to each instance.
+#	As a ResourceSet, only one element of any given type is allowed on a single elements node.
 # deps:
-# - ResourceSet
-# - PropertyInfo
-# - ClassType
+#	- ResourceSet
+#	- PropertyInfo
+#	- ClassType
 # usage:
-# - Creating:
-#     elements = elements.new()
-# - Adding elements:
-#     elements.add_element(MyResource) # Returns a new or pre-existing instance of the element or null if given an invalid element script.
-# - Checking elements:
-#     elements.has_element(MyResource) # Returns true if the element exists in the collection.
-# - Retrieving elements:
-#     elements.get_element(MyResource) # Returns the element instance of the given type or null if not in the collection.
-# - Removing elements:
-#     elements.remove_element(MyResource) # Removes the element from the collection. Returns true if successful. Else, returns false.
+#	- Creating:
+#		elements = elements.new()
+#	- Adding elements:
+#		elements.add_element(MyResource) # Returns a new or pre-existing instance of the element or null if given an invalid element script.
+#	- Checking elements:
+#		elements.has_element(MyResource) # Returns true if the element exists in the collection.
+#	- Retrieving elements:
+#		elements.get_element(MyResource) # Returns the element instance of the given type or null if not in the collection.
+#	- Removing elements:
+#		elements.remove_element(MyResource) # Removes the element from the collection. Returns true if successful. Else, returns false.
 # notes:
-#     - Public interface of each stored Resource type:
-#         - var owner: Node
-#         - func get_enabled() -> bool
-#     - Initialization Sequence:
-#         1. _awake() called during _enter_tree() after CallbackDelegator initializes owner (for Unity familiarity).
-#         2. _enter_tree() called immediately after (so they are virtually aliases for each other)
-#         3. _ready() called during _ready().
+#		- Public interface of each stored Resource type:
+#			- var owner: Node
+#			- func get_enabled() -> bool
+#		- Initialization Sequence:
+#			1. _awake() called during _enter_tree() after CallbackDelegator initializes owner (for Unity familiarity).
+#			2. _enter_tree() called immediately after (so they are virtually aliases for each other)
+#			3. _ready() called during _ready().
 tool
 extends Node
 class_name CallbackDelegator

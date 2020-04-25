@@ -3,14 +3,16 @@ extends Label
 class_name DebugLabel
 # author: Xrayez
 # license: MIT
-# description: A label which displays a list of property values in any Object
-#              instance, suitable for both in-game and editor debugging.
+# description:
+#	A label which displays a list of property values in any Object
+#	instance, suitable for both in-game and editor debugging.
 # usage:
-#     var debug_label = DebugLabel.new(node)
-#     debug_label.watchv(["position:x", "scale", "rotation"])
+#	var debug_label = DebugLabel.new(node)
+#	debug_label.watchv(["position:x", "scale", "rotation"])
 #
-# todo: Use RichTextLabel or custom drawing for color coding of core data types.
-#       Unfortunately, it doesn't compute its minimum size the same way as a Label
+# todo:
+#	Use RichTextLabel or custom drawing for color coding of core data types.
+#	Unfortunately, it doesn't compute its minimum size the same way as a Label
 
 # Assign a node via inspector. If empty, a parent node is inspected instead.
 export var target_path := NodePath() setget set_target_path
@@ -41,7 +43,7 @@ func _init(p_target: Object = null) -> void:
 	if p_target != null:
 		target = p_target
 
-# 	# TODO: RichTextLabel relevant overrides
+#	# TODO: RichTextLabel relevant overrides
 #	rect_clip_content = false
 #	scroll_active = false
 #	selection_enabled = true

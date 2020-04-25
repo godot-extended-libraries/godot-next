@@ -1,9 +1,9 @@
 # FileSystemLink
 # author: willnationsdev
-# brief_description: A utility for creating links (file/directory, symbolic/hard).
+# description: A utility for creating links (file/directory, symbolic/hard).
 # API details:
-# - All methods' parameters are ordered in Unix fashion, {<target>,<linkpath>}
-# - Methods are aliased so that the parameters are implied by the method name.
+#	- All methods' parameters are ordered in Unix fashion, {<target>,<linkpath>}
+#	- Methods are aliased so that the parameters are implied by the method name.
 extends Reference
 class_name FileSystemLink
 

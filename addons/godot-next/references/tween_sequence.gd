@@ -1,19 +1,20 @@
 # TweenSequence
 # author: KoBeWi
 # license: MIT
-# description: A helper class for easier management and chaining of Tweens.
-#              dynamically from code.
-#              Consult comments above methods to see what they do.
-#              They are marked with ## for easier navigation.
-#              Anything starting with __ should not be accessed.
-#              
-#              Example usage:
-#              var seq := TweenSequence.new(get_tree())
-#              seq.append($Sprite, "modulate", Color.red, 1)
-#              seq.append($Sprite, "modulate", Color(1, 0, 0, 0), 1).set_delay(1)
-#              #This will create a Tween and automatically start it,
-#              #changing the Sprite to red color in one second
-#              #and then making it transparent after a delay.
+# description:
+#	A helper class for easier management and chaining of Tweens.
+#	dynamically from code.
+#	Consult comments above methods to see what they do.
+#	They are marked with ## for easier navigation.
+#	Anything starting with __ should not be accessed.
+#	
+#	Example usage:
+#		var seq := TweenSequence.new(get_tree())
+#		seq.append($Sprite, "modulate", Color.red, 1)
+#		seq.append($Sprite, "modulate", Color(1, 0, 0, 0), 1).set_delay(1)
+#	This will create a Tween and automatically start it,
+#	changing the Sprite to red color in one second
+#	and then making it transparent after a delay.
 
 class_name TweenSequence
 extends Reference

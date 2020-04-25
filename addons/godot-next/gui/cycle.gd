@@ -1,6 +1,6 @@
 # Cycle
 # author: willnationsdev
-# brief_description: Cycles through child nodes without any visibility or container effects.
+# description: Cycles through child nodes without any visibility or container effects.
 
 extends TabContainer
 class_name Cycle, "../icons/icon_cycle.svg"

@@ -1,21 +1,22 @@
 # Behavior
 # author: xdgamestudios
 # license: MIT
-# description: This is an abstract base "Behavior" class for use in the "Behaviors" node class.
-#              "Behaviors" manages "Behavior" resources and calls notification methods that the Behavior implements.
+# description:
+#	This is an abstract base "Behavior" class for use in the "Behaviors" node class.
+#	"Behaviors" manages "Behavior" resources and calls notification methods that the Behavior implements.
 # usage: 
-# - Supported notifications:
-#     _enter_tree() -> void
-#     _exit_tree() -> void
-#     _ready() -> void
-#     _process(p_delta: float) -> void
-#     _physics_process(delta: float) -> void:
-#     _input(event: InputEvent) -> void:
-#     _unhandled_input(event: InputEvent) -> void:
-#     _unhandled_key_input(event: InputEventKey) -> void:
-#     Note:
-#     - If present notifications, are automatically triggered by the owner class.
-#     - If the behavior is disabled its notifications will not be processed. 
+#	- Supported notifications:
+#		_enter_tree() -> void
+#		_exit_tree() -> void
+#		_ready() -> void
+#		_process(p_delta: float) -> void
+#		_physics_process(delta: float) -> void:
+#		_input(event: InputEvent) -> void:
+#		_unhandled_input(event: InputEvent) -> void:
+#		_unhandled_key_input(event: InputEventKey) -> void:
+#	Note:
+#		- If present notifications, are automatically triggered by the owner class.
+#		- If the behavior is disabled its notifications will not be processed. 
 tool
 extends Resource
 class_name Behavior
@@ -84,8 +85,8 @@ func get_enabled() -> bool:
 	return enabled
 
 func set_owner(p_owner: Node) -> void:
-    assert(p_owner) # must be assigned a valid owner at all times, except initially.
-    owner = p_owner
+	assert(p_owner) # must be assigned a valid owner at all times, except initially.
+	owner = p_owner
 
 func get_owner() -> Node:
 	return owner

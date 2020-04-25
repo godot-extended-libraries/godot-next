@@ -3,8 +3,8 @@
 # license: MIT
 # description: Draws a Shape2D using CollisionShape2D's editor plugin handles.
 # notes:
-# - Don't use it as direct child of CollisionBody2D classes unless you intent
-#   to use it as its CollisionShape2D.
+#	- Don't use it as direct child of CollisionBody2D classes unless you intent
+#	  to use it as its CollisionShape2D.
 tool
 extends CollisionShape2D
 class_name Geometry2D

@@ -3,32 +3,32 @@
 # description: Provides inflection tools to pluralize and singularize strings.
 # todo: Add more functionality
 # usage:
-# - Creating Inflector:
-#     inflector = Inflector.new() # new inflector with empty vocabulary
-#     inflector = Inflector.new(vocabulary) # new inflector with vocabulary
-#     Note:
-#     - Inflector with no vocabulary will not be able to apply convertion out-of-the-box.
-# - Creating Vocabulary:
-#     vocabulary = Inflector.Vocabulary.new() # creates new empty vocabulary
-#     vocabulary = Inflector.Vocabulary.build_default_vocabulary()
-#     Note:
-#     - Empty vocabulary can be manually configured with custom rules.
-#     - Default vocabulary will apply convertions for english language.
-# - Get Vocabulary:
-#     vocabulary = inflector.get_vocabulary() # reference to the vocabulary used by the inflector.
-# - Add Rules:
-#     vocabulary.add_plural(rule, replacement) # adds convertion rule to plural
-#     vocabulary.add_singular(rule, replacement) # adds convertion rule to singular
-#     vocabulary.add_irregular(rule, replacement) # adds irregular convertion
-#     vocabulary.add_uncountable(word) # add unconvertable word
-#     Note:
-#     - 'rule' is a String with regex syntax.
-#     - 'replacement' is a String with regex systax.
-# - Using Inflector:
-#     inflector.pluralize(word, p_force = false) # returns the plural of the word
-#     inflector.singularize(word, p_force = false) # returns the singular of the word
-#     Note:
-#     - If the first parameter's state is unknown, use 'p_force = true' to force an unknown term into the desired state.
+#	- Creating Inflector:
+#		inflector = Inflector.new() # new inflector with empty vocabulary
+#		inflector = Inflector.new(vocabulary) # new inflector with vocabulary
+#		Note:
+#		- Inflector with no vocabulary will not be able to apply convertion out-of-the-box.
+#	- Creating Vocabulary:
+#		vocabulary = Inflector.Vocabulary.new() # creates new empty vocabulary
+#		vocabulary = Inflector.Vocabulary.build_default_vocabulary()
+#		Note:
+#		- Empty vocabulary can be manually configured with custom rules.
+#		- Default vocabulary will apply convertions for english language.
+#	- Get Vocabulary:
+#		vocabulary = inflector.get_vocabulary() # reference to the vocabulary used by the inflector.
+#	- Add Rules:
+#		vocabulary.add_plural(rule, replacement) # adds convertion rule to plural
+#		vocabulary.add_singular(rule, replacement) # adds convertion rule to singular
+#		vocabulary.add_irregular(rule, replacement) # adds irregular convertion
+#		vocabulary.add_uncountable(word) # add unconvertable word
+#		Note:
+#		- 'rule' is a String with regex syntax.
+#		- 'replacement' is a String with regex systax.
+#	- Using Inflector:
+#		inflector.pluralize(word, p_force = false) # returns the plural of the word
+#		inflector.singularize(word, p_force = false) # returns the singular of the word
+#		Note:
+#		- If the first parameter's state is unknown, use 'p_force = true' to force an unknown term into the desired state.
 tool
 extends Reference
 class_name Inflector

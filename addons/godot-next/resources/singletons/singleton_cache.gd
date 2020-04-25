@@ -1,7 +1,8 @@
 # author: xdgamestudios
 # license: MIT
-# description: A resource file that is preloaded into memory to allow for accessing
-#              singleton classes project wide using Singletons
+# description:
+#	A resource file that is preloaded into memory to allow for accessing
+#	singleton classes project wide using Singletons
 tool
 extends Resource
 

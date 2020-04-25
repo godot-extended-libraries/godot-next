@@ -1,13 +1,13 @@
 # VBoxItemList
 # author: willnationsdev
-# brief_description: Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.
+# description: Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.
 # API details:
-# - The '_item_added' and '_item_removed' methods may be overridden for custom behaviors.
-# - External nodes can connect to the 'item_added' and 'item_removed' signals for custom reactions.
-# - Note that the node provided in the '_item_removed' virtual method and 'item_removed' signal is free'd after their conclusion.
-# - Note that the virtual methods will execute just ahead of emitting their signal counterpart.
-# - Items may define their own "_get_label" method which returns the string for their label text.
-# - If either 'allow_reordering' or 'editable_labels' is true, labels will not be generated automatically via item_prefix + index.
+#	- The '_item_added' and '_item_removed' methods may be overridden for custom behaviors.
+#	- External nodes can connect to the 'item_added' and 'item_removed' signals for custom reactions.
+#	- Note that the node provided in the '_item_removed' virtual method and 'item_removed' signal is free'd after their conclusion.
+#	- Note that the virtual methods will execute just ahead of emitting their signal counterpart.
+#	- Items may define their own "_get_label" method which returns the string for their label text.
+#	- If either 'allow_reordering' or 'editable_labels' is true, labels will not be generated automatically via item_prefix + index.
 
 extends VBoxContainer
 class_name VBoxItemList, "../icons/icon_v_box_item_list.svg"
@@ -32,7 +32,7 @@ export var item_script: Script = null setget set_item_script
 # The scene for the item. Incompatible with item_script.
 export var item_scene: PackedScene = null setget set_item_scene
 # label: The prefix text before enumeration, e.g. 'Item' results in Item 1, Item 2, etc.
-#        If empty, will generate no labels at all unless the item has '_get_label' implemented.
+#		 If empty, will generate no labels at all unless the item has '_get_label' implemented.
 export var item_prefix: String = "" setget set_item_prefix
 # label: The color of the highlighted (hovered over) label.
 export var label_tint: Color = Color(1, 1, 1, 1) setget set_label_tint

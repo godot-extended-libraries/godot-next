@@ -1,69 +1,71 @@
 # ClassType
 # author: willnationsdev
 # license: MIT
-# description: A class abstraction, both for engine and user-defined types.
-#              Provides inheritance queries, reflection data, and instantiation.
-# todo: Refactor all "maps" and file searches to a formal FileSearch class that
-#       uses a user-provided FuncRef to determine whether to include a file in
-#       the search.
+# description:
+#	A class abstraction, both for engine and user-defined types.
+#	Provides inheritance queries, reflection data, and instantiation.
+# todo:
+#	Refactor all "maps" and file searches to a formal FileSearch class that
+#	uses a user-provided FuncRef to determine whether to include a file in
+#	the search.
 # usage:
-# - Creation:
-#     var ct_name = ClassType.from_name("MyNode") (engine + script classes)
-#     var ct_path = ClassType.from_path("res://my_node.gd") (scripts or scenes)
-#     var ct_object = ClassType.from_object(MyNode) (scripts or scenes)
-#     var ct_any = ClassType.new(<whatever>)
-#     var ct_empty = ClassType.new()
-#     var ct_empty_with_deep_type_map = ClassType.new(null, true)
-#     var ct_shallow_copy = ClassType.new(ct) (copies references to internal type map Dictionaries)
-#     var ct_deep_copy = ClassType.new(ct, false, true) (duplicates internal type map Dictionaries)
-# - Printing:
-#     print(ct.name) # prints engine or script class name
-#     print(ct.to_string()) # prints name or, if an anonymous resource, a PascalCase version of the filename
-# - Type Checks:
-#     if ClassType.static_is_object_instance_of(MyNode, node): # static is_object_instance_of() method for comparisons.
-#     if ClassType.static_is_type(MyNode, "Node"): # static is_type() method for comparisons.
-#     if ct.is_type("Node"): # non-static `is_type`. Assumes first parameter from the ct instance.
-#     if ct.is_object_instance_of(node): # non-static `is_object_instance_of`. Assumes first parameter from the ct instance.
-#     Note:
-#     - Must use Strings for engine classes
-#     - Must use PackedScene instances for scenes
-#     - Must use Script instances for anonymous scripts
-#     - Both Strings and Script instances available for script classes
-#     - If the deep type map has been initialized (refresh_deep_type_map()), then namified paths can be used for anonymous scripts and scenes too.
-# - Validity Checks:
-#     if ct.class_exists() # is named type (engine or script class)
-#     if ct.path_exsts() # is a resource (script or scene)
-#     if ct.is_non_class_res() # is an anonymous resource
-#     if ct.is_valid() # is engine class or resource
-# - Class Info:
-#     var type = ct.get_engine_class() # get base type name: "Node" for Node
-#     var type = ct.get_script_class() # get script type name: "MyNode" for MyNode
-# - Inheritance Checks:
-#     var parent = ct.get_engine_parent() # get CustomType of inherited engine class
-#     var parent = ct.get_script_parent() # get CustomType of inherited script resource
-#     var parent = ct.get_scene_parent() # get CustomType of inherited scene resource
-#     var parent = ct.get_type_parent() # get CustomType of inherited engine/script/scene type
-#     ct.become_parent() # CustomType changes to inherited engine/script/scene type
-# - Type Maps:
-#     var script_map = ct.get_script_map() # 'script_map' is...
-#         Dictionary<name, {
-#             'base': <engine class>
-#             'name': <script class>
-#             'language': <language name>
-#             'path': <file path>
-#         }>
-#     var type_map = ct.get_deep_type_map() # 'type_map' is...
-#         Dictionary<name, {
-#             'name': <class name or generated file name>
-#             'type': <"Script"|"PackedScene">
-#             'path': <file path>
-#         }>
-# - Inheritance Lists:
-#     var list: PoolStringArray = ct.get_inheritors_list() # get all named types that inherit "MyNode" (engine + script classes)
-#     var ct = CustomType.new(list[0]) # works because named types only
-#     
-#     var list: PoolStringArray = ct.get_deep_inheritors_list() # get all types that inherit "MyNode" (engine + script and scene resources, namified paths for anonymous ones)
-#     var ct = ClassType.from_type_dict(type_map[list[0]]) # factory method handles init logic
+#	- Creation:
+#		var ct_name = ClassType.from_name("MyNode") (engine + script classes)
+#		var ct_path = ClassType.from_path("res://my_node.gd") (scripts or scenes)
+#		var ct_object = ClassType.from_object(MyNode) (scripts or scenes)
+#		var ct_any = ClassType.new(<whatever>)
+#		var ct_empty = ClassType.new()
+#		var ct_empty_with_deep_type_map = ClassType.new(null, true)
+#		var ct_shallow_copy = ClassType.new(ct) (copies references to internal type map Dictionaries)
+#		var ct_deep_copy = ClassType.new(ct, false, true) (duplicates internal type map Dictionaries)
+#	- Printing:
+#		print(ct.name) # prints engine or script class name
+#		print(ct.to_string()) # prints name or, if an anonymous resource, a PascalCase version of the filename
+#	- Type Checks:
+#		if ClassType.static_is_object_instance_of(MyNode, node): # static is_object_instance_of() method for comparisons.
+#		if ClassType.static_is_type(MyNode, "Node"): # static is_type() method for comparisons.
+#		if ct.is_type("Node"): # non-static `is_type`. Assumes first parameter from the ct instance.
+#		if ct.is_object_instance_of(node): # non-static `is_object_instance_of`. Assumes first parameter from the ct instance.
+#		Note:
+#		- Must use Strings for engine classes
+#		- Must use PackedScene instances for scenes
+#		- Must use Script instances for anonymous scripts
+#		- Both Strings and Script instances available for script classes
+#		- If the deep type map has been initialized (refresh_deep_type_map()), then namified paths can be used for anonymous scripts and scenes too.
+#	- Validity Checks:
+#		if ct.class_exists() # is named type (engine or script class)
+#		if ct.path_exsts() # is a resource (script or scene)
+#		if ct.is_non_class_res() # is an anonymous resource
+#		if ct.is_valid() # is engine class or resource
+#	- Class Info:
+#		var type = ct.get_engine_class() # get base type name: "Node" for Node
+#		var type = ct.get_script_class() # get script type name: "MyNode" for MyNode
+#	- Inheritance Checks:
+#		var parent = ct.get_engine_parent() # get CustomType of inherited engine class
+#		var parent = ct.get_script_parent() # get CustomType of inherited script resource
+#		var parent = ct.get_scene_parent() # get CustomType of inherited scene resource
+#		var parent = ct.get_type_parent() # get CustomType of inherited engine/script/scene type
+#		ct.become_parent() # CustomType changes to inherited engine/script/scene type
+#	- Type Maps:
+#		var script_map = ct.get_script_map() # 'script_map' is...
+#			Dictionary<name, {
+#				'base': <engine class>
+#				'name': <script class>
+#				'language': <language name>
+#				'path': <file path>
+#			}>
+#		var type_map = ct.get_deep_type_map() # 'type_map' is...
+#			Dictionary<name, {
+#				'name': <class name or generated file name>
+#				'type': <"Script"|"PackedScene">
+#				'path': <file path>
+#			}>
+#	- Inheritance Lists:
+#		var list: PoolStringArray = ct.get_inheritors_list() # get all named types that inherit "MyNode" (engine + script classes)
+#		var ct = CustomType.new(list[0]) # works because named types only
+#		
+#		var list: PoolStringArray = ct.get_deep_inheritors_list() # get all types that inherit "MyNode" (engine + script and scene resources, namified paths for anonymous ones)
+#		var ct = ClassType.from_type_dict(type_map[list[0]]) # factory method handles init logic
 tool
 extends Reference
 class_name ClassType
@@ -660,9 +662,9 @@ func _init_from_path(p_path: String) -> void:
 # otherwise, become whatever the given class is
 # Note:
 # 1. Due to this logic, one cannot set a ClassType to be "Script" or
-#    "PackedScene" with this method.
+#	"PackedScene" with this method.
 # 2. Due to this logic, one cannot become a specialized type of PackedScene
-#    resource that has its own script.
+#	resource that has its own script.
 func _init_from_object(p_object: Object) -> void:
 	var initialized: bool = false
 	if not p_object:

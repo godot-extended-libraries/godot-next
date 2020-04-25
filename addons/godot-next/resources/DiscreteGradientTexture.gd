@@ -3,8 +3,8 @@
 # license: MIT
 # description: Has the same functionality as the GradientTexture but does not interpolate colors.
 # todos:
-# - Write a more elegant way of updating the texture than changing the resolution
-# - Persuade godot to repeat the texture vertically in the inspector
+#	- Write a more elegant way of updating the texture than changing the resolution
+#	- Persuade godot to repeat the texture vertically in the inspector
 tool
 extends ImageTexture
 class_name DiscreteGradientTexture

@@ -1,11 +1,12 @@
 # ResourceArray
 # author: xdgamestudios
 # license: MIT
-# description: A ResourceCollection implementation that manages an Array of Resources.
-#              One can add multiple instances of any given Resource type.
+# description:
+#	A ResourceCollection implementation that manages an Array of Resources.
+#	One can add multiple instances of any given Resource type.
 # deps:
-# - ResourceCollection
-# - PropertyInfo
+#	- ResourceCollection
+#	- PropertyInfo
 tool
 extends ResourceCollection
 class_name ResourceArray
