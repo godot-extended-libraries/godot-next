@@ -1,0 +1,218 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Array2D",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/array_2d.gd"
+}, {
+"base": "Resource",
+"class": "Behavior",
+"language": "GDScript",
+"path": "res://addons/godot-next/resources/behavior.gd"
+}, {
+"base": "Reference",
+"class": "BitFlag",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/bit_flag.gd"
+}, {
+"base": "Reference",
+"class": "Bitset",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/bitset.gd"
+}, {
+"base": "Reference",
+"class": "CSVFile",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/csv_file.gd"
+}, {
+"base": "Node",
+"class": "CallbackDelegator",
+"language": "GDScript",
+"path": "res://addons/godot-next/nodes/callback_delegator.gd"
+}, {
+"base": "Reference",
+"class": "ClassType",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/class_type.gd"
+}, {
+"base": "TabContainer",
+"class": "Cycle",
+"language": "GDScript",
+"path": "res://addons/godot-next/gui/cycle.gd"
+}, {
+"base": "Label",
+"class": "DebugLabel",
+"language": "GDScript",
+"path": "res://addons/godot-next/gui/debug_label.gd"
+}, {
+"base": "ImageTexture",
+"class": "DiscreteGradientTexture",
+"language": "GDScript",
+"path": "res://addons/godot-next/resources/DiscreteGradientTexture.gd"
+}, {
+"base": "Reference",
+"class": "EditorTools",
+"language": "GDScript",
+"path": "res://addons/godot-next/global/editor_tools.gd"
+}, {
+"base": "Reference",
+"class": "FileSearch",
+"language": "GDScript",
+"path": "res://addons/godot-next/global/file_search.gd"
+}, {
+"base": "Reference",
+"class": "FileSystemLink",
+"language": "GDScript",
+"path": "res://addons/godot-next/global/file_system_link.gd"
+}, {
+"base": "CollisionShape2D",
+"class": "Geometry2D",
+"language": "GDScript",
+"path": "res://addons/godot-next/2d/geometry_2d.gd"
+}, {
+"base": "Reference",
+"class": "Icons",
+"language": "GDScript",
+"path": "res://addons/godot-next/singletons/icons.gd"
+}, {
+"base": "Reference",
+"class": "Inflector",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/inflector.gd"
+}, {
+"base": "Reference",
+"class": "InspectorControls",
+"language": "GDScript",
+"path": "res://addons/godot-next/global/inspector_controls.gd"
+}, {
+"base": "Reference",
+"class": "MessageDispatcher",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/message_dispatcher.gd"
+}, {
+"base": "Node",
+"class": "MessageDispatcherWrapper",
+"language": "GDScript",
+"path": "res://addons/godot-next/nodes/message_dispatcher_wrapper.gd"
+}, {
+"base": "Resource",
+"class": "PhysicsLayers",
+"language": "GDScript",
+"path": "res://addons/godot-next/global/physics_layers.gd"
+}, {
+"base": "Reference",
+"class": "ProjectTools",
+"language": "GDScript",
+"path": "res://addons/godot-next/global/project_tools.gd"
+}, {
+"base": "Reference",
+"class": "PropertyInfo",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/property_info.gd"
+}, {
+"base": "ResourceCollection",
+"class": "ResourceArray",
+"language": "GDScript",
+"path": "res://addons/godot-next/resources/resource_collections/resource_array.gd"
+}, {
+"base": "Resource",
+"class": "ResourceCollection",
+"language": "GDScript",
+"path": "res://addons/godot-next/resources/resource_collections/resource_collection.gd"
+}, {
+"base": "ResourceCollection",
+"class": "ResourceSet",
+"language": "GDScript",
+"path": "res://addons/godot-next/resources/resource_collections/resource_set.gd"
+}, {
+"base": "Reference",
+"class": "Singletons",
+"language": "GDScript",
+"path": "res://addons/godot-next/global/singletons.gd"
+}, {
+"base": "Line2D",
+"class": "Trail2D",
+"language": "GDScript",
+"path": "res://addons/godot-next/2d/trail_2d.gd"
+}, {
+"base": "ImmediateGeometry",
+"class": "Trail3D",
+"language": "GDScript",
+"path": "res://addons/godot-next/3d/trail_3d.gd"
+}, {
+"base": "Reference",
+"class": "TweenSequence",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/tween_sequence.gd"
+}, {
+"base": "VBoxContainer",
+"class": "VBoxItemList",
+"language": "GDScript",
+"path": "res://addons/godot-next/gui/v_box_item_list.gd"
+}, {
+"base": "Reference",
+"class": "Variant",
+"language": "GDScript",
+"path": "res://addons/godot-next/global/variant.gd"
+} ]
+_global_script_class_icons={
+"Array2D": "",
+"Behavior": "",
+"BitFlag": "",
+"Bitset": "",
+"CSVFile": "",
+"CallbackDelegator": "",
+"ClassType": "",
+"Cycle": "res://addons/godot-next/icons/icon_cycle.svg",
+"DebugLabel": "",
+"DiscreteGradientTexture": "",
+"EditorTools": "",
+"FileSearch": "",
+"FileSystemLink": "",
+"Geometry2D": "",
+"Icons": "",
+"Inflector": "",
+"InspectorControls": "",
+"MessageDispatcher": "",
+"MessageDispatcherWrapper": "",
+"PhysicsLayers": "",
+"ProjectTools": "",
+"PropertyInfo": "",
+"ResourceArray": "",
+"ResourceCollection": "",
+"ResourceSet": "",
+"Singletons": "",
+"Trail2D": "res://addons/godot-next/icons/icon_trail_2d.svg",
+"Trail3D": "res://addons/godot-next/icons/icon_trail_3d.svg",
+"TweenSequence": "",
+"VBoxItemList": "res://addons/godot-next/icons/icon_v_box_item_list.svg",
+"Variant": ""
+}
+
+[application]
+
+config/name="Godot Node Extensions"
+config/description="Godot Node Extensions, AKA Godot NExt.
+Contains many script classes that extend Godot with new functionality."
+run/main_scene="res://demo/demo.tscn"
+config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "godot-next" )
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_environment="res://default_env.tres"

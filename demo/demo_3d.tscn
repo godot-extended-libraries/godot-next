@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/godot-next/3d/trail_3d.gd" type="Script" id=1]
+[ext_resource path="res://demo/scripts/wandering_node_3d.gd" type="Script" id=2]
+
+[node name="Demo3D" type="Spatial"]
+
+[node name="WanderingNode3D" type="Spatial" parent="."]
+script = ExtResource( 2 )
+
+[node name="Trail3D" type="ImmediateGeometry" parent="WanderingNode3D"]
+script = ExtResource( 1 )
+length = 5.0
+max_radius = 0.25
+density_lengthwise = 50
+density_around = 20
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 2, 8 )
