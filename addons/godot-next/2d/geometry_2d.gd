@@ -7,7 +7,7 @@
 #	  to use it as its CollisionShape2D.
 tool
 extends CollisionShape2D
-class_name Geometry2D
+class_name Geometry2D, "../icons/icon_geometry_2d.svg"
 
 ##### CLASSES #####
 
