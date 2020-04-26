@@ -57,6 +57,7 @@ class Rule extends Reference:
 			return null
 		return _regex.sub(p_word, _replacement)
 
+
 class Vocabulary extends Reference:
 	
 	##### PROPERTIES #####
@@ -70,17 +71,22 @@ class Vocabulary extends Reference:
 	func get_plurals() -> Array:
 		return _plurals
 	
+	
 	func get_singulars() -> Array:
 		return _singulars
+	
 	
 	func get_uncountables() -> Array:
 		return _uncountables
 	
+	
 	func add_plural(p_rule: String, p_replacement: String) -> void:
 		_plurals.append(Rule.new(p_rule, p_replacement))
 	
+	
 	func add_singular(p_rule: String, p_replacement: String) -> void:
 		_singulars.append(Rule.new(p_rule, p_replacement))
+	
 	
 	func add_irregular(p_singular: String, p_plural: String, p_match_ending: bool = true) -> void:
 		if p_match_ending:
@@ -94,11 +100,14 @@ class Vocabulary extends Reference:
 			add_plural("^%s$" % p_singular, p_plural)
 			add_singular("^%s$" % p_plural, p_singular)
 	
+	
 	func add_uncountable(p_word: String) -> void:
 		_uncountables.append(p_word.to_lower())
 	
+	
 	func is_uncountable(p_word: String) -> bool:
 		return _uncountables.has(p_word.to_lower())
+	
 	
 	static func build_default_vocabulary() -> Vocabulary:
 		
@@ -244,6 +253,7 @@ func _init(p_vocabulary = null) -> void:
 func get_vocabulary() -> Vocabulary:
 	return _vocabulary
 
+
 func pluralize(p_word: String, p_force: bool = false) -> String:
 	var result = apply_rules(_vocabulary.get_plurals(), p_word)
 	
@@ -258,6 +268,7 @@ func pluralize(p_word: String, p_force: bool = false) -> String:
 	
 	return result
 
+
 func singularize(p_word: String, p_force: bool = false) -> String:
 	var result = apply_rules(_vocabulary.get_singulars(), p_word)
 	
@@ -271,6 +282,7 @@ func singularize(p_word: String, p_force: bool = false) -> String:
 		return p_word
 	
 	return result
+
 
 func apply_rules(p_rules: Array, p_word: String):
 	if not p_word:

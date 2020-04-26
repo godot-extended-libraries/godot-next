@@ -29,12 +29,14 @@ static func fetch(p_script: Script) -> Object:
 			cache[p_script] = p_script.new()
 	return cache[p_script]
 
+
 # Returns a singleton by its class_name as a String
 static func fetchs(p_name: String) -> Object:
 	var ct = ClassType.new(p_name)
 	if ct.res:
 		return fetch(ct.res)
 	return null
+
 
 # Returns an editor-only singleton by its class name
 static func fetch_editor(p_class: GDScriptNativeClass) -> Object:
@@ -47,6 +49,7 @@ static func fetch_editor(p_class: GDScriptNativeClass) -> Object:
 		return cache[p_class]
 	return null
 
+
 # Remove a singleton from the cache and any paths associated with it.
 static func erase(p_script: Script) -> bool:
 	var cache: Dictionary = SINGLETON_CACHE.get_cache()
@@ -56,6 +59,7 @@ static func erase(p_script: Script) -> bool:
 	paths.erase(p_script)
 	return erased
 
+
 static func save(p_script: Script) -> void:
 	var paths: Dictionary = SINGLETON_CACHE.get_paths()
 	if not paths.has(p_script):
@@ -63,6 +67,7 @@ static func save(p_script: Script) -> void:
 	var cache: Dictionary = SINGLETON_CACHE.get_cache()
 	#warning-ignore:return_value_discarded
 	ResourceSaver.save(paths[p_script], cache[p_script])
+
 
 static func save_all() -> void:
 	var cache: Dictionary = SINGLETON_CACHE.get_cache()
@@ -75,6 +80,7 @@ static func save_all() -> void:
 
 static func _get_persistent_path(p_script: Script):
 	return p_script.get("SELF_RESOURCE")
+
 
 # Register all editor-only singletons
 static func _register_editor_singletons(plugin: EditorPlugin):

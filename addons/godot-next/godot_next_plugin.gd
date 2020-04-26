@@ -11,5 +11,6 @@ func _enter_tree() -> void:
 	delegation_inspector_plugin = DelegationInspectorPlugin.new()
 	add_inspector_plugin(delegation_inspector_plugin)
 
+
 func _exit_tree() -> void:
 	remove_inspector_plugin(delegation_inspector_plugin)

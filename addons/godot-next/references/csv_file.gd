@@ -44,13 +44,16 @@ func _init(p_sep: String = DEFAULT_SEP, p_quote: String = DEFAULT_QUOTE, p_uses_
 	_quote = p_quote
 	_uses_map = p_uses_map
 
+
 func _get(p_property):
 	if _map.has(p_property):
 		return _map[p_property]
 
+
 func _set(p_property, p_value):
 	if _map.has(p_property):
 		_map[p_property] = p_value
+
 
 func _get_property_list():
 	var ret := []
@@ -103,6 +106,7 @@ func load(p_filepath: String) -> int:
 	emit_signal("file_loaded", p_filepath)
 	return OK
 
+
 func save(p_filepath: String) -> int:
 	var f := File.new()
 	var err := f.open(p_filepath, File.WRITE)
@@ -121,17 +125,22 @@ func save(p_filepath: String) -> int:
 	emit_signal("file_saved", p_filepath)
 	return OK
 
+
 func get_headers() -> Dictionary:
 	return _headers
+
 
 func get_map() -> Dictionary:
 	return _map
 
+
 func get_array2d() -> Array2D:
 	return _array
 
+
 func map_has_value(p_key: String, p_header: String) -> bool:
 	return _map.has(p_key) and _headers.has(p_header)
+
 
 func map_get_value(p_key: String, p_header: String):
 	if not _uses_map:
@@ -140,6 +149,7 @@ func map_get_value(p_key: String, p_header: String):
 	if not map_has_value(p_key, p_header):
 		return null
 	return _map[p_key][_headers[p_header]]
+
 
 func map_set_value(p_key: String, p_header: String, p_value):
 	if not _uses_map:

@@ -38,9 +38,11 @@ func resize(size: int, default_state: bool = false, enforce_soft_size: bool = tr
 	for i in range(old_masks, bitmasks.size()):
 		bitmasks[i] = ~0 if default_state else 0
 
+
 func check_bit(index: int) -> bool:
 	assert(index < bits)
 	return bitmasks[index / MASK_SIZE] & (1 << (index % MASK_SIZE)) != 0
+
 
 func set_bit(index: int, state: bool) -> void:
 	assert(index < bits)
@@ -49,9 +51,11 @@ func set_bit(index: int, state: bool) -> void:
 	else:
 		bitmasks[index / MASK_SIZE] &= ~(1 << (index % MASK_SIZE))
 
+
 func flip_bit(index: int) -> void:
 	assert(index < bits)
 	set_bit(index, !check_bit(index))
+
 
 func print_bits(multiline: bool = true) -> void:
 	if multiline:

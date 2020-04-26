@@ -29,10 +29,12 @@ func _ready():
 	for i in range(density_lengthwise):
 		points.append(global_transform.origin)
 
+
 func _process(_delta):
 	update_trail()
 	render_trail()
-	
+
+
 func update_trail():
 	var ind = 0
 	var last_p = global_transform.origin
@@ -46,6 +48,7 @@ func update_trail():
 		last_p = p
 		points[ind] = p
 		ind += 1
+
 
 func render_trail():
 	clear()

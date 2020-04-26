@@ -178,7 +178,7 @@ _global_script_class_icons={
 "EditorTools": "",
 "FileSearch": "",
 "FileSystemLink": "",
-"Geometry2D": "",
+"Geometry2D": "res://addons/godot-next/icons/icon_geometry_2d.svg",
 "Icons": "",
 "Inflector": "",
 "InspectorControls": "",

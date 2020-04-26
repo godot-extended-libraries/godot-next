@@ -28,11 +28,13 @@ var _data := []
 func _init() -> void:
 	resource_name = COLLECTION_NAME
 
+
 func _get(p_property: String):
 	if p_property.begins_with(DATA_PREFIX):
 		var index := int(p_property.trim_prefix(DATA_PREFIX + "item_"))
 		return _data[index] if index < _data.size() else null
 	return null
+
 
 func _set(p_property, p_value):
 	if p_property.begins_with(DATA_PREFIX):
@@ -54,6 +56,7 @@ func _set(p_property, p_value):
 func _add_element(script) -> void:
 	_data.append(script.new())
 
+
 func _refresh_data() -> void:
 	if _type == null:
 		clear()
@@ -62,6 +65,7 @@ func _refresh_data() -> void:
 	for a_resource in data_cache:
 		if not ClassType.new(a_resource).is_type(_type):
 			_data.erase(a_resource)
+
 
 func _export_data_group() -> Array:
 	var list := ._export_data_group()

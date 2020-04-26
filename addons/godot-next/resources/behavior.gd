@@ -81,12 +81,15 @@ func set_enabled(p_enable: bool) -> void:
 		_on_disable()
 		owner._remove_from_callbacks()
 
+
 func get_enabled() -> bool:
 	return enabled
 
+
 func set_owner(p_owner: Node) -> void:
-	assert(p_owner) # must be assigned a valid owner at all times, except initially.
+	assert(p_owner) # Must be assigned a valid owner at all times, except initially.
 	owner = p_owner
+
 
 func get_owner() -> Node:
 	return owner

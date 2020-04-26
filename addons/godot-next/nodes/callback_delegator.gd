@@ -62,8 +62,10 @@ var _class_type: ClassType = ClassType.new()
 func _get_property_list() -> Array:
 	return [ PropertyInfo.new_resource("_elements").to_dict() ]
 
+
 func _ready() -> void:
 	_handle_notification("_ready")
+
 
 # Initialize every element and de-activate any non-essential CallbackDelegator notifications.
 func _enter_tree() -> void:	
@@ -75,20 +77,26 @@ func _enter_tree() -> void:
 
 	_handle_notification("_enter_tree")
 
+
 func _exit_tree() -> void:
 	_handle_notification("_exit_tree")
+
 
 func _process(delta: float) -> void:
 	_handle_notification("_process", delta)
 
+
 func _physics_process(delta: float) -> void:
 	_handle_notification("_physics_process", delta)
+
 
 func _input(event: InputEvent) -> void:
 	_handle_notification("_input", event)
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	_handle_notification("_unhandled_input", event)
+
 
 func _unhandled_key_input(event: InputEventKey) -> void:
 	_handle_notification("_unhandled_key_input", event)
@@ -121,17 +129,20 @@ func add_element(p_type: Script) -> Resource:
 	
 	return element
 
+
 # Return the element with the same type as p_type.
 func get_element(p_type: Script) -> Resource:
 	var elements = _elements.get_data()
 	_class_type.res = p_type
 	return elements.get(_class_type.get_script_class(), null)
 
+
 # Returns true if the element exists in the internal collection.
 func has_element(p_type: Script) -> bool:
 	var elements = _elements.get_data()
 	_class_type.res = p_type
 	return elements.has(_class_type.get_script_class())
+
 
 # Returns true if successfully able to remove the element from the internal collection. Else, returns false.
 func remove_element(p_type: Script) -> bool:
@@ -143,9 +154,11 @@ func remove_element(p_type: Script) -> bool:
 		return elements.erase(_class_type.get_script_class())
 	return false
 
+
 # The order of returned Scripts is not deterministic
 func get_element_types() -> Array:
 	return _elements.get_data().keys()
+
 
 # The order of returned Resources is not deterministic
 func get_elements() -> Array:
@@ -171,17 +184,20 @@ func _initialize_element(p_element: Resource) -> void:
 	p_element.connect("script_changed", self, "_refresh_callbacks", [p_element])
 	_add_to_callbacks(p_element)
 
+
 # Register necessary callbacks for the element.
 func _add_to_callbacks(p_element: Resource) -> void:
 	for a_callback in _callbacks:
 		if p_element.has_method(a_callback) and p_element.get_enabled():
 			_callbacks[a_callback][p_element] = null
 
+
 # Unregister all callbacks for the element.
 func _remove_from_callbacks(p_element: Resource) -> void:
 	for a_callback in _callbacks:
 		_callbacks[a_callback].erase(p_element)
 	_check_for_empty_callbacks()
+
 
 # Only delegate the call if a callback-implementing, enabled resource relies on it.
 func _check_for_empty_callbacks() -> void:
@@ -198,6 +214,7 @@ func _check_for_empty_callbacks() -> void:
 			"_unhandled_key_input":
 				set_process_unhandled_key_input(not _callbacks[a_callback].empty())
 
+
 # Sets up the owner instance on the Behavior.
 func __awake(p_element: Resource) -> void:
 	p_element.owner = self
@@ -210,6 +227,7 @@ func __awake(p_element: Resource) -> void:
 func _on_element_script_change(p_element: Resource) -> void:
 	_remove_from_callbacks(p_element)
 	_add_to_callbacks(p_element)
+
 
 func _set_base_type_behavior() -> void:
 	_class_type.name = "Behavior"

@@ -34,6 +34,7 @@ func _get(p_property: String):
 			return _type
 	return null
 
+
 func _set(p_property: String, p_value) -> bool:
 	match p_property.trim_prefix(SETUP_PREFIX):
 		"base_type":
@@ -42,6 +43,7 @@ func _set(p_property: String, p_value) -> bool:
 				property_list_changed_notify()
 			return true
 	return false
+
 
 func _get_property_list() -> Array:
 	var list := []
@@ -62,17 +64,21 @@ func _get_property_list() -> Array:
 func _add_element(p_script: Script) -> void:
 	assert(false)
 
+
 # Refresh the data upon type change.
 func _refresh_data() -> void:
 	assert(false)
+
 
 # Export properties within the 'data' group
 func _export_data_group() -> Array:
 	return [ PropertyInfo.new_editor_only(DATA_PREFIX + "dropdown").to_dict() ]
 
+
 # Export properties within the 'setup' group
 func _export_setup_group() -> Array:
 	return [ PropertyInfo.new_resource(SETUP_PREFIX + "base_type", "Script").to_dict() ] if not _type_readonly else []
+
 
 # Injects controls to the 'EditorInspectorPlugin'
 func _parse_property(p_plugin: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> bool:
@@ -100,6 +106,7 @@ func _instantiate_script(p_script: Script) -> Resource:
 		push_error("Must assign non-Script Resource instances. Fallback error: cannot auto-instantiate non-Resource scripts into ResourceCollection.")
 	return res
 
+
 func _find_inheritors() -> Dictionary:
 	_class_type.res = _type
 	var list = _class_type.get_deep_inheritors_list()
@@ -121,14 +128,17 @@ func _on_dropdown_selector_selected(dropdown_selector):
 func get_base_type() -> Script:
 	return _type
 
+
 func set_base_type(p_type: Script) -> void:
 	if _type == p_type:
 		return
 	_type = p_type
 	property_list_changed_notify()
 
+
 func is_type_readonly() -> bool:
 	return _type_readonly
+
 
 func set_type_readonly(read_only: bool) -> void:
 	if _type_readonly == read_only:

@@ -60,6 +60,7 @@ func set_color(new_color: Color) -> void:
 	color = new_color
 	update()
 
+
 func set_offset(offset: Vector2) -> void:
 	offset_position = offset
 	update()

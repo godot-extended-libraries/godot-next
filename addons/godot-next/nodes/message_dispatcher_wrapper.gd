@@ -21,13 +21,16 @@ var _message_dispatcher = MessageDispatcher.new()
 func connect_message(message_type: String, obj: Object, function: String) -> void:
 	_message_dispatcher.connect_message(message_type, obj, function)
 
+
 # See same function on MessageDispatcher
 func disconnect_message(message_type: String, obj: Object, function: String) -> void:
 	_message_dispatcher.disconnect_message(message_type, obj, function)
 
+
 # See same function on MessageDispatcher
 func disconnect_all_message() -> void:
 	_message_dispatcher.disconnect_all_message()
+
 
 # See same function on MessageDispatcher
 func emit_message(message_type: String, message_data: Dictionary) -> bool:

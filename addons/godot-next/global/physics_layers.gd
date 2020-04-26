@@ -27,6 +27,7 @@ static func setup() -> void:
 			var layer_key : String = prefix.plus_file(layer_name)
 			_PHYSICS_LAYERS_BIT[layer_key] = i-1
 
+
 # Get the corresponding bit of the layer named <layer_name>
 static func _get_physics_layer_index(layer_name: String) -> int:
 	if not _PHYSICS_LAYERS_BIT.has(layer_name):
@@ -43,6 +44,7 @@ static func get_physics_layer(layer_names: Array, layer_type : int = Physics2D) 
 		var layer_bit : int = get_physics_layer_index(layer_names[i], layer_type)
 		res |= 1 << layer_bit
 	return res
+
 
 static func get_physics_layer_index(layer_name: String, layer_type : int = Physics2D) -> int:
 	var res : int

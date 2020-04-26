@@ -87,8 +87,8 @@ func _init(p_title: String = "", p_item_prefix: String = "", p_type: Resource = 
 	
 	item_prefix = p_item_prefix
 
-#warning-ignore:unused_argument
-func _process(p_delta: float):
+
+func _process(_delta: float):
 	if not get_global_rect().has_point(get_global_mouse_position()):
 		for a_child in content.get_children():
 			(a_child.get_node("ItemEdit") as LineEdit).hide()
@@ -111,7 +111,6 @@ func _item_removed(p_index: int, p_control: Control):
 ##### PUBLIC METHODS #####
 
 func insert_item(p_index: int) -> Control:
-	
 	var node: Control = _get_node_from_type()
 	if not node:
 		return null
@@ -167,13 +166,16 @@ func insert_item(p_index: int) -> Control:
 	
 	return node
 
+
 func get_item(p_index: int) -> Control:
 	if p_index < 0 or p_index >= len(content.get_children()):
 		return null
 	return content.get_child(p_index).get_node("Item") as Control
 
+
 func append_item():
 	return insert_item(-1)
+
 
 func remove_item(p_idx: int):
 	var node := content.get_child(p_idx) as HBoxContainer
@@ -190,6 +192,7 @@ func remove_item(p_idx: int):
 
 func _on_remove_item(p_del_btn: ToolButton):
 	remove_item(p_del_btn.get_parent().get_index())
+
 
 func _on_slide_gui_input(p_event: InputEvent, p_rect: TextureRect):
 	if p_event is InputEventMouseButton:
@@ -239,6 +242,7 @@ func _on_hbox_gui_input(p_event: InputEvent, p_hbox: HBoxContainer):
 				#warning-ignore:return_value_discarded
 				del_btn.connect("pressed", self, "remove_item", [prev_idx])
 
+
 func _on_edit_text_entered(p_text: String, p_edit: LineEdit, p_label: Label):
 	p_label.text = p_text
 	p_label.show()
@@ -254,6 +258,7 @@ func _get_node_from_type() -> Control:
 	else:
 		return null
 
+
 func _reset_prefixes():
 	var index: int = 0
 	for hbox in content.get_children():
@@ -262,6 +267,7 @@ func _reset_prefixes():
 			a_label = (hbox as HBoxContainer).get_node("ItemLabel") as Label
 		_reset_prefix_on_label(a_label, index)
 		index += 1
+
 
 func _reset_prefix_on_label(p_label: Label, p_index: int = -1):
 	if not p_label:
@@ -282,6 +288,7 @@ func _reset_prefix_on_label(p_label: Label, p_index: int = -1):
 		p_label.show()
 	else:
 		p_label.hide()
+
 
 func _validate_item_type(p_res: Resource) -> bool:
 	if not p_res:
@@ -313,28 +320,34 @@ func set_title(p_value: String):
 	title = p_value
 	label.text = title
 
+
 func set_item_prefix(p_value: String):
 	item_prefix = p_value
 	if not (allow_reordering or editable_labels):
 		_reset_prefixes()
 
+
 func set_item_script(p_value: Script):
 	if _validate_item_type(p_value):
 		item_script = p_value
 
+
 func set_item_scene(p_value: PackedScene):
 	if _validate_item_type(p_value):
 		item_scene = p_value
+
 
 func set_allow_reordering(p_value: bool):
 	allow_reordering = p_value
 	if _hovered_item:
 		(_hovered_item.get_node("ItemSlide") as TextureRect).set_visible(p_value)
 
+
 func set_label_tint(p_value: Color):
 	label_tint = p_value
 	if _hovered_item:
 		(_hovered_item.get_node("ItemLabel") as Label).modulate = label_tint
+
 
 func set_deletable_items(p_value: bool):
 	deletable_items = p_value
