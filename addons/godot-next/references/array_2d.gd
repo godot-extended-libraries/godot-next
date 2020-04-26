@@ -1,6 +1,6 @@
 # Array2D
 # author: willnationsdev
-# brief_description: A 2D Array class
+# description: A 2D Array class
 extends Reference
 class_name Array2D
 

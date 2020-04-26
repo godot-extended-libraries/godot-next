@@ -2,7 +2,7 @@
 # license: MIT
 # description: An API for accessing singletons
 # deps:
-# - singleton_cache.tres
+#	- singleton_cache.tres
 tool
 extends Reference
 class_name Singletons

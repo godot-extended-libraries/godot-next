@@ -2,21 +2,21 @@
 # author: willnationsdev
 # brief description: Creates a variable-length trail that tracks the "target" node.
 # API details:
-# - Use CanvasItem.show_behind_parent or Node2D.z_index (Inspector) to control its layer visibility
-# - 'target' and 'target_path' (the 'target vars') will update each other as they are modified
-# - If you assign an empty 'target var', the value will automatically update to grab the parent.
-#     - To completely turn off the Trail2D, set its `trail_length` to 0
-# - The node will automatically update its target vars when it is moved around in the tree
-# - You can set the "persistence" mode to have it...
-#     - vanish the trail over time (Off)
-#     - persist the trail forever, unless modified directly (Always)
-#     - persist conditionally:
-#         - persist automatically during movement and then shrink over time when you stop
-#         - persist according to your own custom logic:
-#             - use `bool _should_grow()` to return under what conditions
-#               a point should be added underneath the target.
-#             - use `bool _should_shrink()` to return under what conditions
-#               the degen_rate should be removed from the trail's list of points.
+#	- Use CanvasItem.show_behind_parent or Node2D.z_index (Inspector) to control its layer visibility
+#	- 'target' and 'target_path' (the 'target vars') will update each other as they are modified
+#	- If you assign an empty 'target var', the value will automatically update to grab the parent.
+#		- To completely turn off the Trail2D, set its `trail_length` to 0
+#	- The node will automatically update its target vars when it is moved around in the tree
+#	- You can set the "persistence" mode to have it...
+#		- vanish the trail over time (Off)
+#		- persist the trail forever, unless modified directly (Always)
+#		- persist conditionally:
+#			- persist automatically during movement and then shrink over time when you stop
+#			- persist according to your own custom logic:
+#				- use `bool _should_grow()` to return under what conditions
+#				  a point should be added underneath the target.
+#				- use `bool _should_shrink()` to return under what conditions
+#				  the degen_rate should be removed from the trail's list of points.
 
 extends Line2D
 class_name Trail2D, "../icons/icon_trail_2d.svg"
@@ -26,14 +26,14 @@ class_name Trail2D, "../icons/icon_trail_2d.svg"
 ##### CONSTANTS #####
 
 enum Persistence {
-	OFF,        # Do not persist. Remove all points after the trail_length.
-	ALWAYS,     # Always persist. Do not remove any points.
-	CONDITIONAL # Sometimes persist. Choose an algorithm for when to add and remove points.
+	OFF,         # Do not persist. Remove all points after the trail_length.
+	ALWAYS,	     # Always persist. Do not remove any points.
+	CONDITIONAL, # Sometimes persist. Choose an algorithm for when to add and remove points.
 }
 
 enum PersistWhen {
 	ON_MOVEMENT, # Add points during movement and remove points when not moving.
-	CUSTOM       # Override _should_grow() and _should_shrink() to define when to add/remove points.
+	CUSTOM,	     # Override _should_grow() and _should_shrink() to define when to add/remove points.
 }
 
 ##### PROPERTIES #####

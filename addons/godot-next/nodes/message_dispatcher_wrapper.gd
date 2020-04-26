@@ -2,9 +2,10 @@
 # author: MunWolf (Rikhardur Bjarni Einarsson)
 # license: MIT
 # copyright: Copyright (c) 2019 Rikhardur Bjarni Einarsson
-# brief_description: A wrapper for MessageDispatcher that is extendable on a Node,
-#                    people can also use this as a template to implement it on
-#                    their own if they want to extend something else.
+# description:
+#	A wrapper for MessageDispatcher that is extendable on a Node,
+#	people can also use this as a template to implement it on
+#	their own if they want to extend something else.
 
 extends Node
 

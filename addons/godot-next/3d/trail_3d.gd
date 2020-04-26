@@ -2,9 +2,9 @@
 # author: miziziziz
 # brief description: Creates a variable-length trail on an ImmediateGeometry node.
 # API details:
-# - density_lengthwise: number of vertex loops in trail
-# - density_around: number of vertexes in each loop
-# - shape: curve used to shape trail, right click on this in inspector to see curve options
+#	- density_lengthwise: number of vertex loops in trail
+#	- density_around: number of vertexes in each loop
+#	- shape: curve used to shape trail, right click on this in inspector to see curve options
 
 extends ImmediateGeometry
 class_name Trail3D, "../icons/icon_trail_3d.svg"
@@ -117,4 +117,3 @@ func render_trail():
 			add_vertex(verts[verts.size() - 1][nxt])
 			add_vertex(last_p)
 	end()
-	

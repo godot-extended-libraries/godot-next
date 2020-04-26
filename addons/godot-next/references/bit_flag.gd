@@ -4,26 +4,26 @@
 # description: A class that allows abstracts away the complexity of handling bit flag enum types.
 # todo: Implement additional features
 # usage:
-# - Initial setup:
-#   enum my_enum { a, b, c }
+#	- Initial setup:
+#		enum my_enum { a, b, c }
 #
-# - Creating:
-#     bf = BitFlag.new(my_enum, to_flag = false) # Creates a new BitFlag given an enum. If 'to_flag' converts to flag enum
-# - Flag access:
-#     bf.<name> = true/false # Allows to set the current bit
-# - Set/Put flag:
-#     bf.put(bf.a) # Enables the flag 'a'. Another BitFlag can be provided.
-# - Clear flag:
-#     bf.clear(bf.b) # Disables the flag 'b'. Another BitFlag can be provided.
-# - Toggle flag:
-#     bf.toggle(bf.b) # Inverts the flag 'b'. Another BitFlag can be provided.
-# - Check flag:
-#     bf.check(bf.b) # Checks flag 'b'. Another BitFlag can be provided.
-# - Get flag names:
-#     bf.get_active_keys() # Returns an array of active keys.
-#     bf.get_keys() # Returns an array of all flag keys.
-# - Convert to PropertyInfo dict
-#     bf.to_pinfo_dict("property_name") # Returns a dictionary with export structure.
+#	- Creating:
+#		bf = BitFlag.new(my_enum, to_flag = false) # Creates a new BitFlag given an enum. If 'to_flag' converts to flag enum
+#	- Flag access:
+#		bf.<name> = true/false # Allows to set the current bit
+#	- Set/Put flag:
+#		bf.put(bf.a) # Enables the flag 'a'. Another BitFlag can be provided.
+#	- Clear flag:
+#		bf.clear(bf.b) # Disables the flag 'b'. Another BitFlag can be provided.
+#	- Toggle flag:
+#		bf.toggle(bf.b) # Inverts the flag 'b'. Another BitFlag can be provided.
+#	- Check flag:
+#		bf.check(bf.b) # Checks flag 'b'. Another BitFlag can be provided.
+#	- Get flag names:
+#		bf.get_active_keys() # Returns an array of active keys.
+#		bf.get_keys() # Returns an array of all flag keys.
+#	- Convert to PropertyInfo dict
+#		bf.to_pinfo_dict("property_name") # Returns a dictionary with export structure.
 tool
 extends Reference
 class_name BitFlag

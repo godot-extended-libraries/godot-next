@@ -1,11 +1,12 @@
 # ResourceSet
 # author: xdgamestudios
 # license: MIT
-# description: A ResourceCollection implementation that manages a Set of Resources.
-#              One can add only one instance of any given Resource type.
+# description:
+#	A ResourceCollection implementation that manages a Set of Resources.
+#	One can add only one instance of any given Resource type.
 # deps:
-# - ResourceCollection
-# - PropertyInfo
+#	- ResourceCollection
+#	- PropertyInfo
 tool
 extends ResourceCollection
 class_name ResourceSet

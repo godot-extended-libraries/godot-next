@@ -1,16 +1,16 @@
 # CSVFile
 # author: willnationsdev
-# brief_description: Provides utilities for loading, saving, and editing CSV files.
+# description: Provides utilities for loading, saving, and editing CSV files.
 # dependencies: Array2D
 # API details:
-# - The data is stored internally as an Array2D. The 0th row is the headers.
-# - Use 'get_array()' to fetch the Array2D
-# - Use 'get_headers()' to get a Dictionary of the headers (values are their index in the first row)
-# - Use 'get_map()' to get a Dictionary of string keys to rows.
-#     - if '_uses_map' is true, the key will be generated from the '_get_key()' virtual method (defaults to returning row[0]).
-#       Else _map will be empty. Defaults to false.
-#     - The CSVFile object dynamically generates properties that match the keys of the _map Dictionary.
-# - A .tsv file can be made simply by changing the '_sep' property to "\t".
+#	- The data is stored internally as an Array2D. The 0th row is the headers.
+#	- Use 'get_array()' to fetch the Array2D
+#	- Use 'get_headers()' to get a Dictionary of the headers (values are their index in the first row)
+#	- Use 'get_map()' to get a Dictionary of string keys to rows.
+#		- if '_uses_map' is true, the key will be generated from the '_get_key()' virtual method (defaults to returning row[0]).
+#		  Else _map will be empty. Defaults to false.
+#		- The CSVFile object dynamically generates properties that match the keys of the _map Dictionary.
+#	- A .tsv file can be made simply by changing the '_sep' property to "\t".
 tool
 extends Reference
 class_name CSVFile

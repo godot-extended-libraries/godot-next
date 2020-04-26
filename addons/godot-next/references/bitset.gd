@@ -2,9 +2,9 @@
 # author: milesturin
 # license: MIT
 # description: A class that allows for easily manipulated bitmasks of any size
-# usage: Mostly self explanatory. _init() is equivalent to resize().
-# 	By setting enforce_soft_size to false, the Bitset will allow the user to access
-# 	bits that have been reserved by the script, but are outside of the requested size.
+# usage:
+#	By setting enforce_soft_size to false, the Bitset will allow the user to access
+#	bits that have been reserved by the script, but are outside of the requested size.
 
 extends Reference
 class_name Bitset
