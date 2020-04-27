@@ -17,6 +17,8 @@ position = Vector2( 900, 450 )
 [node name="Geometry2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource( 1 )
 script = ExtResource( 1 )
+color = Color( 1, 1, 1, 1 )
+offset_position = Vector2( 0, 0 )
 
 [node name="WanderingNode2D" type="Node2D" parent="."]
 position = Vector2( 500, 450 )
@@ -47,3 +49,4 @@ target_path = NodePath("../WanderingNode2D")
 show_label_name = true
 show_target_name = true
 properties = PoolStringArray( "position", "velocity", "name" )
+update_mode = 0
