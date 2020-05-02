@@ -57,7 +57,7 @@ _global_script_classes=[ {
 "base": "ImageTexture",
 "class": "DiscreteGradientTexture",
 "language": "GDScript",
-"path": "res://addons/godot-next/resources/DiscreteGradientTexture.gd"
+"path": "res://addons/godot-next/resources/discrete_gradient_texture.gd"
 }, {
 "base": "Reference",
 "class": "EditorTools",

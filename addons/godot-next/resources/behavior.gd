@@ -1,4 +1,6 @@
-# Behavior
+tool
+class_name Behavior
+extends Resource
 # author: xdgamestudios
 # license: MIT
 # description:
@@ -17,17 +19,6 @@
 #	Note:
 #		- If present notifications, are automatically triggered by the owner class.
 #		- If the behavior is disabled its notifications will not be processed. 
-tool
-extends Resource
-class_name Behavior
-
-##### CLASSES #####
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
-
-##### PROPERTIES #####
 
 # A reference to the owning Behaviors node.
 var owner: Node = null setget set_owner, get_owner
@@ -35,40 +26,25 @@ var owner: Node = null setget set_owner, get_owner
 # Allows users to toggle processing callbacks on the owner.
 var enabled: bool = true setget set_enabled, get_enabled
 
-##### NOTIFICATIONS #####
-
-##### OVERRIDES #####
-
-##### VIRTUALS #####
-
-# '_awake' name is used to match the convention in Unity's MonoBehaviour class.
+# This name is used to match the convention in Unity's MonoBehaviour class.
 func _awake() -> void:
 	pass
 
-# '_on_enable' name is used to match the convention in Unity's MonoBehaviour class.
+
+# This name is used to match the convention in Unity's MonoBehaviour class.
 func _on_enable() -> void:
 	pass
-	
-# '_on_disable' name is used to match the convention in Unity's MonoBehaviour class.
+
+
+# This name is used to match the convention in Unity's MonoBehaviour class.
 func _on_disable() -> void:
 	pass
 
-# Should only override if one wishes to create their own abstract Behaviors
-# By default, the absence of this method is interpreted as a non-abstract type!
-static func is_abstract() -> bool:
-	return true
-
-##### PUBLIC METHODS #####
 
 # Returns an instance of the stored Behavior resource from the owner.
 func get_behavior(p_type: Script) -> Behavior:
 	return owner.get_element(p_type)
 
-##### PRIVATE METHODS #####
-
-##### CONNECTIONS #####
-
-##### SETTERS AND GETTERS #####
 
 func set_enabled(p_enable: bool) -> void:
 	if enabled == p_enable:
@@ -93,3 +69,9 @@ func set_owner(p_owner: Node) -> void:
 
 func get_owner() -> Node:
 	return owner
+
+
+# Should only override if one wishes to create their own abstract Behaviors
+# By default, the absence of this method is interpreted as a non-abstract type!
+static func is_abstract() -> bool:
+	return true

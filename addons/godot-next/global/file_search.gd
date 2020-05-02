@@ -1,42 +1,34 @@
-# FileSearch
+tool
+class_name FileSearch
+extends Reference
 # author: willnationsdev
 # license: MIT
 # description: A utility with helpful methods to search through one's project files (or any directory).
-tool
-extends Reference
-class_name FileSearch
 
-##### CLASSES #####
-
-class FileEvaluator:
-	extends Reference
-	
-	##### PROPERTIES #####
-
+class FileEvaluator extends Reference:
 	var file_path: String = "" setget set_file_path
-	
-	##### virtuals #####
 
-	# _is_match() -> void: assigns a new file path to the object
+	# Assigns a new file path to the object.
 	func _is_match() -> bool:
 		return true
-
-	# _get_key() -> void: If _is_match() returns true, returns the key used to store the data.
+	
+	
+	# If _is_match() returns true, returns the key used to store the data.
 	func _get_key():
 		return file_path
 	
-	# _get_value() -> Dictionary: If _is_match() returns true, returns the data associated with the file.
+	
+	# If _is_match() returns true, returns the data associated with the file.
 	func _get_value() -> Dictionary:
 		return { "path": file_path }
 	
-	# set_file_path(path) -> void: assigns a new file path to the object
+	
+	# Assigns a new file path to the object.
 	func set_file_path(p_value):
 		file_path = p_value
 
 
-class FilesThatHaveString:
-	extends FileEvaluator
-	
+class FilesThatHaveString extends FileEvaluator:
 	var _compare: String
 	
 	func _init(p_compare: String = ""):
@@ -47,9 +39,7 @@ class FilesThatHaveString:
 		return file_path.find(_compare) != -1
 
 
-class FilesThatAreSubsequenceOf:
-	extends FileEvaluator
-
+class FilesThatAreSubsequenceOf extends FileEvaluator:
 	var _compare: String
 	var _case_sensitive: bool
 
@@ -57,15 +47,14 @@ class FilesThatAreSubsequenceOf:
 		_compare = p_compare
 		_case_sensitive = p_case_sensitive
 	
+	
 	func _is_match() -> bool:
 		if _case_sensitive:
 			return _compare.is_subsequence_of(file_path)
 		return _compare.is_subsequence_ofi(file_path)
 
 
-class FilesThatMatchRegex:
-	extends FileEvaluator
-
+class FilesThatMatchRegex extends FileEvaluator:
 	var _regex: RegEx = RegEx.new()
 	var _compare_full_path
 	var _match: RegExMatch = null
@@ -90,9 +79,7 @@ class FilesThatMatchRegex:
 		return data
 
 
-class FilesThatExtendResource:
-	extends FileEvaluator
-	
+class FilesThatExtendResource extends FileEvaluator:
 	var _match_func: FuncRef
 	var _exts: Dictionary
 	
@@ -116,19 +103,8 @@ class FilesThatExtendResource:
 				return true
 		return false
 
-##### SIGNALS #####
-
-##### CONSTANTS #####
 
 const SELF_PATH: String = "res://addons/godot-next/global/file_search.gd"
-
-##### NOTIFICATIONS #####
-
-##### VIRTUALS #####
-
-##### OVERRIDES #####
-
-##### PUBLIC METHODS #####
 
 static func search_string(p_str: String, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatHaveString.new(p_str), p_from_dir, p_recursive)
@@ -165,10 +141,10 @@ static func search_types(p_match_func: FuncRef = null, p_from_dir: String = "res
 static func search_resources(p_types: PoolStringArray = ["Resource"], p_match_func: FuncRef = null, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	return _search(FilesThatExtendResource.new(p_types, p_match_func), p_from_dir, p_recursive)
 
-##### PRIVATE METHODS #####
 
 static func _this() -> Script:
 	return load(SELF_PATH) as Script
+
 
 # p_evaluator: A FileEvaluator type.
 # p_from_dir: The starting location from which to scan.
@@ -180,7 +156,7 @@ static func _search(p_evaluator: FileEvaluator, p_from_dir: String = "res://", p
 	var data: Dictionary = {}
 	var eval: FileEvaluator = p_evaluator
 
-	# generate 'data' map
+	# Generate 'data' map.
 	while not dirs.empty():
 		var dir_name = dirs.back()
 		dirs.pop_back()
@@ -192,27 +168,23 @@ static func _search(p_evaluator: FileEvaluator, p_from_dir: String = "res://", p
 			while file_name:
 				if first and not dir_name == p_from_dir:
 					first = false
-				# Ignore hidden content
+				# Ignore hidden content.
 				if not file_name.begins_with("."):
 					var a_path = dir.get_current_dir() + ("" if first else "/") + file_name
 					eval.set_file_path(a_path)
 
-					# If a directory, then add to list of directories to visit
+					# If a directory, then add to list of directories to visit.
 					if p_recursive and dir.current_is_dir():
 						dirs.push_back(dir.get_current_dir().plus_file(file_name))
 					# If a file, check if we already have a record for the same name.
-					# Only use files with extensions
+					# Only use files with extensions.
 					elif not data.has(a_path) and eval._is_match():
 						data[eval._get_key()] = eval._get_value()
 
-				# Move on to the next file in this directory
+				# Move on to the next file in this directory.
 				file_name = dir.get_next()
 
-			# We've exhausted all files in this directory. Close the iterator
+			# We've exhausted all files in this directory. Close the iterator.
 			dir.list_dir_end()
 
 	return data
-
-##### CONNECTIONS #####
-
-##### SETTERS AND GETTERS #####

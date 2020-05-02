@@ -1,4 +1,5 @@
-# Bitset
+class_name Bitset
+extends Reference
 # author: milesturin
 # license: MIT
 # description: A class that allows for easily manipulated bitmasks of any size
@@ -6,24 +7,14 @@
 #	By setting enforce_soft_size to false, the Bitset will allow the user to access
 #	bits that have been reserved by the script, but are outside of the requested size.
 
-extends Reference
-class_name Bitset
-
-### CONSTANTS ###
-
 const MASK_SIZE := 32
-
-### PROPERTIES ###
 
 var bitmasks: PoolIntArray = []
 var bits: int
 
-### NOTIFICATIONS ###
-
 func _init(size: int, default_state: bool = false, enforce_soft_size: bool = true) -> void:
 	resize(size, default_state, enforce_soft_size)
 
-### PUBLIC METHODS ###
 
 func resize(size: int, default_state: bool = false, enforce_soft_size: bool = true) -> void:
 	assert(size >= 0)

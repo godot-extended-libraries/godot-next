@@ -1,4 +1,6 @@
-# ResourceArray
+tool
+class_name ResourceArray
+extends ResourceCollection
 # author: xdgamestudios
 # license: MIT
 # description:
@@ -7,26 +9,21 @@
 # deps:
 #	- ResourceCollection
 #	- PropertyInfo
-tool
-extends ResourceCollection
-class_name ResourceArray
-
-##### CLASSES #####
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
 
 const COLLECTION_NAME = "[ Array ]"
 
-##### PROPERTIES #####
-
 var _data := []
-
-##### NOTIFICATIONS #####
 
 func _init() -> void:
 	resource_name = COLLECTION_NAME
+
+
+func clear() -> void:
+	_data.clear()
+
+
+func get_data() -> Array:
+	return _data
 
 
 func _get(p_property: String):
@@ -51,7 +48,6 @@ func _set(p_property, p_value):
 		return true
 	return false
 
-##### OVERRIDES #####
 
 func _add_element(script) -> void:
 	_data.append(script.new())
@@ -75,19 +71,3 @@ func _export_data_group() -> Array:
 	for an_index in _data.size():
 		list.append(PropertyInfo.new_resource("%sitem_%s" % [DATA_PREFIX, an_index], "", PROPERTY_USAGE_EDITOR).to_dict())
 	return list
-
-##### VIRTUALS #####
-
-##### PUBLIC METHODS #####
-
-func clear() -> void:
-	_data.clear()
-
-##### PRIVATE METHODS #####
-
-##### CONNECTIONS #####
-
-##### SETTERS AND GETTERS #####
-
-func get_data() -> Array:
-	return _data

@@ -1,43 +1,25 @@
-# DiscreteGradientTexture
+tool
+class_name DiscreteGradientTexture
+extends ImageTexture
 # author: Athrunen
 # license: MIT
 # description: Has the same functionality as the GradientTexture but does not interpolate colors.
 # todos:
-#	- Write a more elegant way of updating the texture than changing the resolution
-#	- Persuade godot to repeat the texture vertically in the inspector
-tool
-extends ImageTexture
-class_name DiscreteGradientTexture
+#	- Write a more elegant way of updating the texture than changing the resolution.
+#	- Persuade Godot to repeat the texture vertically in the inspector.
 
-##### CLASSES #####
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
-
-##### PROPERTIES #####
-
-export var resolution : int = 256 setget _update_resolution 
-export var gradient : Gradient = Gradient.new() setget _update_gradient
-
-##### NOTIFICATIONS #####
+export var resolution: int = 256 setget _update_resolution 
+export var gradient: Gradient = Gradient.new() setget _update_gradient
 
 func _ready() -> void:
 	_update_texture()
 
-##### OVERRIDES #####
-
-##### VIRTUALS #####
-
-##### PUBLIC METHODS #####
-
-##### PRIVATE METHODS #####
 
 func _update_texture() -> void:
 	var image := Image.new()
 	image.create(resolution, 1, false, Image.FORMAT_RGBA8)
 	
-	if (not gradient):
+	if not gradient:
 		return
 	
 	image.lock()
@@ -64,9 +46,6 @@ func _update_texture() -> void:
 	image.unlock()
 	self.create_from_image(image, 0)
 
-##### CONNECTIONS #####
-
-##### SETTERS AND GETTERS #####
 
 func _update_gradient(g: Gradient) -> void:
 	gradient = g

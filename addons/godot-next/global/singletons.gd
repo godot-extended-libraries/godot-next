@@ -1,19 +1,16 @@
+tool
+class_name Singletons
+extends Reference
 # author: xdgamestudios
 # license: MIT
 # description: An API for accessing singletons
 # deps:
 #	- singleton_cache.tres
-tool
-extends Reference
-class_name Singletons
-
-##### CONSTANTS #####
 
 const SINGLETON_CACHE = preload("res://addons/godot-next/data/singleton_cache.tres")
 
-##### PUBLIC METHODS #####
-
-# Look up a singleton by its script. If it doesn't exist yet, make it. If it's a Resource with a persistent file path, load it in from memory.
+# Look up a singleton by its script. If it doesn't exist yet, make it.
+# If it's a Resource with a persistent file path, load it in from memory.
 static func fetch(p_script: Script) -> Object:
 	var cache: Dictionary = SINGLETON_CACHE.get_cache()
 	if not cache.has(p_script):
@@ -30,7 +27,7 @@ static func fetch(p_script: Script) -> Object:
 	return cache[p_script]
 
 
-# Returns a singleton by its class_name as a String
+# Returns a singleton by its class_name as a String.
 static func fetchs(p_name: String) -> Object:
 	var ct = ClassType.new(p_name)
 	if ct.res:
@@ -38,7 +35,7 @@ static func fetchs(p_name: String) -> Object:
 	return null
 
 
-# Returns an editor-only singleton by its class name
+# Returns an editor-only singleton by its class name.
 static func fetch_editor(p_class: GDScriptNativeClass) -> Object:
 	if not Engine.editor_hint:
 		push_warning("Cannot access '%s' (editor-only class) at runtime." % p_class.get_class())
@@ -76,13 +73,12 @@ static func save_all() -> void:
 		#warning-ignore:return_value_discarded
 		ResourceSaver.save(paths[a_script], cache[a_script])
 
-##### PRIVATE METHODS #####
 
 static func _get_persistent_path(p_script: Script):
 	return p_script.get("SELF_RESOURCE")
 
 
-# Register all editor-only singletons
+# Register all editor-only singletons.
 static func _register_editor_singletons(plugin: EditorPlugin):
 	var cache: Dictionary = SINGLETON_CACHE.get_cache()
 	

@@ -1,3 +1,6 @@
+tool
+class_name Inflector
+extends Reference
 # author: xdgamestudios (adapted from C# .NET Humanizer, licensed under MIT)
 # license: MIT
 # description: Provides inflection tools to pluralize and singularize strings.
@@ -29,20 +32,10 @@
 #		inflector.singularize(word, p_force = false) # returns the singular of the word
 #		Note:
 #		- If the first parameter's state is unknown, use 'p_force = true' to force an unknown term into the desired state.
-tool
-extends Reference
-class_name Inflector
-
-##### CLASSES #####
 
 class Rule extends Reference:
-	
-	##### PROPERTIES #####
-	
 	var _regex: RegEx
 	var _replacement: String
-	
-	##### NOTIFICATIONS #####
 	
 	func _init(p_rule: String, p_replacement: String) -> void:
 		_regex = RegEx.new()
@@ -50,7 +43,6 @@ class Rule extends Reference:
 		_regex.compile(p_rule)
 		_replacement = p_replacement
 	
-	##### PUBLIC METHODS #####
 	
 	func apply(p_word: String):
 		if not _regex.search(p_word):
@@ -59,14 +51,10 @@ class Rule extends Reference:
 
 
 class Vocabulary extends Reference:
-	
-	##### PROPERTIES #####
-	
 	var _plurals: Array = [] setget, get_plurals
 	var _singulars: Array = [] setget, get_singulars
 	var _uncountables: Array = [] setget, get_uncountables
 	
-	##### PUBLIC METHODS #####
 	
 	func get_plurals() -> Array:
 		return _plurals
@@ -110,10 +98,9 @@ class Vocabulary extends Reference:
 	
 	
 	static func build_default_vocabulary() -> Vocabulary:
-		
 		var vocabulary = Vocabulary.new()
 		
-		# plurals rules
+		# Plural rules.
 		vocabulary._plurals = [
 			Rule.new("$", "s"),
 			Rule.new("s$", "s"),
@@ -138,7 +125,7 @@ class Vocabulary extends Reference:
 			Rule.new("(criteri|phenomen)on$", "$1a")
 		]
 		
-		# singular rules
+		# Singular rules.
 		vocabulary._singulars = [
 			Rule.new("s$", ""),
 			Rule.new("(n)ews$", "$1ews"),
@@ -168,7 +155,7 @@ class Vocabulary extends Reference:
 			Rule.new("([b|r|c]ook|room|smooth)ies$", "$1ie")
 		]
 		
-		# irregular rules
+		# Irregular rules.
 		vocabulary.add_irregular("person", "people")
 		vocabulary.add_irregular("man", "men")
 		vocabulary.add_irregular("human", "humans")
@@ -191,7 +178,7 @@ class Vocabulary extends Reference:
 		vocabulary.add_irregular("bus", "buses", true)
 		vocabulary.add_irregular("staff", "staff", true)
 		
-		#  uncountables
+		# Uncountables.
 		vocabulary._uncountables = [
 			"equipment",
 			"information",
@@ -236,11 +223,8 @@ class Vocabulary extends Reference:
 		
 		return vocabulary
 
-##### PROPERTIES #####
 
 var _vocabulary: Vocabulary setget, get_vocabulary
-
-##### NOTIFICATIONS #####
 
 func _init(p_vocabulary = null) -> void:
 	if not p_vocabulary:
@@ -248,7 +232,6 @@ func _init(p_vocabulary = null) -> void:
 	else:
 		_vocabulary = p_vocabulary
 
-##### PUBLIC METHODS #####
 
 func get_vocabulary() -> Vocabulary:
 	return _vocabulary
