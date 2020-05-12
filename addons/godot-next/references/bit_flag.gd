@@ -1,4 +1,6 @@
-# BitFlag
+tool
+class_name BitFlag
+extends Reference
 # author: xdgamestudios
 # license: MIT
 # description: A class that allows abstracts away the complexity of handling bit flag enum types.
@@ -24,16 +26,9 @@
 #		bf.get_keys() # Returns an array of all flag keys.
 #	- Convert to PropertyInfo dict
 #		bf.to_pinfo_dict("property_name") # Returns a dictionary with export structure.
-tool
-extends Reference
-class_name BitFlag
-
-##### PROPERTIES #####
 
 var _enum: Dictionary = {}
 var _flags: int = 0 setget set_flags, get_flags
-
-##### NOTIFICATIONS #####
 
 func _init(p_enum: Dictionary, p_to_flag: bool = false):
 	if p_to_flag:
@@ -69,7 +64,6 @@ func _get_value_flags(p_value) -> int:
 	assert(false)
 	return -1
 
-##### PUBLIC METHODS #####
 
 func put(p_value) -> int:
 	if p_value == null:
@@ -115,9 +109,6 @@ func to_pinfo_dict(p_name: String) -> Dictionary:
 	var hint_string = PoolStringArray(get_keys()).join(",")
 	return PropertyInfo.new(p_name, TYPE_INT, PROPERTY_HINT_FLAGS, hint_string).to_dict()
 
-##### PRIVATE METHODS #####
-
-##### SETTERS AND GETTERS #####
 
 func get_flags() -> int:
 	return _flags

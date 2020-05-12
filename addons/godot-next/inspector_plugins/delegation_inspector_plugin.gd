@@ -1,4 +1,5 @@
-# DelegationInspectorPlugin
+tool
+extends EditorInspectorPlugin
 # author: willnationsdev and xdgamestudios
 # license: MIT
 # description:
@@ -6,8 +7,6 @@
 #	object that appears in an EditorInspector anywhere. Enables
 #	objects to define their own EditorInspector GUI logic without
 #	the need for additional plugins.
-tool
-extends EditorInspectorPlugin
 
 var obj_stack: Array
 

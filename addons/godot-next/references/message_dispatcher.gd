@@ -1,4 +1,5 @@
-# MessageDispatcher
+class_name MessageDispatcher
+extends Reference
 # author: MunWolf (Rikhardur Bjarni Einarsson)
 # license: MIT
 # copyright: Copyright (c) 2019 Rikhardur Bjarni Einarsson
@@ -6,14 +7,7 @@
 #	A message handler for non predefined signals, if you want to use this
 #	by extending it on a Node, please use MessageDispatcherWrapper.
 
-extends Reference
-class_name MessageDispatcher
-
-##### PROPERTIES #####
-
 var _message_handlers := {}
-
-##### PUBLIC METHODS #####
 
 # Connect a handler, obj has to have a function that corresponds to the parameter.
 #	message_type: type of the message, we call obj.function(message) based on this.

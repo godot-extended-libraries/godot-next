@@ -1,4 +1,6 @@
-# CallbackDelegator
+tool
+class_name CallbackDelegator
+extends Node
 # author: xdgamestudios
 # license: MIT
 # description:
@@ -27,17 +29,6 @@
 #			1. _awake() called during _enter_tree() after CallbackDelegator initializes owner (for Unity familiarity).
 #			2. _enter_tree() called immediately after (so they are virtually aliases for each other)
 #			3. _ready() called during _ready().
-tool
-extends Node
-class_name CallbackDelegator
-
-##### CLASSES #####
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
-
-##### PROPERTIES #####
 
 # The collection of Resources. Only one Resource of each type is allowed.
 var _elements: ResourceSet = ResourceSet.new()
@@ -56,12 +47,6 @@ var _callbacks: Dictionary = {
 
 # Assists with inheritance checks and name identification of script classes.
 var _class_type: ClassType = ClassType.new()
-
-##### NOTIFICATIONS #####
-
-func _get_property_list() -> Array:
-	return [ PropertyInfo.new_resource("_elements").to_dict() ]
-
 
 func _ready() -> void:
 	_handle_notification("_ready")
@@ -101,18 +86,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _unhandled_key_input(event: InputEventKey) -> void:
 	_handle_notification("_unhandled_key_input", event)
 
-##### OVERRIDES #####
 
-func _parse_property(p_inspector: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> void:
-	match p_pinfo.name:
-		"_elements":
-			p_inspector.add_custom_control(InspectorControls.new_button("Initialize Default Behavior", false, self, "_set_base_type_behavior"))
-
-##### VIRTUALS #####
-
-##### PUBLIC METHODS #####
-
-# Add an element to the CallbackDelegator. Does nothing if no base_type is assigned. See `set_base_type(...)`.
+# Add an element to the CallbackDelegator. Does nothing if no
+# base_type is assigned. See `set_base_type(...)`.
 func add_element(p_type: Script) -> Resource:
 	var elements = _elements.get_data()
 	
@@ -144,7 +120,8 @@ func has_element(p_type: Script) -> bool:
 	return elements.has(_class_type.get_script_class())
 
 
-# Returns true if successfully able to remove the element from the internal collection. Else, returns false.
+# Returns true if successfully able to remove the element
+# from the internal collection. Else, returns false.
 func remove_element(p_type: Script) -> bool:
 	var elements = _elements.get_data()
 	var element = get_element(p_type)
@@ -155,18 +132,27 @@ func remove_element(p_type: Script) -> bool:
 	return false
 
 
-# The order of returned Scripts is not deterministic
+# The order of returned Scripts is not deterministic.
 func get_element_types() -> Array:
 	return _elements.get_data().keys()
 
 
-# The order of returned Resources is not deterministic
+# The order of returned Resources is not deterministic.
 func get_elements() -> Array:
 	return _elements.get_data().values()
 
-##### PRIVATE METHODS #####
 
-# Helper method to facilitate delegation of the callback
+func _parse_property(p_inspector: EditorInspectorPlugin, p_pinfo: PropertyInfo) -> void:
+	match p_pinfo.name:
+		"_elements":
+			p_inspector.add_custom_control(InspectorControls.new_button("Initialize Default Behavior", false, self, "_set_base_type_behavior"))
+
+
+func _get_property_list() -> Array:
+	return [ PropertyInfo.new_resource("_elements").to_dict() ]
+
+
+# Helper method to facilitate delegation of the callback.
 func _handle_notification(p_name: String, p_param = null) -> void:
 	if Engine.editor_hint:
 		return
@@ -177,9 +163,10 @@ func _handle_notification(p_name: String, p_param = null) -> void:
 		for an_element in _callbacks[p_name]:
 			an_element.call(p_name)
 
+
 # Setup the owner and initialization of the element. Ensure it updates its callbacks if the script is modified.
 func _initialize_element(p_element: Resource) -> void:
-	__awake(p_element)
+	_awake(p_element)
 	#warning-ignore:return_value_discarded
 	p_element.connect("script_changed", self, "_refresh_callbacks", [p_element])
 	_add_to_callbacks(p_element)
@@ -216,12 +203,11 @@ func _check_for_empty_callbacks() -> void:
 
 
 # Sets up the owner instance on the Behavior.
-func __awake(p_element: Resource) -> void:
+func _awake(p_element: Resource) -> void:
 	p_element.owner = self
 	if p_element.has_method("_awake"):
 		p_element._awake()
 
-##### CONNECTIONS #####
 
 # Reset callback registrations in the event that the script is modified.
 func _on_element_script_change(p_element: Resource) -> void:
@@ -232,5 +218,3 @@ func _on_element_script_change(p_element: Resource) -> void:
 func _set_base_type_behavior() -> void:
 	_class_type.name = "Behavior"
 	_elements.set_base_type(_class_type.res)
-
-##### SETTERS AND GETTERS #####

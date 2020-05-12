@@ -1,4 +1,6 @@
-# CSVFile
+tool
+class_name CSVFile
+extends Reference
 # author: willnationsdev
 # description: Provides utilities for loading, saving, and editing CSV files.
 # dependencies: Array2D
@@ -11,21 +13,12 @@
 #		  Else _map will be empty. Defaults to false.
 #		- The CSVFile object dynamically generates properties that match the keys of the _map Dictionary.
 #	- A .tsv file can be made simply by changing the '_sep' property to "\t".
-tool
-extends Reference
-class_name CSVFile
-
-##### SIGNALS #####
 
 signal file_loaded(p_filepath)
 signal file_saved(p_filepath)
 
-##### CONSTANTS #####
-
 const DEFAULT_SEP = ","
 const DEFAULT_QUOTE = "\""
-
-##### PROPERTIES #####
 
 var _filepath := ""
 
@@ -36,8 +29,6 @@ var _map := {}
 var _sep := DEFAULT_SEP
 var _quote := DEFAULT_QUOTE
 var _uses_map := true
-
-##### NOTIFICATIONS #####
 
 func _init(p_sep: String = DEFAULT_SEP, p_quote: String = DEFAULT_QUOTE, p_uses_map: bool = true):
 	_sep = p_sep
@@ -64,18 +55,14 @@ func _get_property_list():
 		})
 	return ret
 
-##### VIRTUAL METHODS #####
 
 func _get_key(p_row: Array) -> String:
 	if not p_row:
 		return ""
 	return p_row[0]
 
-##### OVERRIDES #####
 
-##### PUBLIC METHODS #####
-
-func load(p_filepath: String) -> int:
+func load_file(p_filepath: String) -> int:
 	var f = File.new()
 	var err = f.open(p_filepath, File.READ)
 	if err != OK:
@@ -107,7 +94,7 @@ func load(p_filepath: String) -> int:
 	return OK
 
 
-func save(p_filepath: String) -> int:
+func save_file(p_filepath: String) -> int:
 	var f := File.new()
 	var err := f.open(p_filepath, File.WRITE)
 	if err != OK:
@@ -159,7 +146,6 @@ func map_set_value(p_key: String, p_header: String, p_value):
 		return null
 	_map[p_key][_headers[p_header]] = p_value
 
-##### PRIVATE METHODS #####
 
 func _parse_line(p_line: String) -> Array:
 	if not p_line:
@@ -208,5 +194,3 @@ func _parse_line(p_line: String) -> Array:
 				val += s
 	ret.append(val)
 	return ret
-
-##### SETTERS AND GETTERS #####

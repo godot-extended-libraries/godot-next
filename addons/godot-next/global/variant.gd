@@ -1,13 +1,12 @@
-# Variant
+tool
+class_name Variant
+extends Reference
 # author: willnationsdev
 # license: MIT
 # description: A utility class for handling Variants.
-tool
-extends Reference
-class_name Variant
 
-# Returns a string form of all types, but allows Objects to override their string conversion
-static func to_string(p_value) -> String:
+# Returns a string form of all types, but allows Objects to override their string conversion.
+static func var_to_string(p_value) -> String:
 	if typeof(p_value) == TYPE_OBJECT and p_value.has_method("_to_string"):
 		return p_value._to_string() as String
 	return var2str(p_value)

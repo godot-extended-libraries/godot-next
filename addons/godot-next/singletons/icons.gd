@@ -1,13 +1,12 @@
-# Icons
+tool
+class_name Icons
+extends Reference
 # author: willnationsdev
 # license: MIT
 # description:
 #	A singleton that stores paths to icons, but fetches them loaded for users.
 #	icons must have a `icon_<name>.svg` file path, anywhere in the project.
 #	The name can then be accessed directly as a property of Icons.fetch().
-tool
-extends Reference
-class_name Icons
 
 const SELF_PATH: String = "res://addons/godot-next/singletons/icons.gd"
 

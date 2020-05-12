@@ -1,4 +1,5 @@
-# VBoxItemList
+class_name VBoxItemList, "../icons/icon_v_box_item_list.svg"
+extends VBoxContainer
 # author: willnationsdev
 # description: Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.
 # API details:
@@ -9,21 +10,12 @@
 #	- Items may define their own "_get_label" method which returns the string for their label text.
 #	- If either 'allow_reordering' or 'editable_labels' is true, labels will not be generated automatically via item_prefix + index.
 
-extends VBoxContainer
-class_name VBoxItemList, "../icons/icon_v_box_item_list.svg"
-
-##### SIGNALS #####
-
 signal item_inserted(p_index, p_control)
 signal item_removed(p_index, p_control)
-
-##### CONSTANTS #####
 
 const ICON_ADD: Texture = preload("../icons/icon_add.svg")
 const ICON_DELETE: Texture = preload("../icons/icon_import_fail.svg")
 const ICON_SLIDE: Texture = preload("../icons/icon_mirror_y.svg")
-
-##### PROPERTIES #####
 
 # The title text at the top of the node.
 export var title: String = "" setget set_title
@@ -53,8 +45,6 @@ var _dragged_item: HBoxContainer = null
 var _hovered_item: HBoxContainer = null
 var _insertions: int = 0
 var _removals: int = 0
-
-##### NOTIFICATIONS #####
 
 func _init(p_title: String = "", p_item_prefix: String = "", p_type: Resource = null):
 	if p_type:
@@ -94,21 +84,18 @@ func _process(_delta: float):
 			(a_child.get_node("ItemEdit") as LineEdit).hide()
 			(a_child.get_node("ItemLabel") as Label).show()
 
-##### OVERRIDES #####
-
-##### VIRTUAL METHODS #####
 
 #warning-ignore:unused_argument
 #warning-ignore:unused_argument
 func _item_inserted(p_index: int, p_control: Control):
 	pass
 
+
 #warning-ignore:unused_argument
 #warning-ignore:unused_argument
 func _item_removed(p_index: int, p_control: Control):
 	pass
 
-##### PUBLIC METHODS #####
 
 func insert_item(p_index: int) -> Control:
 	var node: Control = _get_node_from_type()
@@ -184,11 +171,10 @@ func remove_item(p_idx: int):
 		_reset_prefixes()
 	_item_removed(p_idx, node)
 	emit_signal("item_removed", p_idx, node)
-	if (is_instance_valid(node)):
+	if is_instance_valid(node):
 		node.free()
 	_removals += 1
 
-##### CONNECTIONS #####
 
 func _on_remove_item(p_del_btn: ToolButton):
 	remove_item(p_del_btn.get_parent().get_index())
@@ -199,6 +185,7 @@ func _on_slide_gui_input(p_event: InputEvent, p_rect: TextureRect):
 		var mb := p_event as InputEventMouseButton
 		if not mb.is_echo() and mb.button_index == BUTTON_LEFT and mb.pressed:
 			_dragged_item = p_rect.get_parent() as HBoxContainer
+
 
 func _on_hbox_gui_input(p_event: InputEvent, p_hbox: HBoxContainer):
 	if p_event is InputEventMouseButton:
@@ -248,7 +235,6 @@ func _on_edit_text_entered(p_text: String, p_edit: LineEdit, p_label: Label):
 	p_label.show()
 	p_edit.hide()
 
-##### PRIVATE METHODS #####
 
 func _get_node_from_type() -> Control:
 	if item_script:
@@ -314,7 +300,6 @@ func _validate_item_type(p_res: Resource) -> bool:
 	
 	return true
 
-##### SETTERS AND GETTERS #####
 
 func set_title(p_value: String):
 	title = p_value

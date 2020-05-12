@@ -1,4 +1,5 @@
-# Trail2D
+class_name Trail2D, "../icons/icon_trail_2d.svg"
+extends Line2D
 # author: willnationsdev
 # brief description: Creates a variable-length trail that tracks the "target" node.
 # API details:
@@ -18,45 +19,34 @@
 #				- use `bool _should_shrink()` to return under what conditions
 #				  the degen_rate should be removed from the trail's list of points.
 
-extends Line2D
-class_name Trail2D, "../icons/icon_trail_2d.svg"
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
-
 enum Persistence {
 	OFF,         # Do not persist. Remove all points after the trail_length.
-	ALWAYS,	     # Always persist. Do not remove any points.
+	ALWAYS,      # Always persist. Do not remove any points.
 	CONDITIONAL, # Sometimes persist. Choose an algorithm for when to add and remove points.
 }
 
 enum PersistWhen {
 	ON_MOVEMENT, # Add points during movement and remove points when not moving.
-	CUSTOM,	     # Override _should_grow() and _should_shrink() to define when to add/remove points.
+	CUSTOM,      # Override _should_grow() and _should_shrink() to define when to add/remove points.
 }
 
-##### PROPERTIES #####
-
-# The target node to track
-var target: Node2D setget set_target
-
-# The NodePath to the target
+# The NodePath to the target.
 export var target_path: NodePath = @".." setget set_target_path
-# If not persisting, the number of points that should be allowed in the trail
+# If not persisting, the number of points that should be allowed in the trail.
 export var trail_length: int = 10
 # To what degree the trail should remain in existence before automatically removing points.
 export(int, "Off", "Always", "Conditional") var persistence: int = Persistence.OFF
-# During conditional persistence, which persistence algorithm to use
+# During conditional persistence, which persistence algorithm to use.
 export(int, "On Movement", "Custom") var persistence_condition: int = PersistWhen.ON_MOVEMENT
-# During conditional persistence, how many points to remove per frame
+# During conditional persistence, how many points to remove per frame.
 export var degen_rate: int = 1
-# If true, automatically set z_index to be one less than the 'target'
+# If true, automatically set z_index to be one less than the 'target'.
 export var auto_z_index: bool = true
-# If true, will automatically setup a gradient for a gradually transparent trail
+# If true, will automatically setup a gradient for a gradually transparent trail.
 export var auto_alpha_gradient: bool = true
 
-##### NOTIFICATIONS #####
+# The target node to track.
+var target: Node2D setget set_target
 
 func _init():
 	set_as_toplevel(true)
@@ -109,27 +99,12 @@ func _process(_delta: float):
 							for i in range(degen_rate):
 								remove_point(0)
 
-##### OVERRIDES #####
-
-##### VIRTUAL METHODS #####
-
-func _should_grow() -> bool:
-	return true
-
-
-func _should_shrink() -> bool:
-	return true
-
-##### PUBLIC METHODS #####
 
 func erase_trail():
 	#warning-ignore:unused_variable
 	for i in range(get_point_count()):
 		remove_point(0)
 
-##### PRIVATE METHODS #####
-
-##### SETTERS AND GETTERS #####
 
 func set_target(p_value: Node2D):
 	if p_value:
@@ -142,3 +117,11 @@ func set_target(p_value: Node2D):
 func set_target_path(p_value: NodePath):
 	target_path = p_value
 	target = get_node(p_value) as Node2D if has_node(p_value) else null
+
+
+func _should_grow() -> bool:
+	return true
+
+
+func _should_shrink() -> bool:
+	return true

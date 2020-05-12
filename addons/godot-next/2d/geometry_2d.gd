@@ -1,26 +1,15 @@
-# Geometry2D
+tool
+class_name Geometry2D, "../icons/icon_geometry_2d.svg"
+extends CollisionShape2D
 # author: Henrique "Pigdev" Campos
 # license: MIT
 # description: Draws a Shape2D using CollisionShape2D's editor plugin handles.
 # notes:
 #	- Don't use it as direct child of CollisionBody2D classes unless you intent
 #	  to use it as its CollisionShape2D.
-tool
-extends CollisionShape2D
-class_name Geometry2D, "../icons/icon_geometry_2d.svg"
 
-##### CLASSES #####
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
-
-##### PROPERTIES #####
-
-export (Color) var color := Color(1, 1, 1, 1) setget set_color
-export (Vector2) var offset_position := Vector2(0, 0) setget set_offset
-
-##### NOTIFICATIONS #####
+export (Color) var color := Color.white setget set_color
+export (Vector2) var offset_position := Vector2.ZERO setget set_offset
 
 func _draw() -> void:
 	if shape is CircleShape2D:
@@ -31,11 +20,6 @@ func _draw() -> void:
 	elif shape is CapsuleShape2D:
 		draw_capsule(offset_position, shape.radius, shape.height, color)
 
-##### OVERRIDES #####
-
-##### VIRTUALS #####
-
-##### PUBLIC METHODS #####
 
 func draw_capsule(capsule_position: Vector2, capsule_radius: float,
 		capsule_height: float, capsule_color: Color) -> void:
@@ -50,11 +34,6 @@ func draw_capsule(capsule_position: Vector2, capsule_radius: float,
 	var rect := Rect2(rect_position, Vector2(capsule_radius * 2, capsule_height))
 	draw_rect(rect, capsule_color)
 
-##### PRIVATE METHODS #####
-
-##### CONNECTIONS #####
-
-##### SETTERS AND GETTERS #####
 
 func set_color(new_color: Color) -> void:
 	color = new_color

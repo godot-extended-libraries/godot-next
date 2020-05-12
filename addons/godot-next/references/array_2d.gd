@@ -1,27 +1,13 @@
-# Array2D
+class_name Array2D
+extends Reference
 # author: willnationsdev
 # description: A 2D Array class
-extends Reference
-class_name Array2D
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
-
-##### PROPERTIES #####
 
 var data: Array = []
-
-##### NOTIFICATIONS #####
 
 func _init(p_array: Array = []):
 	data = p_array
 
-##### OVERRIDES #####
-
-##### VIRTUAL METHODS #####
-
-##### PUBLIC METHODS #####
 
 func has_cell(p_row: int, p_col: int) -> bool:
 	return len(data) > p_row and len(data[p_row]) > p_col
@@ -303,10 +289,6 @@ func transpose() -> Array2D:
 		array.append_row(get_col(i))
 	return array
 
-
-##### CONNECTIONS #####
-
-##### PRIVATE METHODS #####
 
 func _sort_axis(p_idx: int, p_is_row: bool):
 	if p_is_row:

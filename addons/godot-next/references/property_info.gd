@@ -1,31 +1,20 @@
-# PropertyInfo
+tool
+class_name PropertyInfo
+extends Reference
 # author: xdgamestudios
 # license: MIT
 # description:
 #	A wrapper and utility class for generating PropertyInfo
 #	Dictionaries, of which Object._get_property_list()
 #	returns an Array.
-tool
-extends Reference
-class_name PropertyInfo
-
-##### CLASSES #####
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
 
 const SELF_PATH: String = "res://addons/godot-next/references/property_info.gd"
-
-##### PROPERTIES #####
 
 var name: String
 var type: int
 var hint: int
 var hint_string: String
 var usage: int
-
-##### NOTIFICATIONS #####
 
 func _init(p_name: String = "", p_type: int = TYPE_NIL, p_hint: int = PROPERTY_HINT_NONE, p_hint_string: String = "", p_usage: int = PROPERTY_USAGE_DEFAULT) -> void:
 	name = p_name
@@ -34,7 +23,6 @@ func _init(p_name: String = "", p_type: int = TYPE_NIL, p_hint: int = PROPERTY_H
 	hint_string = p_hint_string
 	usage = p_usage
 
-##### PUBLIC METHODS #####
 
 func to_dict() -> Dictionary:
 	return {

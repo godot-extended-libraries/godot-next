@@ -1,17 +1,7 @@
-# Cycle
-# author: willnationsdev
-# description: Cycles through child nodes without any visibility or container effects.
-
 class_name Cycle, "../icons/icon_cycle.svg"
 extends TabContainer
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
-
-##### PROPERTIES #####
-
-##### NOTIFICATIONS #####
+# author: willnationsdev
+# description: Cycles through child nodes without any visibility or container effects.
 
 func _init():
 	tabs_visible = false
@@ -23,9 +13,6 @@ func _ready():
 		if a_child is Control:
 			(a_child as Control).set_as_toplevel(true)
 
-##### VIRTUAL METHODS #####
-
-##### OVERRIDES #####
 
 func add_child(p_value: Node, p_legible_unique_name: bool = false):
 	.add_child(p_value, p_legible_unique_name)
@@ -37,9 +24,3 @@ func remove_child(p_value: Node):
 	.remove_child(p_value)
 	if p_value and p_value is Control:
 		(p_value as Control).set_as_toplevel(false)
-
-##### PUBLIC METHODS #####
-
-##### PRIVATE METHODS #####
-
-##### SETTERS AND GETTERS #####

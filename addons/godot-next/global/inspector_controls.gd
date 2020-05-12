@@ -1,18 +1,15 @@
-# InspectorControls
+class_name InspectorControls
+extends Reference
 # author: xdgamestudios
 # license: MIT
 # description:
-#	A collection of classes and factory methods for generating
-#	Controls oriented towards editing data. Useful for modifying
-#	the EditorInspector or generating your own in-game data-editing
-#	tools.
-extends Reference
-class_name InspectorControls
+#	A collection of classes and factory methods for generating Controls
+#	oriented towards editing data. Useful for modifying the
+#	EditorInspector or generating your own in-game data-editing tools.
 
 const ADD_ICON = preload("res://addons/godot-next/icons/icon_add.svg")
 
 class DropdownAppender extends HBoxContainer:
-	
 	func get_button() -> ToolButton:
 		return get_node("ToolButton") as ToolButton
 	
@@ -31,7 +28,7 @@ class DropdownAppender extends HBoxContainer:
 		return get_dropdown().get_selected_metadata()
 
 
-# Instantiates a Label. If align is not set the dafault ALIGN_LEFT will be used
+# Instantiates a Label. If align is not set the dafault ALIGN_LEFT will be used.
 static func new_label(p_label: String, p_align: int = Label.ALIGN_LEFT) -> Label:
 	var label = Label.new()
 	label.text = p_label
@@ -48,7 +45,8 @@ static func new_space(p_size: Vector2, p_horizontal_flag: int = Control.SIZE_EXP
 	return control
 
 
-# Instantiates a Button. If toggle mode is set, p_object/p_callback will connect to its "toggled" signal. Else, "pressed".
+# Instantiates a Button. If toggle mode is set, p_object/p_callback
+# will connect to its "toggled" signal. Else, "pressed".
 static func new_button(p_label: String, p_toggle_mode: bool = false, p_object: Object = null, p_callback: String = "") -> Button:
 	var button = Button.new()
 	button.text = p_label
@@ -64,7 +62,8 @@ static func new_button(p_label: String, p_toggle_mode: bool = false, p_object: O
 	return button
 
 
-# Instantiates a ToolButton. If toggle mode is set, p_object/p_callback will connect to its "toggled" signal. Else, "pressed".
+# Instantiates a ToolButton. If toggle mode is set, p_object/p_callback
+# will connect to its "toggled" signal. Else, "pressed".
 static func new_tool_button(p_icon: Texture, p_toggle_mode: bool = false, p_object: Object = null, p_callback: String = "") -> ToolButton:
 	var button = ToolButton.new()
 	button.icon = p_icon

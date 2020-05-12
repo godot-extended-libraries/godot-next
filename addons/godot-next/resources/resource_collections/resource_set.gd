@@ -1,4 +1,6 @@
-# ResourceSet
+tool
+class_name ResourceSet
+extends ResourceCollection
 # author: xdgamestudios
 # license: MIT
 # description:
@@ -7,26 +9,21 @@
 # deps:
 #	- ResourceCollection
 #	- PropertyInfo
-tool
-extends ResourceCollection
-class_name ResourceSet
-
-##### CLASSES #####
-
-##### SIGNALS #####
-
-##### CONSTANTS #####
 
 const COLLECTION_NAME: String = "[ Set ]"
 
-##### PROPERTIES #####
-
 var _data: Dictionary = {}
-
-##### NOTIFICATIONS #####
 
 func _init() -> void:
 	resource_name = COLLECTION_NAME
+
+
+func clear() -> void:
+	_data.clear()
+
+
+func get_data() -> Dictionary:
+	return _data
 
 
 func _get(p_property: String):
@@ -51,7 +48,6 @@ func _set(p_property: String, p_value) -> bool:
 		return true
 	return false
 
-##### OVERRIDES #####
 
 func _add_element(p_script: Script) -> void:
 	_class_type.res = p_script
@@ -80,19 +76,3 @@ func _export_data_group() -> Array:
 	for a_typename in _data:
 		list.append(PropertyInfo.new_resource(DATA_PREFIX + a_typename, "", PROPERTY_USAGE_EDITOR).to_dict())
 	return list
-
-##### VIRTUALS #####
-
-##### PUBLIC METHODS #####
-
-func clear() -> void:
-	_data.clear()
-
-##### PRIVATE METHODS #####
-
-##### CONNECTIONS #####
-
-##### SETTERS AND GETTERS #####
-
-func get_data() -> Dictionary:
-	return _data

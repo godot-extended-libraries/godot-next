@@ -1,9 +1,8 @@
-# EditorTools
-# author: willnationsdev
-# description: A utility for any features useful in the context of the Editor
 tool
-extends Reference
 class_name EditorTools
+extends Reference
+# author: willnationsdev
+# description: A utility for any features useful in the context of the Editor.
 
 static func is_in_edited_scene(p_node: Node):
 	if not p_node.is_inside_tree():
