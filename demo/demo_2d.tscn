@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/godot-next/2d/geometry_2d.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-next/2d/trail_2d.gd" type="Script" id=2]
 [ext_resource path="res://addons/godot-next/gui/debug_label.gd" type="Script" id=3]
+[ext_resource path="res://addons/godot-next/2d/vector_display_2d.gd" type="Script" id=4]
 [ext_resource path="res://demo/scripts/wandering_node_2d.gd" type="Script" id=5]
+[ext_resource path="res://demo/scripts/test_vector_display.gd" type="Script" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 50.0
@@ -45,8 +47,17 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+update_mode = 0
 target_path = NodePath("../WanderingNode2D")
 show_label_name = true
 show_target_name = true
 properties = PoolStringArray( "position", "velocity", "name" )
-update_mode = 0
+
+[node name="TestVectorDisplay2D" type="Node2D" parent="."]
+position = Vector2( 100, 100 )
+script = ExtResource( 6 )
+pool_vector2_array = PoolVector2Array( 100, 200, 200, 100 )
+
+[node name="VectorDisplay2D" type="Node" parent="TestVectorDisplay2D"]
+script = ExtResource( 4 )
+variable_name = "pool_vector2_array"

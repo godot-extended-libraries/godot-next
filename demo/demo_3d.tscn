@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/godot-next/3d/trail_3d.gd" type="Script" id=1]
 [ext_resource path="res://demo/scripts/wandering_node_3d.gd" type="Script" id=2]
+[ext_resource path="res://addons/godot-next/3d/vector_display_3d.gd" type="Script" id=3]
+[ext_resource path="res://demo/scripts/test_vector_display.gd" type="Script" id=4]
 
 [node name="Demo3D" type="Spatial"]
 
@@ -17,3 +19,12 @@ density_around = 20
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 2, 8 )
+
+[node name="TestVectorDisplay3D" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5 )
+script = ExtResource( 4 )
+pool_vector3_array = PoolVector3Array( 1, 0, 2, 2, 0, 1 )
+
+[node name="VectorDisplay3D" type="Node" parent="TestVectorDisplay3D"]
+script = ExtResource( 3 )
+variable_name = "pool_vector3_array"

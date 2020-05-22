@@ -86,6 +86,8 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Trail2D](addons/godot-next/2d/trail_2d.gd)|Creates a variable-length trail that tracks a "target" node.|GDScript, C#
 |[Trail3D](addons/godot-next/3d/trail_3d.gd)|Creates a variable-length trail on an ImmediateGeometry node.|GDScript, C#
 |[Tween Sequence](addons/godot-next/references/tween_sequence.gd)|A helper class for easier management and chaining of Tweens dynamically from code.|GDScript
+|[VectorDisplay2D](addons/godot-next/2d/vector_display_2d.gd)|Displays Vector2 members in the editor via Position2D nodes.|GDScript
+|[VectorDisplay3D](addons/godot-next/3d/vector_display_3d.gd)|Displays Vector3 members in the editor via Position3D nodes.|GDScript
 |[Variant](addons/godot-next/global/variant.gd)|A utility class for handling Variants (the type wrapper for all variables in Godot's scripting API).|GDScript
 |[VBoxItemList](addons/godot-next/gui/v_box_item_list.gd)|Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.|GDScript
 |[DiscreteGradientTexture](addons/godot-next/resources/DiscreteGradientTexture.gd)|Creates a not interpolated texture for a gradient.|GDScript
