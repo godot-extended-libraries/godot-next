@@ -163,6 +163,16 @@ _global_script_classes=[ {
 "class": "Variant",
 "language": "GDScript",
 "path": "res://addons/godot-next/global/variant.gd"
+}, {
+"base": "Node",
+"class": "VectorDisplay2D",
+"language": "GDScript",
+"path": "res://addons/godot-next/2d/vector_display_2d.gd"
+}, {
+"base": "Node",
+"class": "VectorDisplay3D",
+"language": "GDScript",
+"path": "res://addons/godot-next/3d/vector_display_3d.gd"
 } ]
 _global_script_class_icons={
 "Array2D": "",
@@ -195,7 +205,9 @@ _global_script_class_icons={
 "Trail3D": "res://addons/godot-next/icons/icon_trail_3d.svg",
 "TweenSequence": "",
 "VBoxItemList": "res://addons/godot-next/icons/icon_v_box_item_list.svg",
-"Variant": ""
+"Variant": "",
+"VectorDisplay2D": "",
+"VectorDisplay3D": ""
 }
 
 [application]
