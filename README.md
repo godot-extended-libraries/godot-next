@@ -91,3 +91,4 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[Variant](addons/godot-next/global/variant.gd)|A utility class for handling Variants (the type wrapper for all variables in Godot's scripting API).|GDScript
 |[VBoxItemList](addons/godot-next/gui/v_box_item_list.gd)|Creates a vertical list of items that can be added or removed. Items are a user-specified Script or Scene Control.|GDScript
 |[DiscreteGradientTexture](addons/godot-next/resources/DiscreteGradientTexture.gd)|Creates a not interpolated texture for a gradient.|GDScript
+|[StateMachine](addons/godot-next/references/state_machine.gd)|A Performance-like State Machine Implementation |GDScript
