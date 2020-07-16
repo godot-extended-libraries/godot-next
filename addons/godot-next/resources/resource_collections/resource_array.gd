@@ -65,9 +65,9 @@ func _refresh_data() -> void:
 
 func _export_data_group() -> Array:
 	var list := ._export_data_group()
-	list.append(PropertyInfo.new_storage_only("_data").to_dict())
+	list.append(PropertyInfoFactory.new_storage_only("_data").to_dict())
 	if _data.empty():
-		list.append(PropertyInfo.new_nil(DATA_PREFIX + EMPTY_ENTRY).to_dict())
+		list.append(PropertyInfoFactory.new_nil(DATA_PREFIX + EMPTY_ENTRY).to_dict())
 	for an_index in _data.size():
-		list.append(PropertyInfo.new_resource("%sitem_%s" % [DATA_PREFIX, an_index], "", PROPERTY_USAGE_EDITOR).to_dict())
+		list.append(PropertyInfoFactory.new_resource("%sitem_%s" % [DATA_PREFIX, an_index], "", PROPERTY_USAGE_EDITOR).to_dict())
 	return list

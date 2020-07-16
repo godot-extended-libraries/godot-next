@@ -83,12 +83,12 @@ func _refresh_data() -> void:
 
 # Export properties within the 'data' group.
 func _export_data_group() -> Array:
-	return [ PropertyInfo.new_editor_only(DATA_PREFIX + "dropdown").to_dict() ]
+	return [ PropertyInfoFactory.new_editor_only(DATA_PREFIX + "dropdown").to_dict() ]
 
 
 # Export properties within the 'setup' group.
 func _export_setup_group() -> Array:
-	return [ PropertyInfo.new_resource(SETUP_PREFIX + "base_type", "Script").to_dict() ] if not _type_readonly else []
+	return [ PropertyInfoFactory.new_resource(SETUP_PREFIX + "base_type", "Script").to_dict() ] if not _type_readonly else []
 
 
 # Injects controls to the EditorInspectorPlugin.
