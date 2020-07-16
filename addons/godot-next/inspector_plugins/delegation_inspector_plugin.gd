@@ -27,7 +27,7 @@ func parse_category(p_object: Object, p_category: String) -> void:
 
 
 func parse_property(p_object: Object, p_type: int, p_path: String, p_hint: int, p_hint_text: String, p_usage: int) -> bool:
-	if p_object.has_method("_parse_property"):
+	if p_object and p_object.has_method("_parse_property"):
 		var pinfo = PropertyInfo.new(p_path, p_type, p_hint, p_hint_text, p_usage)
 		return p_object._parse_property(self, pinfo)
 	return false
