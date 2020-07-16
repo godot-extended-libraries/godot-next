@@ -119,6 +119,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-next/references/property_info.gd"
 }, {
+"base": "Reference",
+"class": "PropertyInfoFactory",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/property_info_factory.gd"
+}, {
 "base": "ResourceCollection",
 "class": "ResourceArray",
 "language": "GDScript",
@@ -197,6 +202,7 @@ _global_script_class_icons={
 "PhysicsLayers": "",
 "ProjectTools": "",
 "PropertyInfo": "",
+"PropertyInfoFactory": "",
 "ResourceArray": "",
 "ResourceCollection": "",
 "ResourceSet": "",

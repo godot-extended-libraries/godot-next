@@ -149,7 +149,7 @@ func _parse_property(p_inspector: EditorInspectorPlugin, p_pinfo: PropertyInfo) 
 
 
 func _get_property_list() -> Array:
-	return [ PropertyInfo.new_resource("_elements").to_dict() ]
+	return [ PropertyInfoFactory.new_resource("_elements").to_dict() ]
 
 
 # Helper method to facilitate delegation of the callback.

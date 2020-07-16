@@ -35,7 +35,7 @@ func register_dir(p_path: String) -> void:
 func _get_property_list():
 	var list := []
 	for a_name in data:
-		list.append(PropertyInfo.new_resource(a_name, "Texture").to_dict())
+		list.append(PropertyInfoFactory.new_resource(a_name, "Texture").to_dict())
 	return list
 
 
