@@ -42,7 +42,7 @@ func _on_disable() -> void:
 
 
 # Returns an instance of the stored Behavior resource from the owner.
-func get_behavior(p_type: Script) -> Behavior:
+func get_behavior(p_type: Script) -> Resource:
 	return owner.get_element(p_type)
 
 
