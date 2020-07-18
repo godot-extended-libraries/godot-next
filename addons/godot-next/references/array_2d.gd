@@ -5,8 +5,18 @@ extends Reference
 
 var data: Array = []
 
-func _init(p_array: Array = []):
-	data = p_array
+
+func _init(p_array: Array = [], p_deep_copy : bool = true):
+	if p_deep_copy:
+		for row in p_array:
+			if row is Array:
+				data.append(row.duplicate())
+	else:
+		data = p_array
+
+
+func get_data() -> Array:
+	return data
 
 
 func has_cell(p_row: int, p_col: int) -> bool:
@@ -135,8 +145,8 @@ func sort_col_custom(p_idx: int, p_obj: Object, p_func: String):
 	_sort_axis_custom(p_idx, false, p_obj, p_func)
 
 
-func duplicate() -> Array2D:
-	return (load(get_script().resource_path) as GDScript).new(data.duplicate()) as Array2D
+func duplicate() -> Reference:
+	return load(get_script().resource_path).new(data)
 
 
 func hash() -> int:
@@ -229,18 +239,18 @@ func has(p_value) -> bool:
 	return false
 
 
-func invert() -> Array2D:
+func invert() -> Reference:
 	data.invert()
 	return self
 
 
-func invert_row(p_idx: int) -> Array2D:
+func invert_row(p_idx: int) -> Reference:
 	assert(p_idx >= 0 and len(data) > p_idx)
 	data[p_idx].invert()
 	return self
 
 
-func invert_col(p_idx: int) -> Array2D:
+func invert_col(p_idx: int) -> Reference:
 	assert(len(data) > 0)
 	assert(p_idx >= 0 and len(data[0]) > p_idx)
 	var col = get_col(p_idx)
@@ -282,12 +292,32 @@ func rfind(p_value) -> Vector2:
 	return Vector2(-1, -1)
 
 
-func transpose() -> Array2D:
-	var array = (load(get_script().resource_path) as GDScript).new() as Array2D
-	array.resize(len(data), len(data[0]))
-	for i in range(len(data[0])):
-		array.append_row(get_col(i))
-	return array
+func transpose() -> Reference:
+	var width : int = len(data)
+	var height : int = len(data[0])
+	var transposed_matrix : Array
+	for i in range(height):
+		transposed_matrix.append([])
+	var h : int = 0
+	while h < height:
+		for w in range(width):
+			transposed_matrix[h].append(data[w][h])
+		h += 1
+	return load(get_script().resource_path).new(transposed_matrix, false)
+
+
+func to_str() -> String:
+	var ret: String
+	var width: int = len(data)
+	var height: int = len(data[0])
+	for h in range(height):
+		for w in range(width):
+			ret += "[" + str(data[w][h]) + "]"
+			if w == width - 1 and h != height -1:
+				ret += "\n"
+			else:
+				ret += ", "
+	return ret
 
 
 func _sort_axis(p_idx: int, p_is_row: bool):
