@@ -306,7 +306,7 @@ func transpose() -> Reference:
 	return load(get_script().resource_path).new(transposed_matrix, false)
 
 
-func to_str() -> String:
+func _to_string() -> String:
 	var ret: String
 	var width: int = len(data)
 	var height: int = len(data[0])
@@ -316,7 +316,10 @@ func to_str() -> String:
 			if w == width - 1 and h != height -1:
 				ret += "\n"
 			else:
-				ret += ", "
+				if w == width - 1:
+					ret += "\n"
+				else:
+					ret += ", "
 	return ret
 
 
