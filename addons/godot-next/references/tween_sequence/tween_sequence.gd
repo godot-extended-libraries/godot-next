@@ -5,7 +5,7 @@ extends Reference
 # description:
 #	A helper class for easier management and chaining of Tweens.
 #	dynamically from code.
-#	
+#
 #	Example usage:
 #		var seq := TweenSequence.new(get_tree())
 #		seq.append($Sprite, "modulate", Color.red, 1)
@@ -13,12 +13,6 @@ extends Reference
 #	This will create a Tween and automatically start it,
 #	changing the Sprite to red color in one second
 #	and then making it transparent after a delay.
-
-# Abstract class for all Tweeners.
-class Tweener extends Reference:
-	func _start(tween: Tween) -> void:
-		pass
-
 
 # Tweener for tweening properties.
 class PropertyTweener extends Tweener:
@@ -29,11 +23,11 @@ class PropertyTweener extends Tweener:
 	var _duration: float
 	var _trans: int
 	var _ease: int
-	
+
 	var _delay: float
 	var _continue := true
 	var _advance := false
-	
+
 	func _init(target: Object, property: NodePath, to_value, duration: float) -> void:
 		assert(target, "Invalid target Object.")
 		_target = target
@@ -43,49 +37,49 @@ class PropertyTweener extends Tweener:
 		_duration = duration
 		_trans = Tween.TRANS_LINEAR
 		_ease = Tween.EASE_IN_OUT
-	
-	
-	# Sets custom starting value for the tweener.
-	# By default, it starts from value at the start of this tweener.
-	func from(val) -> PropertyTweener:
+
+
+# Sets custom starting value for the tweener.
+# By default, it starts from value at the start of this tweener.
+	func from(val) -> Tweener:
 		_from = val
 		_continue = false
 		return self
-	
-	
-	# Sets the starting value to the current value,
-	# i.e. value at the time of creating sequence.
-	func from_current() -> PropertyTweener:
+
+
+# Sets the starting value to the current value,
+# i.e. value at the time of creating sequence.
+	func from_current() -> Tweener:
 		_continue = false
 		return self
-	
-	
-	# Sets transition type of this tweener, from Tween.TransitionType.
-	func set_trans(t: int) -> PropertyTweener:
+
+
+# Sets transition type of this tweener, from Tween.TransitionType.
+	func set_trans(t: int) -> Tweener:
 		_trans = t
 		return self
-	
-	
-	# Sets ease type of this tweener, from Tween.EaseType.
-	func set_ease(e: int) -> PropertyTweener:
+
+
+# Sets ease type of this tweener, from Tween.EaseType.
+	func set_ease(e: int) -> Tweener:
 		_ease = e
 		return self
-	
-	
-	# Sets the delay after which this tweener will start.
-	func set_delay(d: float) -> PropertyTweener:
+
+
+# Sets the delay after which this tweener will start.
+	func set_delay(d: float) -> Tweener:
 		_delay = d
 		return self
-	
-	
+
+
 	func _start(tween: Tween) -> void:
 		if not is_instance_valid(_target):
 			push_warning("Target object freed, aborting Tweener.")
 			return
-		
+
 		if _continue:
 			_from = _target.get_indexed(_property)
-		
+
 		if _advance:
 			tween.interpolate_property(_target, _property, _from, _from + _to, _duration, _trans, _ease, _delay)
 		else:
@@ -95,18 +89,17 @@ class PropertyTweener extends Tweener:
 # Generic tweener for creating delays in sequence.
 class IntervalTweener extends Tweener:
 	var _time: float
-	
+
 	func _init(time: float) -> void:
 		_time = time
-	
-	
+
+
 	func _start(tween: Tween) -> void:
 		tween.interpolate_callback(self, _time, "_")
-	
-	
+
+
 	func _():
 		pass
-
 
 # Tweener for calling methods.
 class CallbackTweener extends Tweener:
@@ -114,30 +107,30 @@ class CallbackTweener extends Tweener:
 	var _delay: float
 	var _method: String
 	var _args: Array
-	
+
 	func _init(target: Object, method: String, args: Array) -> void:
 		assert(target, "Invalid target Object.")
 		_target = target
 		_method = method
 		_args = args
-	
-	
-	# Set delay after which the method will be called.
-	func set_delay(d: float) -> CallbackTweener:
+
+
+# Set delay after which the method will be called.
+	func set_delay(d: float) -> Tweener:
 		_delay = d
 		return self
-	
-	
+
+
 	func _start(tween: Tween) -> void:
 		if not is_instance_valid(_target):
 			push_warning("Target object freed, aborting Tweener.")
 			return
-		
+
 		tween.interpolate_callback(_target, _delay, _method,
 			_get_argument(0), _get_argument(1), _get_argument(2),
 			_get_argument(3), _get_argument(4))
-	
-	
+
+
 	func _get_argument(i: int):
 		if i < _args.size():
 			return _args[i]
@@ -154,9 +147,9 @@ class MethodTweener extends Tweener:
 	var _duration: float
 	var _trans: int
 	var _ease: int
-	
+
 	var _delay: float
-	
+
 	func _init(target: Object, method: String, from_value, to_value, duration: float) -> void:
 		assert(target, "Invalid target Object.")
 		_target = target
@@ -166,31 +159,31 @@ class MethodTweener extends Tweener:
 		_duration = duration
 		_trans = Tween.TRANS_LINEAR
 		_ease = Tween.EASE_IN_OUT
-	
-	
-	# Sets transition type of this tweener, from Tween.TransitionType.
-	func set_trans(t: int) -> MethodTweener:
+
+
+# Sets transition type of this tweener, from Tween.TransitionType.
+	func set_trans(t: int) -> Tweener:
 		_trans = t
 		return self
-	
-	
-	# Sets ease type of this tweener, from Tween.EaseType.
-	func set_ease(e: int) -> MethodTweener:
+
+
+# Sets ease type of this tweener, from Tween.EaseType.
+	func set_ease(e: int) -> Tweener:
 		_ease = e
 		return self
-	
-	
-	# Sets the delay after which this tweener will start.
-	func set_delay(d: float) -> MethodTweener:
+
+
+# Sets the delay after which this tweener will start.
+	func set_delay(d: float) -> Tweener:
 		_delay = d
 		return self
-	
-	
+
+
 	func _start(tween: Tween) -> void:
 		if not is_instance_valid(_target):
 			push_warning("Target object freed, aborting Tweener.")
 			return
-		
+
 		tween.interpolate_method(_target, _method, _from, _to, _duration, _trans, _ease, _delay)
 
 
@@ -220,7 +213,7 @@ func _init(tree: SceneTree) -> void:
 	_tween = Tween.new()
 	_tween.set_meta("sequence", self)
 	_tree.get_root().call_deferred("add_child", _tween)
-	
+
 	_tree.connect("idle_frame", self, "start", [], CONNECT_ONESHOT)
 	_tween.connect("tween_all_completed", self, "_step_complete")
 
@@ -264,7 +257,7 @@ func append_method(target: Object, method: String, from_value, to_value, duratio
 
 # When used, next Tweener will be added as a parallel to previous one.
 # Example: sequence.parallel().append(...)
-func parallel() -> TweenSequence:
+func parallel() -> Reference:
 	if _tweeners.empty():
 		_tweeners.append([])
 	_parallel = true
@@ -272,33 +265,33 @@ func parallel() -> TweenSequence:
 
 
 # Alias to parallel(), except it won't work without first tweener.
-func join() -> TweenSequence:
+func join() -> Reference:
 	assert(!_tweeners.empty(), "Can't join with empty sequence!")
 	_parallel = true
 	return self
 
 
 # Sets the speed scale of tweening.
-func set_speed(speed: float) -> TweenSequence:
+func set_speed(speed: float) -> Reference:
 	_tween.playback_speed = speed
 	return self
 
 
 # Sets how many the sequence should repeat.
 # When used without arguments, sequence will run infinitely.
-func set_loops(loops := -1) -> TweenSequence:
+func set_loops(loops := -1) -> Reference:
 	_loops = loops
 	return self
 
 
 # Whether the sequence should autostart or not.
 # Enabled by default.
-func set_autostart(autostart: bool) -> TweenSequence:
+func set_autostart(autostart: bool) -> Reference:
 	if _autostart and not autostart:
 		_tree.disconnect("idle_frame", self, "start")
 	elif not _autostart and autostart:
 		_tree.connect("idle_frame", self, "start", [], CONNECT_ONESHOT)
-	
+
 	_autostart = autostart
 	return self
 
@@ -377,7 +370,7 @@ func _run_next_step() -> void:
 func _step_complete() -> void:
 	emit_signal("step_finished", _current_step)
 	_current_step += 1
-	
+
 	if _current_step == _tweeners.size():
 		_loops -= 1
 		if _loops == -1:

@@ -157,7 +157,12 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "TweenSequence",
 "language": "GDScript",
-"path": "res://addons/godot-next/references/tween_sequence.gd"
+"path": "res://addons/godot-next/references/tween_sequence/tween_sequence.gd"
+}, {
+"base": "Reference",
+"class": "Tweener",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/tween_sequence/tweener.gd"
 }, {
 "base": "VBoxContainer",
 "class": "VBoxItemList",
@@ -210,6 +215,7 @@ _global_script_class_icons={
 "Trail2D": "res://addons/godot-next/icons/icon_trail_2d.svg",
 "Trail3D": "res://addons/godot-next/icons/icon_trail_3d.svg",
 "TweenSequence": "",
+"Tweener": "",
 "VBoxItemList": "res://addons/godot-next/icons/icon_v_box_item_list.svg",
 "Variant": "",
 "VectorDisplay2D": "",
