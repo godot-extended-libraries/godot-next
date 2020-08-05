@@ -23,6 +23,7 @@ extends Reference
 #		bf.check(bf.b) # Checks flag 'b'. Another BitFlag can be provided.
 #	- Get flag names:
 #		bf.get_active_keys() # Returns an array of active keys.
+#		bf.get_active_keys_raw() # Returns the integer represented by the flag, example: a=true,b=true,c=false will return 3
 #		bf.get_keys() # Returns an array of all flag keys.
 #	- Convert to PropertyInfo dict
 #		bf.to_pinfo_dict("property_name") # Returns a dictionary with export structure.
@@ -100,6 +101,12 @@ func get_active_keys() -> Array:
 			out.append(a_flag)
 	return out
 
+func get_active_keys_raw() -> int:
+	var value = 0
+	for a_flag in _enum:
+		if check(_enum[a_flag]):
+			value += _get(a_flag)
+	return value
 
 func get_keys() -> Array:
 	return _enum.keys()
