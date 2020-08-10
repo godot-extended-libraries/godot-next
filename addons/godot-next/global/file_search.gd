@@ -152,7 +152,6 @@ static func _this() -> Script:
 static func _search(p_evaluator: FileEvaluator, p_from_dir: String = "res://", p_recursive: bool = true) -> Dictionary:
 	var dirs: Array = [p_from_dir]
 	var dir: Directory = Directory.new()
-	var first: bool = true
 	var data: Dictionary = {}
 	var eval: FileEvaluator = p_evaluator
 
@@ -166,16 +165,14 @@ static func _search(p_evaluator: FileEvaluator, p_from_dir: String = "res://", p
 			dir.list_dir_begin()
 			var file_name = dir.get_next()
 			while file_name:
-				if first and not dir_name == p_from_dir:
-					first = false
 				# Ignore hidden content.
 				if not file_name.begins_with("."):
-					var a_path = dir.get_current_dir() + ("" if first else "/") + file_name
+					var a_path = dir.get_current_dir().plus_file(file_name)
 					eval.set_file_path(a_path)
 
 					# If a directory, then add to list of directories to visit.
 					if p_recursive and dir.current_is_dir():
-						dirs.push_back(dir.get_current_dir().plus_file(file_name))
+						dirs.push_back(a_path)
 					# If a file, check if we already have a record for the same name.
 					# Only use files with extensions.
 					elif not data.has(a_path) and eval._is_match():
