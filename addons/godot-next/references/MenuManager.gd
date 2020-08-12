@@ -38,18 +38,18 @@ var _reset_on_last:bool
 var _current:int
 var _target:Node
 var _last:int
-var enabled = []
-var _options = []
+var _enabled:Array = []
+var _options:Array = []
 
-func _init(target:Node,options:Array,reset_on_last:bool = false, start:int = 0) -> void:
+func _init(target:Node, options:Array, reset_on_last:bool = false, start:int = 0) -> void:
 	_target = target
 	_amount = target.menu_data.size()
 	_reset_on_last = reset_on_last
 	_current = start
-  _options = options
+  	_options = options
 	_last = start
-	for i in range( _options.size()) :
-		enabled[i] = true
+	for i in range( _options.size()):
+		_enabled[i] = true
 
 func disable_option(index):
 	enable[index] = false
@@ -57,7 +57,7 @@ func disable_option(index):
 func update():
 	var move = int(Input.is_action_just_pressed("ui_up")) - int(Input.is_action_just_pressed("ui_down"))
 	if move > 0:
-		if _current -1 < 0:
+		if _current - 1 < 0:
 			if _reset_on_last:
 				_current = _amount - 1
 		else: _current -= 1
@@ -68,9 +68,9 @@ func update():
 		else: _current += 1
 	if !move == 0 and _last != _current:
 			_target.call_deferred("_on_enter_"+_options[_current])
-			_target.call_deferred("_on_cursor_moved",_current)
+			_target.call_deferred("_on_cursor_moved", _current)
 	elif Input.is_action_just_pressed("ui_select"):
 		print("selected menu: "+_options[_current])
-		_target.call_deferred("_on_menu_selected_"+_options[_current],enable[_current])
+		_target.call_deferred("_on_menu_selected_"+_options[_current], _enabled[_current])
 	_last = _current
 	
