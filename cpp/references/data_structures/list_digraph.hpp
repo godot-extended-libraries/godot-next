@@ -7,180 +7,266 @@
 #include <lemon/list_graph.h>
 
 #include "hash_map.hpp"
+#include "pair.hpp"
 #include "vector.hpp"
 
 namespace godot {
 
 	typedef lemon::ListDigraph LemonDigraph;
-	typedef LemonDigraph::Arc LemonArc;
-	typedef LemonDigraph::ArcIt LemonArcIt;
-	typedef LemonDigraph::Node LemonNode;
-	typedef LemonDigraph::NodeIt LemonNodeIt;
 
-	typedef int64_t ArcID;
-	typedef int64_t VertexID;
+	template <class T>
+	struct DataWrapper {
+		T *wrapper = nullptr;
+		Variant data;
+	};
 
+	class ListDigraph;
+
+	template <class T>
+	class GraphComponent {
+	protected:
+		T _handle;
+		ListDigraph *_list_digraph;
+		bool _initialized;
+
+	public:
+		const T &get_handle() const {
+			return _handle;
+		}
+
+		void initialize(T p_handle, ListDigraph *p_list_digraph) {
+			_handle = p_handle;
+			_list_digraph = p_list_digraph;
+			_initialized = true;
+		}
+
+		virtual int get_id() const = 0;
+
+		virtual bool is_valid() const = 0;
+
+		virtual void set_data(Variant p_data) = 0;
+
+		virtual Variant get_data() const = 0;
+	};
+
+	class Arc;
+
+	class Vertex : public Reference, public GraphComponent<LemonDigraph::Node> {
+		GODOT_CLASS(Vertex, Reference);
+
+	protected:
+		// ## Vertex (GDScript) ######################################### //
+
+		void _contract(const Variant p_other, const Variant p_remove = true);
+
+		Ref<Vertex> _split(const Variant p_connect = true);
+
+		Array _get_incoming_arcs() const;
+
+		Array _get_outgoing_arcs() const;
+
+	public:
+		// ## Vertex (GDNative) ######################################### //
+
+		int get_id() const override;
+
+		bool is_valid() const override;
+
+		void set_data(Variant p_data) override;
+
+		Variant get_data() const override;
+
+		void contract(const Ref<Vertex> p_other, const bool p_remove = false);
+
+		Ref<Vertex> split(const bool p_connect);
+
+		Vector<Ref<Arc> > get_incoming_arcs() const;
+
+		Vector<Ref<Arc> > get_outgoing_arcs() const;
+
+		void _init();
+
+		static void _register_methods();
+
+		Vertex();
+		~Vertex();
+	};
+
+	class Arc : public Reference, public GraphComponent<LemonDigraph::Arc> {
+		GODOT_CLASS(Arc, Reference);
+
+	protected:
+		// ## Arc (GDScript) ############################################ //
+
+		void _set_source(Variant p_vertex);
+
+		void _set_target(Variant p_vertex);
+
+	public:
+		// ## Arc (GDNative) ############################################ //
+
+		int get_id() const override;
+
+		bool is_valid() const override;
+
+		void set_data(Variant p_data) override;
+
+		Variant get_data() const override;
+
+		void reverse();
+
+		Ref<Vertex> split();
+
+		void set_source(Ref<Vertex> p_vertex);
+
+		Ref<Vertex> get_source() const;
+
+		void set_target(Ref<Vertex> p_vertex);
+
+		Ref<Vertex> get_target() const;
+
+		void _init();
+
+		static void _register_methods();
+
+		Arc();
+		~Arc();
+	};
 
 	class ListDigraph : public Reference {
-		GODOT_CLASS(ListDigraph, Reference)
+		GODOT_CLASS(ListDigraph, Reference);
 
-		protected:
-			LemonDigraph _graph;
-			LemonNodeIt _vertex_it;
+		friend Vertex;
+		friend Arc;
 
-			LemonDigraph::ArcMap<Variant> _arc_map;
-			LemonDigraph::NodeMap<Variant> _vertex_map;
+	private:
+		LemonDigraph _graph;
+		LemonDigraph::NodeIt _vertex_it;
 
-			bool _iter_init();
+		LemonDigraph::NodeMap<DataWrapper<Vertex> > _vertex_map;
+		LemonDigraph::ArcMap<DataWrapper<Arc> > _arc_map;
 
-			bool _iter_next();
+	protected:
+		// ## ListDigraph (Internal) #################################### //
 
-			VertexID _iter_get();
+		template <class B, class T, class H, class M>
+		Ref<B> __create_instance(const H &p_handle, M &p_map) {
+			Ref<B> ref = Ref<B>::__internal_constructor(T::_new());
+			ref->initialize(p_handle, this);
+			p_map[p_handle].wrapper = ref.ptr();
+			return ref;
+		}
 
-			bool _set(String p_property, Variant p_value);
+		template <class T>
+		Ref<Vertex> __get_instance(const LemonDigraph::Node &p_node) {
+			if (_vertex_map[p_node].wrapper != nullptr) {
+				return Object::cast_to<Vertex>((T *)_vertex_map[p_node].wrapper);
+			}
+			return __create_instance<Vertex, T>(p_node, _vertex_map);
+		}
 
-			Variant _get(String p_property);
+		template <class T>
+		Ref<Arc> __get_instance(const LemonDigraph::Arc &p_arc) {
+			if (_arc_map[p_arc].wrapper != nullptr) {
+				return Object::cast_to<Arc>((T *)_arc_map[p_arc].wrapper);
+			}
+			return __create_instance<Arc, T>(p_arc, _arc_map);
+		}
 
-			// Graph (GDScript)
+		template <typename T>
+		void __update_data(const Vector<Pair<Ref<T>, Variant> > &p_data) {
+			for (int i = 0; i < p_data.size(); ++i) {
+				Pair<Ref<T>, Variant> comp_to_value = p_data[i];
+				ERR_FAIL_COND(!comp_to_value.first.is_valid());
 
-			PoolIntArray add_vertices(Array p_data);
-			PoolIntArray _add_vertices(Variant p_data);
+				comp_to_value.first->set_data(comp_to_value.second);
+			}
+		}
 
-			void _erase_vertex(Variant p_vertex);
+		const LemonDigraph &get_graph() const;
 
-			void erase_vertices(PoolIntArray p_vertices);
-			void _erase_vertices(Variant p_vertices);
+		virtual Ref<Vertex> get_instance(const LemonDigraph::Node &p_node);
 
-			void _reserve_vertices(Variant p_amount);
+		virtual Ref<Arc> get_instance(const LemonDigraph::Arc &p_arc);
 
-			PoolIntArray _get_vertices();
+		// ## ListDigraph (GDScript) #################################### //
 
-			ArcID _add_arc(Variant p_one, Variant p_other);
+		bool _iter_init();
+		bool _iter_next();
+		Ref<Vertex> _iter_get();
 
-			PoolIntArray add_arcs(Array p_data);
-			PoolIntArray _add_arcs(Variant p_data);
+		Array add_vertices(const Array &p_data, const bool &p_return);
+		Array _add_vertices(Variant p_data, Variant p_return = false);
 
-			void _erase_arc(Variant p_arc);
+		void _erase_vertex(Variant p_vertex);
 
-			void erase_arcs(PoolIntArray p_arcs);
-			void _erase_arcs(Variant p_arcs);
+		void erase_vertices(const Array &p_vertices);
+		void _erase_vertices(Variant p_vertices);
 
-			void _reserve_arcs(Variant p_amount);
+		void _reserve_vertices(Variant p_amount);
 
-			PoolIntArray _get_arcs();
+		Array _get_vertices();
 
-			void _set_data(Variant p_type, Variant p_id, Variant p_data);
+		Ref<Arc> _add_arc(Variant p_source, Variant p_target);
 
-			Variant _get_data(Variant p_type, Variant p_id);
+		Array add_arcs(const Array &p_data, const bool &p_return);
+		Array _add_arcs(Variant p_data, Variant p_return = false);
 
-			void update_data(int p_type, Dictionary p_data);
-			void _update_data(Variant p_type, Variant p_data);
+		void _erase_arc(const Variant p_arc);
 
-			// Vertex (GDScript)
+		void erase_arcs(const Array &p_arcs);
+		void _erase_arcs(Variant p_arcs);
 
-			bool _vertex_is_valid(const Variant p_id);
+		void _reserve_arcs(Variant p_amount);
 
-			void _vertex_contract(Variant p_vertex, Variant p_other, Variant p_remove = true);
+		Array _get_arcs();
 
-			VertexID _vertex_split(const Variant p_vertex, const Variant p_connect = true);
+		void update_data(const Dictionary &p_data);
+		void _update_data(Variant p_data);
 
-			PoolIntArray __vertex_get_incoming_arcs(VertexID p_vertex) const;
-			PoolIntArray _vertex_get_incoming_arcs(Variant p_vertex) const;
+	public:
+		// ## ListDigraph (GDNative) #################################### //
 
-			PoolIntArray __vertex_get_outgoing_arcs(VertexID p_vertex) const;
-			PoolIntArray _vertex_get_outgoing_arcs(Variant p_vertex) const;
+		Ref<Vertex> add_vertex();
 
-			// Arc (GDScript)
+		Vector<Ref<Vertex> > add_vertices(const Vector<Variant> &p_data, const bool p_return = false);
 
-			bool _arc_is_valid(const Variant p_id);
+		void erase_vertex(Ref<Vertex> p_vertex);
 
-			void _arc_reverse(const Variant p_arc);
+		void erase_vertices(const Vector<Ref<Vertex> > &p_vertices);
 
-			VertexID _arc_split(const Variant p_arc);
+		void reserve_vertices(const int p_amount);
 
-			void _arc_set_source(const Variant p_arc, const Variant p_vertex);
+		Vector<Ref<Vertex> > get_vertices();
 
-			VertexID _arc_get_source(const Variant p_arc);
+		int count_vertices() const;
 
-			void _arc_set_target(const Variant p_arc, const Variant p_vertex);
+		Ref<Arc> add_arc(const Ref<Vertex> p_source, const Ref<Vertex> p_target);
 
-			VertexID _arc_get_target(const Variant p_arc);
+		Vector<Ref<Arc> > add_arcs(const Vector<HashMap<String, Variant> > &p_data, const bool p_return = false);
 
-		public:
+		void erase_arc(Ref<Arc> p_arcs);
 
-			enum GraphComponent {
-				VERTEX,
-				ARC
-			};
+		void erase_arcs(const Vector<Ref<Arc> > &p_arcs);
 
-			// Graph (GDNative)
+		void reserve_arcs(int p_amount);
 
-			VertexID add_vertex();
+		Vector<Ref<Arc> > get_arcs();
 
-			Vector<VertexID> add_vertices(Vector<Variant> p_data);
+		int count_arcs() const;
 
-			void erase_vertex(const VertexID p_vertex);
+		void clear();
 
-			void erase_vertices(Vector<VertexID> p_vertices);
+		void update_data(const Vector<Pair<Ref<Vertex>, Variant> > &p_data);
 
-			void reserve_vertices(int p_amount);
+		void update_data(const Vector<Pair<Ref<Arc>, Variant> > &p_data);
 
-			Vector<VertexID> get_vertices();
+		void _init();
 
-			ArcID add_arc(VertexID p_source, VertexID p_target);
+		static void _register_methods();
 
-			Vector<ArcID> add_arcs(Vector<HashMap<String, Variant>> p_data);
-
-			void erase_arc(ArcID p_arcs);
-
-			void erase_arcs(Vector<ArcID> p_arcs);
-
-			void reserve_arcs(int p_amount);
-
-			Vector<ArcID> get_arcs();
-
-			void clear();
-
-			void set_data(ListDigraph::GraphComponent p_type, int64_t p_id, Variant p_data);
-
-			Variant get_data(ListDigraph::GraphComponent p_type, int64_t p_id);
-
-			void update_data(ListDigraph::GraphComponent p_type, const HashMap<int64_t, Variant> &p_data);
-
-			// Vertex (GDNative)
-
-			bool vertex_is_valid(VertexID p_id) const;
-
-			void vertex_contract(VertexID p_vertex, VertexID p_other, bool p_remove = false);
-
-			VertexID vertex_split(const VertexID p_vertex, const bool p_connect);
-
-			Vector<ArcID> vertex_get_incoming_arcs(const VertexID p_vertex) const;
-
-			Vector<ArcID> vertex_get_outgoing_arcs(const VertexID p_vertex) const;
-
-			// Arc (GDNative)
-
-			bool arc_is_valid(ArcID p_id) const;
-
-			void arc_reverse(ArcID p_arc);
-
-			VertexID arc_split(ArcID p_arc);
-
-			void arc_set_source(const ArcID p_arc, const VertexID p_vertex);
-
-			VertexID arc_get_source(const ArcID p_arc);
-
-			void arc_set_target(const ArcID p_arc, const VertexID p_vertex);
-
-			VertexID arc_get_target(const ArcID p_arc);
-
-			static void _register_methods();
-
-			ListDigraph();
-			~ListDigraph();
-
-			void _init();
+		ListDigraph();
+		~ListDigraph();
 	};
-}
+} // namespace godot
 #endif /* !LIST_DIGRAPH_HPP */

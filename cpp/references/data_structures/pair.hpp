@@ -1,10 +1,10 @@
-#ifndef MAP_HPP
-#define MAP_HPP
+#ifndef PAIR_HPP
+#define PAIR_HPP
 
 #include <map>
 
 namespace godot {
 	template <typename K, typename V>
-	using Map = std::map<K, V>;
+	using Pair = std::pair<K, V>;
 } // namespace godot
-#endif /* !MAP_HPP */
+#endif /* !PAIR_HPP */

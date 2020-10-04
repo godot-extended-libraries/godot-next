@@ -4,7 +4,7 @@
 #include <set>
 
 namespace godot {
-	template<typename T>
+	template <typename T>
 	using Set = std::set<T>;
-}
+} // namespace godot
 #endif /* !SET_HPP */
