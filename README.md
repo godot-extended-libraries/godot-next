@@ -1,8 +1,5 @@
 # godot-next
 
-## Disclaimer
-
-Please note that this repository has been moved to `godot-extended-libraries/godot-next`. Please visit there if you would like to track its continued development! I am still the maintainer of it within that organization.
 
 ## Description
 
