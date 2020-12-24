@@ -1,0 +1,7 @@
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners.
+# Owners can be @users, @org/teams or emails
+
+/addons/godot-next/2d        @aaronfranke
+/addons/godot-next/3d        @aaronfranke
+/addons/godot-next-cs        @aaronfranke
