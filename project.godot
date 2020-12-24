@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://addons/godot-next/references/array_2d.gd"
 }, {
 "base": "Resource",
+"class": "ArrayMap",
+"language": "GDScript",
+"path": "res://addons/godot-next/resources/array_map.gd"
+}, {
+"base": "Resource",
 "class": "Behavior",
 "language": "GDScript",
 "path": "res://addons/godot-next/resources/behavior.gd"
@@ -174,6 +179,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-next/global/variant.gd"
 }, {
+"base": "Resource",
+"class": "Vec2",
+"language": "GDScript",
+"path": "res://addons/godot-next/2d/vec2.gd"
+}, {
+"base": "Resource",
+"class": "Vec3",
+"language": "GDScript",
+"path": "res://addons/godot-next/3d/vec3.gd"
+}, {
 "base": "Node",
 "class": "VectorDisplay2D",
 "language": "GDScript",
@@ -186,6 +201,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Array2D": "",
+"ArrayMap": "",
 "Behavior": "",
 "BitFlag": "",
 "Bitset": "",
@@ -218,6 +234,8 @@ _global_script_class_icons={
 "Tweener": "",
 "VBoxItemList": "res://addons/godot-next/icons/icon_v_box_item_list.svg",
 "Variant": "",
+"Vec2": "",
+"Vec3": "",
 "VectorDisplay2D": "",
 "VectorDisplay3D": ""
 }
