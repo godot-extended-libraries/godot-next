@@ -55,7 +55,9 @@
   <ItemGroup>
     <Compile Include="addons\godot-next-cs\2d\Geometry2D.cs" />
     <Compile Include="addons\godot-next-cs\2d\Trail2D.cs" />
+    <Compile Include="addons\godot-next-cs\2d\Vec2.cs" />
     <Compile Include="addons\godot-next-cs\3d\Trail3D.cs" />
+    <Compile Include="addons\godot-next-cs\3d\Vec3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
