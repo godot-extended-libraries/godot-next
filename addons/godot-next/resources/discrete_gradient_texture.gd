@@ -8,7 +8,7 @@ extends ImageTexture
 #	- Write a more elegant way of updating the texture than changing the resolution.
 #	- Persuade Godot to repeat the texture vertically in the inspector.
 
-export var resolution: int = 256 setget _update_resolution 
+export var resolution: int = 256 setget _update_resolution
 export var gradient: Gradient = Gradient.new() setget _update_gradient
 
 func _ready() -> void:
@@ -18,12 +18,12 @@ func _ready() -> void:
 func _update_texture() -> void:
 	var image := Image.new()
 	image.create(resolution, 1, false, Image.FORMAT_RGBA8)
-	
+
 	if not gradient:
 		return
-	
+
 	image.lock()
-	
+
 	var last_offset := 0
 	var last_pixel := 0
 	var index := 0
@@ -33,16 +33,16 @@ func _update_texture() -> void:
 		var color := gradient.colors[index]
 		for x in range(amount):
 			image.set_pixel(x + last_pixel, 0, color)
-		
+
 		last_offset = offset
 		last_pixel = last_pixel + amount
 		index += 1
-	
+
 	if last_pixel < resolution:
 		var color := gradient.colors[-1]
 		for x in resolution - last_pixel:
 			image.set_pixel(x + last_pixel, 0, color)
-	 
+
 	image.unlock()
 	self.create_from_image(image, 0)
 

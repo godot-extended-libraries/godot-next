@@ -65,7 +65,7 @@ extends Reference
 #	- Inheritance Lists:
 #		var list: PoolStringArray = ct.get_inheritors_list() # get all named types that inherit "MyNode" (engine + script classes)
 #		var ct = CustomType.new(list[0]) # works because named types only
-#		
+#
 #		var list: PoolStringArray = ct.get_deep_inheritors_list() # get all types that inherit "MyNode" (engine + script and scene resources, namified paths for anonymous ones)
 #		var ct = ClassType.from_type_dict(type_map[list[0]]) # factory method handles init logic
 
@@ -527,7 +527,7 @@ static func static_is_type(p_type, p_other, p_map: Dictionary = {}) -> bool:
 		map = _get_script_map()
 	else:
 		map = p_map
-	
+
 	match typeof(p_type):
 		# static_is_type(<string>, <something>)
 		TYPE_STRING:
@@ -545,7 +545,7 @@ static func static_is_type(p_type, p_other, p_map: Dictionary = {}) -> bool:
 			var res_type := _convert_name_to_res(p_type, map)
 			if res_type:
 				return static_is_type(res_type, p_other, map)
-			
+
 			return false
 
 		TYPE_OBJECT:
@@ -651,7 +651,7 @@ func _init_from_name(p_name: String) -> void:
 		res = load(path)
 		_source = Source.SCRIPT
 		return
-	
+
 	path = ""
 	res = null
 	_source = Source.NONE

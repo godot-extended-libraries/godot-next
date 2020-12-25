@@ -9,7 +9,6 @@ using Vector3Array = Godot.Collections.Array<Godot.Vector3>;
 /// </remarks>
 public static partial class Vec3
 {
-
     public static readonly Vector3 Zero = new Vector3(0, 0, 0);
     public static readonly Vector3 One = new Vector3(1, 1, 1);
     public static readonly Vector3 Right = new Vector3(1, 0, 0);

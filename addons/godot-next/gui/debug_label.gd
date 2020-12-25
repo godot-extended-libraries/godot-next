@@ -51,7 +51,7 @@ func _init(p_target: Object = null) -> void:
 
 func _enter_tree() -> void:
 	set_process_internal(true)
-	
+
 	if not OS.is_debug_build():
 		text = ""
 		hide()
@@ -66,7 +66,7 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	set_process_internal(false)
 	set_physics_process_internal(false)
-	
+
 	target = null
 
 
@@ -87,7 +87,7 @@ func set_target_path(p_path: NodePath) -> void:
 
 func set_update_mode(p_mode: int) -> void:
 	update_mode = p_mode
-	
+
 	match update_mode:
 		UpdateMode.IDLE:
 			set_process_internal(true)
@@ -129,27 +129,27 @@ func update() -> void:
 func _update_debug_info() -> void:
 	if not OS.is_debug_build():
 		return
-	
+
 	text = ""
-	
+
 	if not is_instance_valid(target):
 		text = "null"
 		return
-	
+
 	if show_label_name:
 		text += "%s\n" % [name]
-	
+
 	if show_target_name:
 		var object_name := String()
-		
+
 		if target is Node:
 			object_name = target.name
 		elif target is Resource:
 			object_name = target.resource_name
-		
+
 		if not object_name.empty():
 			text += "%s\n" % [object_name]
-	
+
 	for prop in properties:
 		if prop.empty():
 			continue

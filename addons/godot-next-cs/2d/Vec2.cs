@@ -103,5 +103,4 @@ public static partial class Vec2
         NENorm,
         NEE,
     };
-
 }

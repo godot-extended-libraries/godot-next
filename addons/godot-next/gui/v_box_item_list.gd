@@ -54,27 +54,27 @@ func _init(p_title: String = "", p_item_prefix: String = "", p_type: Resource = 
 			item_scene = p_type
 		else:
 			printerr("'p_type' in VBoxItemList.new() is not a Script or PackedScene")
-	
+
 	var main_toolbar := HBoxContainer.new()
 	main_toolbar.name = "Toolbar"
 	add_child(main_toolbar)
-	
+
 	label = Label.new()
 	label.name = "Title"
 	label.text = p_title
 	main_toolbar.add_child(label)
-	
+
 	add_button = ToolButton.new()
 	add_button.icon = ICON_ADD
 	add_button.name = "AddButton"
 	#warning-ignore:return_value_discarded
 	add_button.connect("pressed", self, "append_item")
 	main_toolbar.add_child(add_button)
-	
+
 	content = VBoxContainer.new()
 	content.name = "Content"
 	add_child(content)
-	
+
 	item_prefix = p_item_prefix
 
 
@@ -101,13 +101,13 @@ func insert_item(p_index: int) -> Control:
 	var node: Control = _get_node_from_type()
 	if not node:
 		return null
-	
+
 	node.name = "Item"
-	
+
 	var hbox := HBoxContainer.new()
 	#warning-ignore:return_value_discarded
 	hbox.connect("gui_input", self, "_on_hbox_gui_input", [hbox])
-	
+
 	var rect := TextureRect.new()
 	rect.texture = ICON_SLIDE
 	#warning-ignore:return_value_discarded
@@ -115,42 +115,42 @@ func insert_item(p_index: int) -> Control:
 	rect.name = "ItemSlide"
 	rect.set_visible(allow_reordering)
 	hbox.add_child(rect)
-	
+
 	var item_label := Label.new()
 	item_label.name = "ItemLabel"
 	hbox.add_child(item_label)
-	
+
 	var item_edit := LineEdit.new()
 	item_edit.name = "ItemEdit"
 	item_edit.hide()
 	#warning-ignore:return_value_discarded
 	item_edit.connect("text_entered", self, "_on_edit_text_entered", [item_edit, item_label])
 	hbox.add_child(item_edit)
-	
+
 	hbox.add_child(node)
-	
+
 	var del_btn := ToolButton.new()
 	del_btn.icon = ICON_DELETE
 	del_btn.name = "DeleteButton"
 	if not deletable_items:
 		del_btn.visible = false
 	hbox.add_child(del_btn)
-	
+
 	content.add_child(hbox)
 	if p_index >= 0:
 		content.move_child(node, p_index)
 	else:
 		p_index = len(content.get_children())-1
-	
+
 	_reset_prefix_on_label(item_label, p_index)
 	#warning-ignore:return_value_discarded
 	del_btn.connect("pressed", self, "_on_remove_item", [del_btn])
 	_item_inserted(p_index, node)
-	
+
 	emit_signal("item_inserted", p_index, node)
-	
+
 	_insertions += 1
-	
+
 	return node
 
 
@@ -199,29 +199,29 @@ func _on_hbox_gui_input(p_event: InputEvent, p_hbox: HBoxContainer):
 			edit.text = label.text
 			edit.show()
 			label.hide()
-	
+
 	if p_event is InputEventMouseMotion:
 		var mm := p_event as InputEventMouseMotion
-		
+
 		if _hovered_item and is_instance_valid(_hovered_item):
 			(_hovered_item.get_node("ItemLabel") as Label).modulate = Color(1, 1, 1, 1)
 		_hovered_item = p_hbox
 		(_hovered_item.get_node("ItemLabel") as Label).modulate = label_tint
-		
+
 		if _dragged_item:
 			var prev_idx = max(p_hbox.get_index() - 1, 0)
 			var next_idx = min(p_hbox.get_index() + 1, p_hbox.get_parent().get_child_count() - 1)
 			var previous = p_hbox.get_parent().get_child(prev_idx)
 			var next = p_hbox.get_parent().get_child(next_idx)
 			var moved := false
-			
+
 			if previous.get_global_rect().has_point(mm.global_position):
 				content.move_child(_dragged_item, prev_idx)
 				moved = true
 			elif next.get_global_rect().has_point(mm.global_position):
 				content.move_child(_dragged_item, next_idx)
 				moved = true
-			
+
 			if moved:
 				var del_btn := _dragged_item.get_node("DeleteButton") as ToolButton
 				if del_btn.is_connected("pressed", self, "remove_item"):
@@ -269,7 +269,7 @@ func _reset_prefix_on_label(p_label: Label, p_index: int = -1):
 				idx = len(content.get_children()) - 1
 		else:
 			idx = _insertions
-			
+
 		p_label.text = "%s %d" % [item_prefix, idx]
 		p_label.show()
 	else:
@@ -287,17 +287,17 @@ func _validate_item_type(p_res: Resource) -> bool:
 	else:
 		printerr("Item Resource is unassigned.")
 		return false
-	
+
 	if not node:
 		printerr("An error occurred in creating a node from the Item Resource.")
 		return false
 	elif not node is Control:
 		printerr("Item Resource does not create a Control.")
 		return false
-	
+
 	if node is Node:
 		node.queue_free()
-	
+
 	return true
 
 

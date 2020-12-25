@@ -17,7 +17,7 @@ func connect_message(message_type: String, obj: Object, function: String) -> voi
 	assert(obj.has_method(function))
 	if !_message_handlers.has(message_type):
 		_message_handlers[message_type] = []
-	
+
 	_message_handlers[message_type].push_back([obj, function])
 
 
@@ -52,5 +52,5 @@ func emit_message(message_type: String, message_data: Dictionary) -> bool:
 
 		for handler in invalid:
 			handlers.erase(handler)
-			
+
 	return handlers != null && !handlers.empty()

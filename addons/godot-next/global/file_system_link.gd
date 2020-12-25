@@ -50,7 +50,7 @@ static func _make_link(p_target: String, p_linkpath: String = "", p_target_type 
 		TargetTypes.DIR, TargetTypes.WINDOWS_JUNCTION:
 			if not dir.dir_exists(target):
 				return ERR_FILE_NOT_FOUND
-	
+
 	match OS.get_name():
 		"Windows":
 			match p_link_type:
@@ -87,7 +87,7 @@ static func _make_link(p_target: String, p_linkpath: String = "", p_target_type 
 				_:
 					printerr("Unknown link type passed to FileSystemLink.make_link", p_link_type)
 					return ERR_INVALID_PARAMETER
-			
+
 			match p_target_type:
 				TargetTypes.FILE:
 					pass
