@@ -6,7 +6,7 @@ extends Resource
 # description:
 #	This is an abstract base "Behavior" class for use in the "Behaviors" node class.
 #	"Behaviors" manages "Behavior" resources and calls notification methods that the Behavior implements.
-# usage: 
+# usage:
 #	- Supported notifications:
 #		_enter_tree() -> void
 #		_exit_tree() -> void
@@ -18,7 +18,7 @@ extends Resource
 #		_unhandled_key_input(event: InputEventKey) -> void:
 #	Note:
 #		- If present notifications, are automatically triggered by the owner class.
-#		- If the behavior is disabled its notifications will not be processed. 
+#		- If the behavior is disabled its notifications will not be processed.
 
 # A reference to the owning Behaviors node.
 var owner: Node = null setget set_owner, get_owner

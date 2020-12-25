@@ -70,16 +70,16 @@ func load_file(p_filepath: String) -> int:
 	_headers.clear()
 	_map.clear()
 	_array.clear()
-	
+
 	var headers = _parse_line(f.get_line())
 	_array.append_row(headers)
 	for i in range(headers.size()):
 		_headers[headers[i]] = i
-	
+
 	if not _uses_map:
 		for a_header in _headers:
 			_map[a_header] = []
-	
+
 	#warning-ignore:unused_variable
 	var line: String
 	while not f.eof_reached():
@@ -87,7 +87,7 @@ func load_file(p_filepath: String) -> int:
 		if _uses_map:
 			_map[_get_key(row)] = row
 		_array.append_row(row)
-	
+
 	f.close()
 	_filepath = p_filepath
 	emit_signal("file_loaded", p_filepath)
@@ -150,14 +150,14 @@ func map_set_value(p_key: String, p_header: String, p_value):
 func _parse_line(p_line: String) -> Array:
 	if not p_line:
 		return []
-	
+
 	var ret := []
 	var val := ""
-	
+
 	var in_quotes := false
 	var start_collect_char := false
 	var double_quotes_in_column := false
-	
+
 	var chars := p_line.to_utf8()
 	for a_char in chars:
 		var s := char(a_char)
@@ -176,10 +176,10 @@ func _parse_line(p_line: String) -> Array:
 		else:
 			if s == _quote:
 				in_quotes = true
-				
+
 				if p_line[0] != "\"" and _quote == "\"":
 					val += "\""
-				
+
 				if start_collect_char:
 					val += "\""
 			elif s == _sep:

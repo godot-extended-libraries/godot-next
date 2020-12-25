@@ -53,7 +53,7 @@ func _ready() -> void:
 
 
 # Initialize every element and de-activate any non-essential CallbackDelegator notifications.
-func _enter_tree() -> void:	
+func _enter_tree() -> void:
 	var elements = _elements.get_data().values()
 	for an_element in elements:
 		if not an_element.owner:
@@ -91,18 +91,18 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 # base_type is assigned. See `set_base_type(...)`.
 func add_element(p_type: Script) -> Resource:
 	var elements = _elements.get_data()
-	
+
 	_class_type.res = p_type
 	if not _class_type.is_type(_elements.get_base_type()):
 		return null
 	if has_element(p_type):
 		return get_element(p_type)
-		
+
 	var element: Resource = p_type.new()
-	
+
 	elements[_class_type.get_script_class()] = element
 	_initialize_element(element)
-	
+
 	return element
 
 

@@ -23,7 +23,7 @@ func _ready():
 		density_around = 3
 	if density_lengthwise < 2:
 		density_lengthwise = 2
-	
+
 	segment_length = length / density_lengthwise
 	for i in range(density_lengthwise):
 		points.append(global_transform.origin)
@@ -91,7 +91,7 @@ func render_trail():
 		last_p = p
 		ind += 1
 		first_iteration = false
-	
+
 	# Create tris.
 	for j in range(len(verts) - 1):
 		var cur = verts[j]
@@ -105,7 +105,7 @@ func render_trail():
 			add_vertex(cur[nxt_i])
 			add_vertex(nxt[nxt_i])
 			add_vertex(nxt[i])
-	
+
 	if verts.size() > 1:
 		# Cap off top.
 		for i in range(density_around):
@@ -113,7 +113,7 @@ func render_trail():
 			add_vertex(verts[0][i])
 			add_vertex(Vector3())
 			add_vertex(verts[0][nxt])
-		
+
 		# Cap off bottom.
 		for i in range(density_around):
 			var nxt = (i + 1) % density_around

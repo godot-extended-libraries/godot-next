@@ -36,14 +36,14 @@ extends Reference
 class Rule extends Reference:
 	var _regex: RegEx
 	var _replacement: String
-	
+
 	func _init(p_rule: String, p_replacement: String) -> void:
 		_regex = RegEx.new()
 		#warning-ignore:return_value_discarded
 		_regex.compile(p_rule)
 		_replacement = p_replacement
-	
-	
+
+
 	func apply(p_word: String):
 		if not _regex.search(p_word):
 			return null
@@ -54,28 +54,28 @@ class Vocabulary extends Reference:
 	var _plurals: Array = [] setget, get_plurals
 	var _singulars: Array = [] setget, get_singulars
 	var _uncountables: Array = [] setget, get_uncountables
-	
-	
+
+
 	func get_plurals() -> Array:
 		return _plurals
-	
-	
+
+
 	func get_singulars() -> Array:
 		return _singulars
-	
-	
+
+
 	func get_uncountables() -> Array:
 		return _uncountables
-	
-	
+
+
 	func add_plural(p_rule: String, p_replacement: String) -> void:
 		_plurals.append(Rule.new(p_rule, p_replacement))
-	
-	
+
+
 	func add_singular(p_rule: String, p_replacement: String) -> void:
 		_singulars.append(Rule.new(p_rule, p_replacement))
-	
-	
+
+
 	func add_irregular(p_singular: String, p_plural: String, p_match_ending: bool = true) -> void:
 		if p_match_ending:
 			var sfirst = p_singular[0]
@@ -87,19 +87,19 @@ class Vocabulary extends Reference:
 		else:
 			add_plural("^%s$" % p_singular, p_plural)
 			add_singular("^%s$" % p_plural, p_singular)
-	
-	
+
+
 	func add_uncountable(p_word: String) -> void:
 		_uncountables.append(p_word.to_lower())
-	
-	
+
+
 	func is_uncountable(p_word: String) -> bool:
 		return _uncountables.has(p_word.to_lower())
-	
-	
+
+
 	static func build_default_vocabulary() -> Vocabulary:
 		var vocabulary = Vocabulary.new()
-		
+
 		# Plural rules.
 		vocabulary._plurals = [
 			Rule.new("$", "s"),
@@ -124,7 +124,7 @@ class Vocabulary extends Reference:
 			Rule.new("(alumn|alg|larv|vertebr)a$", "$1ae"),
 			Rule.new("(criteri|phenomen)on$", "$1a")
 		]
-		
+
 		# Singular rules.
 		vocabulary._singulars = [
 			Rule.new("s$", ""),
@@ -154,7 +154,7 @@ class Vocabulary extends Reference:
 			Rule.new("(criteri|phenomen)a$", "$1on"),
 			Rule.new("([b|r|c]ook|room|smooth)ies$", "$1ie")
 		]
-		
+
 		# Irregular rules.
 		vocabulary.add_irregular("person", "people")
 		vocabulary.add_irregular("man", "men")
@@ -171,13 +171,13 @@ class Vocabulary extends Reference:
 		vocabulary.add_irregular("database", "databases")
 		vocabulary.add_irregular("zombie", "zombies")
 		vocabulary.add_irregular("personnel", "personnel")
-		
+
 		vocabulary.add_irregular("is", "are", true)
 		vocabulary.add_irregular("that", "those", true)
 		vocabulary.add_irregular("this", "these", true)
 		vocabulary.add_irregular("bus", "buses", true)
 		vocabulary.add_irregular("staff", "staff", true)
-		
+
 		# Uncountables.
 		vocabulary._uncountables = [
 			"equipment",
@@ -220,7 +220,7 @@ class Vocabulary extends Reference:
 			"means",
 			"mail"
 		]
-		
+
 		return vocabulary
 
 
@@ -239,31 +239,31 @@ func get_vocabulary() -> Vocabulary:
 
 func pluralize(p_word: String, p_force: bool = false) -> String:
 	var result = apply_rules(_vocabulary.get_plurals(), p_word)
-	
+
 	if not p_force:
 		return result
-	
+
 	var as_singular = apply_rules(_vocabulary.get_singulars(), p_word)
 	var as_singular_as_plural = apply_rules(_vocabulary.get_plurals(), as_singular)
-	
+
 	if as_singular and as_singular != p_word and as_singular + "s" != p_word and as_singular_as_plural == p_word and result != p_word:
 		return p_word
-	
+
 	return result
 
 
 func singularize(p_word: String, p_force: bool = false) -> String:
 	var result = apply_rules(_vocabulary.get_singulars(), p_word)
-	
+
 	if not p_force:
 		return result
-	
+
 	var as_plural = apply_rules(_vocabulary.get_plurals(), p_word)
 	var as_plural_as_singular = apply_rules(_vocabulary.get_singulars(), as_plural)
-	
+
 	if as_plural and p_word + "s" != as_plural and as_plural_as_singular == p_word and result != p_word:
 		return p_word
-	
+
 	return result
 
 
@@ -273,11 +273,11 @@ func apply_rules(p_rules: Array, p_word: String):
 
 	if _vocabulary.is_uncountable(p_word):
 		return p_word
-	
+
 	var result = p_word
 	for i in range(len(p_rules) - 1, -1, -1):
 		result = p_rules[i].apply(p_word)
 		if result:
 			break
-	
+
 	return result

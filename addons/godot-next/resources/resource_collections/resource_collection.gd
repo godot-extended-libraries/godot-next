@@ -62,10 +62,10 @@ func _set(p_property: String, p_value) -> bool:
 func _get_property_list() -> Array:
 	var list := []
 	list += _export_setup_group()
-	
+
 	if not _type:
 		return list
-	
+
 	list += _export_data_group()
 	return list
 

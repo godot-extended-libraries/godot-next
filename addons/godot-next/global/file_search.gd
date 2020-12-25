@@ -11,18 +11,18 @@ class FileEvaluator extends Reference:
 	# Assigns a new file path to the object.
 	func _is_match() -> bool:
 		return true
-	
-	
+
+
 	# If _is_match() returns true, returns the key used to store the data.
 	func _get_key():
 		return file_path
-	
-	
+
+
 	# If _is_match() returns true, returns the data associated with the file.
 	func _get_value() -> Dictionary:
 		return { "path": file_path }
-	
-	
+
+
 	# Assigns a new file path to the object.
 	func set_file_path(p_value):
 		file_path = p_value
@@ -30,11 +30,11 @@ class FileEvaluator extends Reference:
 
 class FilesThatHaveString extends FileEvaluator:
 	var _compare: String
-	
+
 	func _init(p_compare: String = ""):
 		_compare = p_compare
-	
-	
+
+
 	func _is_match() -> bool:
 		return file_path.find(_compare) != -1
 
@@ -46,8 +46,8 @@ class FilesThatAreSubsequenceOf extends FileEvaluator:
 	func _init(p_compare: String = "", p_case_sensitive: bool = false):
 		_compare = p_compare
 		_case_sensitive = p_case_sensitive
-	
-	
+
+
 	func _is_match() -> bool:
 		if _case_sensitive:
 			return _compare.is_subsequence_of(file_path)
@@ -64,15 +64,15 @@ class FilesThatMatchRegex extends FileEvaluator:
 		if _regex.compile(p_regex_str) != OK:
 			push_error("Check failed. FilesThatMatchRegex failed to compile regex: " + p_regex_str)
 			return
-	
-	
+
+
 	func _is_match() -> bool:
 		if not _regex.is_valid():
 			return false
 		_match = _regex.search(file_path if _compare_full_path else file_path.get_file())
 		return _match != null
-	
-	
+
+
 	func _get_value() -> Dictionary:
 		var data = ._get_value()
 		data.match = _match
@@ -82,7 +82,7 @@ class FilesThatMatchRegex extends FileEvaluator:
 class FilesThatExtendResource extends FileEvaluator:
 	var _match_func: FuncRef
 	var _exts: Dictionary
-	
+
 	func _init(p_types: PoolStringArray = PoolStringArray(["Resource"]), p_match_func: FuncRef = null, p_block_base_resource: bool = false):
 		_match_func = p_match_func
 		for type in p_types:
@@ -93,8 +93,8 @@ class FilesThatExtendResource extends FileEvaluator:
 			#warning-ignore:return_value_discarded
 			_exts.erase("tres")
 			_exts.erase("res")
-	
-	
+
+
 	func _is_match() -> bool:
 		for a_ext in _exts:
 			if file_path.get_file().get_extension() == a_ext:

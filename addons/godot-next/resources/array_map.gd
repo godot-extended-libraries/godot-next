@@ -6,10 +6,10 @@ extends Resource
 # description:
 #   ArrayMap is a Resource that stores String->Variant pairs.
 #   Stores an Array of values and a Dictionary of names mapped to their indices.
-#   
+#
 #   Because exporting Arrays results in globally shared Array references,
 #   this simulates all of its data as individual properties.
-#   
+#
 #   The above bug is fixed in 4.0 via godotengine/godot#41983.
 
 # internal data
@@ -45,7 +45,7 @@ func insert(p_key: String, p_value) -> void:
 		elif _type == TYPE_ARRAY:
 			_hint = 24 # PROPERTY_HINT_TYPE_STRING
 			_hint_string = str(typeof(p_value)) + ":"
-		
+
 	if keys.has(p_key):
 		values[keys[p_key]] = p_value
 	else:
@@ -127,7 +127,7 @@ func _get(p_name: String):
 		var i = int(p_name.replace("values/", ""))
 		if i < values.size() and i >= 0:
 			return values[i]
-	
+
 	if p_name.begins_with("keys/"):
 		var key = p_name.replace("keys/", "")
 		if keys.has(key):
@@ -141,11 +141,11 @@ func _set(p_name: String, p_value):
 		if i < values.size() and i >= 0:
 			values[i] = p_value
 			return true
-	
+
 	if p_name.begins_with("keys/"):
 		var key = p_name.replace("keys/", "")
 		if keys.has(key):
 			keys[key] = p_value
 			return true
-			
+
 	return false

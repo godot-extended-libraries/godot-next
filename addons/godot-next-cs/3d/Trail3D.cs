@@ -108,7 +108,6 @@ public class Trail3D : ImmediateGeometry
         }
         for (int j = 0; j < verts.Count - 1; j++)
         {
-
             var cur = verts[j];
             var nxt = verts[j + 1];
             for (int i = 0; i < densityAround; i++)

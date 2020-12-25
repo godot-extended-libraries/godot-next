@@ -12,7 +12,7 @@ func _enter_tree() -> void:
 	add_custom_type("Trail3D", "ImmediateGeometry", preload("3d/Trail3D.cs"), preload("icons/icon_trail_3d.svg"))
 
 	Singletons._register_editor_singletons(self)
-	
+
 	delegation_inspector_plugin = DelegationInspectorPlugin.new()
 	add_inspector_plugin(delegation_inspector_plugin)
 
