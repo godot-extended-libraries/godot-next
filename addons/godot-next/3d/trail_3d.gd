@@ -96,13 +96,19 @@ func render_trail():
 	for j in range(len(verts) - 1):
 		var cur = verts[j]
 		var nxt = verts[j + 1]
+		var uv = (j + 1.0) / (len(verts) + 1);
+		var uvnxt = (j + 2.0) / (len(verts) + 1);
 		for i in range(density_around):
 			var nxt_i = (i + 1) % density_around
 			# Order added affects normal.
+			set_uv(Vector2(uv, 0.0))
 			add_vertex(cur[i])
 			add_vertex(cur[nxt_i])
+			set_uv(Vector2(uvnxt, 0.0))
 			add_vertex(nxt[i])
+			set_uv(Vector2(uv, 0.0))
 			add_vertex(cur[nxt_i])
+			set_uv(Vector2(uvnxt, 0.0))
 			add_vertex(nxt[nxt_i])
 			add_vertex(nxt[i])
 
@@ -110,6 +116,7 @@ func render_trail():
 		# Cap off top.
 		for i in range(density_around):
 			var nxt = (i + 1) % density_around
+			set_uv(Vector2(0, 0))
 			add_vertex(verts[0][i])
 			add_vertex(Vector3())
 			add_vertex(verts[0][nxt])
@@ -117,6 +124,7 @@ func render_trail():
 		# Cap off bottom.
 		for i in range(density_around):
 			var nxt = (i + 1) % density_around
+			set_uv(Vector2(1, 0))
 			add_vertex(verts[verts.size() - 1][i])
 			add_vertex(verts[verts.size() - 1][nxt])
 			add_vertex(last_p)
