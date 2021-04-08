@@ -110,7 +110,7 @@ public class Trail3D : ImmediateGeometry
         {
             var cur = verts[j];
             var nxt = verts[j + 1];
-		    // 1.0 added to avoid division by zero
+            // 1.0 added to avoid division by zero
             float uv = (j + 1.0f) / (verts.Count + 1);
             float uvnxt = (j + 2.0f) / (verts.Count + 1);
             for (int i = 0; i < densityAround; i++)
