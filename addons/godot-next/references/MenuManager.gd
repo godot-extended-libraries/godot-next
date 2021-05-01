@@ -70,6 +70,6 @@ func update():
 			_target.call_deferred("_on_enter_"+_options[_current])
 			_target.call_deferred("_on_cursor_moved", _current)
 	elif Input.is_action_just_pressed("ui_select"):
-		print("selected menu: "+_options[_current])
+		#print("selected menu: "+_options[_current])
 		_target.call_deferred("_on_menu_selected_"+_options[_current], _enabled[_current])
 	_last = _current
