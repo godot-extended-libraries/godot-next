@@ -110,15 +110,23 @@ public class Trail3D : ImmediateGeometry
         {
             var cur = verts[j];
             var nxt = verts[j + 1];
+            // 1.0 added to avoid division by zero
+            float uv = (j + 1.0f) / (verts.Count + 1);
+            float uvnxt = (j + 2.0f) / (verts.Count + 1);
             for (int i = 0; i < densityAround; i++)
             {
                 var nxtI = (i + 1) % densityAround;
                 //order added affects normal
+                SetUv(new Vector2(uv, 0f));
                 AddVertex(cur[i]);
                 AddVertex(cur[nxtI]);
+                SetUv(new Vector2(uvnxt, 0f));
                 AddVertex(nxt[i]);
+                SetUv(new Vector2(uv, 0f));
                 AddVertex(cur[nxtI]);
+                SetUv(new Vector2(uvnxt, 0f));
                 AddVertex(nxt[nxtI]);
+                SetUv(new Vector2(uvnxt, 0f));
                 AddVertex(nxt[i]);
             }
         }
@@ -127,6 +135,7 @@ public class Trail3D : ImmediateGeometry
             for (int i = 0; i < densityAround; i++)
             {
                 var nxt = (i + 1) % densityAround;
+                SetUv(Vector2.Zero);
                 AddVertex(verts[0][i]);
                 AddVertex(Vector3.Zero);
                 AddVertex(verts[0][nxt]);
@@ -135,6 +144,7 @@ public class Trail3D : ImmediateGeometry
             for (int i = 0; i < densityAround; i++)
             {
                 var nxt = (i + 1) % densityAround;
+                SetUv(new Vector2(1f, 0f));
                 AddVertex(verts[verts.Count - 1][i]);
                 AddVertex(verts[verts.Count - 1][nxt]);
                 AddVertex(lastP);
