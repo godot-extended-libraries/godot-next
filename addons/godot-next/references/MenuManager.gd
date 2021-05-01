@@ -32,7 +32,6 @@ extends Reference
 #     PS: in order to the above function work the function _on_menu_selected_OPTION and _on_enter_OPTION must have:
 #     if (enabled): #handle logic.
 
-
 var _amount:int
 var _reset_on_last:bool
 var _current:int
