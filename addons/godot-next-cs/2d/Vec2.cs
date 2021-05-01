@@ -76,6 +76,7 @@ public static partial class Vec2
     public static readonly Vector2 NNorm = new Vector2(0, -1);
     public static readonly Vector2 NENorm = new Vector2(0.7071067811865475244f, -0.7071067811865475244f);
 
+    // These are always normalized, because tan(22.5 degrees) is not rational.
     public static readonly Vector2 SEE = new Vector2(0.9238795325112867561f, 0.3826834323650897717f);
     public static readonly Vector2 SSE = new Vector2(0.3826834323650897717f, 0.9238795325112867561f);
     public static readonly Vector2 SSW = new Vector2(-0.3826834323650897717f, 0.9238795325112867561f);

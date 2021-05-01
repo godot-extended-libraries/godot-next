@@ -39,3 +39,4 @@ pool_vector3_array = PoolVector3Array( 1, 0, 2, 2, 0, 1 )
 [node name="VectorDisplay3D" type="Node" parent="TestVectorDisplay3D"]
 script = ExtResource( 3 )
 variable_name = "pool_vector3_array"
+relative = true

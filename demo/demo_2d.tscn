@@ -19,8 +19,6 @@ position = Vector2( 900, 450 )
 [node name="Geometry2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource( 1 )
 script = ExtResource( 1 )
-color = Color( 1, 1, 1, 1 )
-offset_position = Vector2( 0, 0 )
 
 [node name="WanderingNode2D" type="Node2D" parent="."]
 position = Vector2( 500, 450 )
@@ -61,3 +59,4 @@ pool_vector2_array = PoolVector2Array( 100, 200, 200, 100 )
 [node name="VectorDisplay2D" type="Node" parent="TestVectorDisplay2D"]
 script = ExtResource( 4 )
 variable_name = "pool_vector2_array"
+relative = true
