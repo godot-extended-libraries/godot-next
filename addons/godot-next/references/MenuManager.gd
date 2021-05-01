@@ -30,7 +30,8 @@ extends Reference
 #       you can use it to play a sound for example.
 #     * disable_option(index:bool) - you can set an option to be disabled or enabled (useful for secret menus)
 #     PS: in order to the above function work the function _on_menu_selected_OPTION and _on_enter_OPTION must have:
-#     if (enabled): #handle logic.
+#     if (enabled): 
+#		#handle logic code here.
 
 var _amount:int
 var _reset_on_last:bool
@@ -66,9 +67,9 @@ func update():
 				_current = 0
 		else: _current += 1
 	if !move == 0 and _last != _current:
-			_target.call_deferred("_on_enter_"+_options[_current])
-			_target.call_deferred("_on_cursor_moved", _current)
+		_target.call_deferred("_on_enter_"+_options[_current])
+		_target.call_deferred("_on_cursor_moved", _current)
 	elif Input.is_action_just_pressed("ui_select"):
-		#print("selected menu: "+_options[_current])
+		# print("selected menu: "+_options[_current])
 		_target.call_deferred("_on_menu_selected_"+_options[_current], _enabled[_current])
 	_last = _current
