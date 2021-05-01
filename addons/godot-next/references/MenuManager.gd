@@ -14,15 +14,11 @@ extends Reference
 #     optional 3rd param: Reset on last means when for example you are on exit and press down the selection goes to new_game
 #     optional 4th param: Where the selection cursor starts
 #     var menu:MenuManager = MenuManager.new(self, ["new_game","load_game","exit"], false )
-#     
-#     
 #     - Updating:
 #       call menu.update() undex _process function
-#     
 #     - Events:
 #       since the class uses call_deferred for target's function, its not mandatory to create the functions bellow
 #       this events functions must be called where "target" is set
-#     
 #     OPTION = the menu according to param 2:
 #     * _on_enter_OPTION(enabled:bool) - Called when menu cursor is over it - e.g: _on_enter_new_game(enabled) or _on_enter_exit(enabled)
 #     * _on_menu_selected_OPTION(enabled:bool) - Called when user select the option
@@ -30,8 +26,8 @@ extends Reference
 #       you can use it to play a sound for example.
 #     * disable_option(index:bool) - you can set an option to be disabled or enabled (useful for secret menus)
 #     PS: in order to the above function work the function _on_menu_selected_OPTION and _on_enter_OPTION must have:
-#     if (enabled): 
-#		#handle logic code here.
+#     if (enabled):
+#	#handle logic code here.
 
 var _amount:int
 var _reset_on_last:bool
