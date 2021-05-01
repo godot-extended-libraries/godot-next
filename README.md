@@ -70,7 +70,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[EditorTools](addons/godot-next/global/editor_tools.gd)|A utility for any features useful in the context of the Editor.|GDScript
 |[FileSearch](addons/godot-next/global/file_search.gd)|A utility with helpful methods to search through one's project files (or any directory).|GDScript
 |[FileSystemLink](addons/godot-next/global/file_system_link.gd)|A utility for creating links (file/directory, symbolic/hard).|GDScript
-|[Geometry2D](addons/godot-next/2d/geometry_2d.gd)|A utility that draws a Shape2D using CollisionShape2D's editor plugin handles.|GDScript, C#
+|[Geometry2D](addons/godot-next/2d/geometry_2d.gd)|A utility that draws a Shape2D using CollisionShape2D's editor plugin handles.|GDScript, [C#](addons/godot-next-cs/2d/Geometry2D.cs)
 |[Inflector](addons/godot-next/references/inflector.gd)|A vocabulary wrapper of inflection tools to pluralize and singularize strings.|GDScript
 |[InspectorControls](addons/godot-next/global/inspector_controls.gd)|A utility for creating data-editing GUI elements.|GDScript
 |[MessageDispatcher](addons/godot-next/objects/message_dispatcher.gd)|A base object that handles signaling for non predetermined signals.|GDScript
@@ -81,9 +81,11 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |[ResourceCollection](addons/godot-next/resources/resource_collections/resource_collection.gd)|An abstract base class for data structures that store Resource objects.|GDScript
 |[ResourceSet](addons/godot-next/resources/resource_collections/resource_set.gd)|A ResourceCollection implementation that manages a Set of Resources.|GDScript
 |[Singletons](addons/godot-next/global/singletons.gd)|A utility for caching Reference-derived singletons. Resources with a `SELF_RESOURCE` constant with a path to a `*.tres` file will be automatically loaded when accessed.|GDScript
-|[Trail2D](addons/godot-next/2d/trail_2d.gd)|Creates a variable-length trail that tracks a "target" node.|GDScript, C#
-|[Trail3D](addons/godot-next/3d/trail_3d.gd)|Creates a variable-length trail on an ImmediateGeometry node.|GDScript, C#
+|[Trail2D](addons/godot-next/2d/trail_2d.gd)|Creates a variable-length trail that tracks a "target" node.|GDScript, [C#](addons/godot-next-cs/2d/Trail2D.cs)
+|[Trail3D](addons/godot-next/3d/trail_3d.gd)|Creates a variable-length trail on an ImmediateGeometry node.|GDScript, [C#](addons/godot-next-cs/3d/Trail3D.cs)
 |[Tween Sequence](addons/godot-next/references/tween_sequence.gd)|A helper class for easier management and chaining of Tweens dynamically from code.|GDScript
+|[Vec2](addons/godot-next/2d/vec2.gd)|Adds more constants for Vector2.|GDScript, [C#](addons/godot-next-cs/2d/Vec2.cs)
+|[Vec3](addons/godot-next/3d/vec3.gd)|Adds more constants for Vector3.|GDScript, [C#](addons/godot-next-cs/3d/Vec3.cs)
 |[VectorDisplay2D](addons/godot-next/2d/vector_display_2d.gd)|Displays Vector2 members in the editor via Position2D nodes.|GDScript
 |[VectorDisplay3D](addons/godot-next/3d/vector_display_3d.gd)|Displays Vector3 members in the editor via Position3D nodes.|GDScript
 |[Variant](addons/godot-next/global/variant.gd)|A utility class for handling Variants (the type wrapper for all variables in Godot's scripting API).|GDScript
