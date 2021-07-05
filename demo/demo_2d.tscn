@@ -45,7 +45,6 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-update_mode = 0
 target_path = NodePath("../WanderingNode2D")
 show_label_name = true
 show_target_name = true
@@ -59,4 +58,3 @@ pool_vector2_array = PoolVector2Array( 100, 200, 200, 100 )
 [node name="VectorDisplay2D" type="Node" parent="TestVectorDisplay2D"]
 script = ExtResource( 4 )
 variable_name = "pool_vector2_array"
-relative = true
