@@ -100,6 +100,11 @@ _global_script_classes=[ {
 "path": "res://addons/godot-next/global/inspector_controls.gd"
 }, {
 "base": "Reference",
+"class": "MenuManager",
+"language": "GDScript",
+"path": "res://addons/godot-next/references/MenuManager.gd"
+}, {
+"base": "Reference",
 "class": "MessageDispatcher",
 "language": "GDScript",
 "path": "res://addons/godot-next/references/message_dispatcher.gd"
@@ -218,6 +223,7 @@ _global_script_class_icons={
 "Icons": "",
 "Inflector": "",
 "InspectorControls": "",
+"MenuManager": "",
 "MessageDispatcher": "",
 "MessageDispatcherWrapper": "",
 "PhysicsLayers": "",
