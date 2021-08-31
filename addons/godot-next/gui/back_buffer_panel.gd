@@ -1,3 +1,4 @@
+tool
 extends Control
 class_name BackBufferPanel, "../icons/icon_back_buffer_panel.svg"
 # author: Tlitookilakin
