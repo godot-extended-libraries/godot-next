@@ -1,5 +1,5 @@
 extends Control
-class_name BackBufferPanel, "res://addons/godot-next/icons/icon_back_buffer.png"
+class_name BackBufferPanel, "../icons/icon_back_buffer_panel.svg"
 # author: Tlitookilakin
 # Description: Copies its render region to the render buffer for shader purposes
 
