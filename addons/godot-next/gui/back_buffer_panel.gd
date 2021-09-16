@@ -10,6 +10,6 @@ func _draw():
 	if rid == null:
 		rid = get_canvas_item()
 	var rect: Rect2 = get_global_rect()
-	# screen-space coordinates are y-flipped
+	# screen-space coordinates are y-flipped. Remove in Godot 4.0.
 	rect.position.y = get_viewport_rect().size.y - rect.position.y - rect.size.y
 	VisualServer.canvas_item_set_copy_to_backbuffer(rid,visible,rect)
