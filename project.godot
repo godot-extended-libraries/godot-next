@@ -70,6 +70,11 @@ _global_script_classes=[ {
 "path": "res://addons/godot-next/global/editor_tools.gd"
 }, {
 "base": "Reference",
+"class": "ExampleObject",
+"language": "GDScript",
+"path": "res://demo/scripts/example_object.gd"
+}, {
+"base": "Reference",
 "class": "FileSearch",
 "language": "GDScript",
 "path": "res://addons/godot-next/global/file_search.gd"
@@ -113,6 +118,11 @@ _global_script_classes=[ {
 "class": "MessageDispatcherWrapper",
 "language": "GDScript",
 "path": "res://addons/godot-next/nodes/message_dispatcher_wrapper.gd"
+}, {
+"base": "Object",
+"class": "ObjectFreezer",
+"language": "GDScript",
+"path": "res://addons/godot-next/object_freezer.gd"
 }, {
 "base": "Resource",
 "class": "PhysicsLayers",
@@ -217,6 +227,7 @@ _global_script_class_icons={
 "DebugLabel": "",
 "DiscreteGradientTexture": "",
 "EditorTools": "",
+"ExampleObject": "",
 "FileSearch": "",
 "FileSystemLink": "",
 "Geometry2D": "res://addons/godot-next/icons/icon_geometry_2d.svg",
@@ -226,6 +237,7 @@ _global_script_class_icons={
 "MenuManager": "",
 "MessageDispatcher": "",
 "MessageDispatcherWrapper": "",
+"ObjectFreezer": "",
 "PhysicsLayers": "",
 "ProjectTools": "",
 "PropertyInfo": "",

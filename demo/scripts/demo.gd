@@ -1,5 +1,9 @@
 extends Node
 
+
+const filepath = "user://frozen_object.json"  # for the object freezer
+
+
 func _ready():
 	# Array2D
 	var array_2d = Array2D.new()
@@ -18,3 +22,30 @@ func _ready():
 	bitset.set_bit(2, true)
 	bitset.set_bit(3, true)
 	bitset.print_bits(false)
+	
+	# Object Freezer
+	# create a new object
+	var example_object: ExampleObject = ExampleObject.new()
+	
+	# store specific values on it
+	example_object.name = "Bob"
+	example_object.job = "Taco Bell"
+	example_object.age = 43
+	example_object.position = Vector2(69, 420)
+	
+	# print those values
+	print("\nObject 1:")
+	example_object.print_properties()
+	
+	# freeze the properties of that object
+	ObjectFreezer.freeze_properties(filepath, example_object)
+	
+	# load the properties onto a new object of the same class
+	var example_object_2: ExampleObject = ExampleObject.new()
+	ObjectFreezer.microwave_properties(filepath, example_object_2)
+	
+	# should print the same thing as the first object
+	print("\nObject 2:")
+	example_object_2.print_properties()
+	
+	
