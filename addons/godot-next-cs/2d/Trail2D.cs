@@ -56,6 +56,7 @@ public class Trail2D : Line2D
             case Node.NotificationParented:
                 if (autoZIndex)
                 {
+                    _target = GetNodeOrNull<Node2D>(targetPath);
                     ZIndex = _target != null ? _target.ZIndex - 1 : 0;
                 }
                 break;
