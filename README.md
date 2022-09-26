@@ -59,6 +59,7 @@ That's it! I hope you've got ideas of what you'd like to share with others.
 |-|-|-|
 |[Array2D](addons/godot-next/references/array_2d.gd)|A 2D Array class.|GDScript
 |[ArrayMap](addons/godot-next/resources/array_map.gd)|A Resource that maps String keys to Variants in an Array for fast iteration. Serializes all data as individual properties to avoid storage bugs in Godot 3.x.|GDScript
+|[BackBufferPanel](addons/godot-next/gui/back_buffer_panel.gd)|A Control that copies its region to the render buffer so it can be used in screen-reading shaders.|GDScript
 |[BitFlag](addons/godot-next/references/bit_flag.gd)|A class that allows abstracts away the complexity of handling bit flag enum types.|GDScript
 |[Bitset](addons/godot-next/references/bitset.gd)|A class that allows for easily manipulated bitmasks of any size.|GDScript
 |[Behavior](addons/godot-next/resources/behavior.gd)|A Resource type that automatically calls Node-like notification methods when paired with the CallbackDelegator class.|GDScript
