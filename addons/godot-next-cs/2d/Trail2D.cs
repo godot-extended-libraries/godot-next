@@ -46,7 +46,6 @@ public class Trail2D : Line2D
             Gradient.SetColor(0, first);
             Gradient.SetColor(1, DefaultColor);
         }
-        _target = GetNodeOrNull<Node2D>(targetPath);
     }
 
     public override void _Notification(int p_what)
@@ -56,6 +55,7 @@ public class Trail2D : Line2D
             case Node.NotificationParented:
                 if (autoZIndex)
                 {
+                    _target = GetNodeOrNull<Node2D>(targetPath);
                     ZIndex = _target != null ? _target.ZIndex - 1 : 0;
                 }
                 break;
