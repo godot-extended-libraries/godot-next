@@ -46,7 +46,6 @@ public class Trail2D : Line2D
             Gradient.SetColor(0, first);
             Gradient.SetColor(1, DefaultColor);
         }
-        _target = GetNodeOrNull<Node2D>(targetPath);
     }
 
     public override void _Notification(int p_what)
